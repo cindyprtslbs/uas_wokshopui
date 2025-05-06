@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="MiniMarket - Your Neighborhood Grocery Store">
+    <meta name="keywords" content="minimarket, grocery, shop, food, fresh, organic">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MiniMarket</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="uas_workshopui/css/styles.css">
+    
+</head>
+<body>
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <span class="mobile-menu__close"><i class="fa fa-times"></i></span>
+        <ul>
+            <li class="active"><a href="./index.html">Home</a></li>
+            <li><a href="./shop-grid.html">Shop</a></li>
+            <li><a href="#">Pages</a></li>
+            <li><a href="./blog.html">Artikel</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+        </ul>
+    </div>
+    <div class="mobile-menu-overlay"></div>
+
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="./index.html">
+                            <h2>MiniMarket</h2>
+                        </a>
+                    </div>
+                    <div class="humberger__open">
+                        <i class="fa fa-bars"></i>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li><a href="./index.html">Home</a></li>
+                            <li class="active" ><a href="./shop-grid.html">Shop</a></li>
+                            <li><a href="#">Pages</a>
+                                <ul class="header__menu__dropdown">
+                                    <li><a href="./shop-details.html">Detail Belanja</a></li>
+                                    <li><a href="./shoping-cart.html">Keranjang Belanja</a></li>
+                                    <li><a href="./checkout.html">Pembayaran</a></li>
+                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="./blog.html">Artikel</a></li>
+                            <li><a href="./contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul>
+                            <li><a href="shoping-cart.html"><i class="fa fa-shopping-bag"></i></a></li>
+                        </ul>
+                        <div class="header__top__right__auth">
+                            <a href="javascript:void(0);" onclick="openLoginSidebar()"><i class="fa fa-user"></i> Login</a>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Sidebar -->
+    <div id="loginSidebar" class="login-sidebar">
+        <div class="login-sidebar-content">
+            <span class="closebtn" onclick="closeLoginSidebar()">&times;</span>
+            <h4>Login As</h4>
+            <a href="admin-login.html"><i class="fa fa-cogs"></i> Admin</a>
+        </div>
+    </div> 
+
+    <!-- Breadcrumb Section -->
+    <section class="breadcrumb-section" style="background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Shop</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Section Begin -->
+    <section class="product-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Produk Unggulan</h2>
+            </div>
+
+            <!-- Featured Products -->
+            <div class="featured-products">
+                <div class="featured-products-grid">
+                    <!-- Featured Product 1 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://plus.unsplash.com/premium_photo-1667049290968-d0e2b9c36e01?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dmVnZXRhYmxlc3xlbnwwfHwwfHx8MA%3D%3D" alt="Dried Fruits Mix">
+                            <div class="discount-badge">-36%</div>
+                            <div class="product-actions">
+                                <button class="action-btn" aria-label="Add to wishlist">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="action-btn" aria-label="Compare">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </button>
+                                <button class="action-btn" aria-label="Add to cart">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category">fruit</div>
+                            <h3 class="product-title"><a href="#">Premium lobak merah & Fresh</a></h3>
+                            <div class="product-price">
+                                <span class="current-price">Rp45.000/Kg</span>
+                                <span class="old-price">Rp70.000</span>
+                            </div>
+                            <p>Tersedia dalam Kemasan Ritel dan Grosir</p>
+                        </div>
+                    </div>
+
+                    <!-- Featured Product 2 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://plus.unsplash.com/premium_photo-1667047165840-803e47970128?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29ybnxlbnwwfHwwfHx8MA%3D%3D" alt="Vegetables Package">
+                            <div class="discount-badge">-50%</div>
+                            <div class="product-actions">
+                                <button class="action-btn" aria-label="Add to wishlist">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="action-btn" aria-label="Compare">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </button>
+                                <button class="action-btn" aria-label="Add to cart">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category">Vegetables & fruit</div>
+                            <h3 class="product-title"><a href="#">Jagung Manis</a></h3>
+                            <div class="product-price">
+                                <span class="current-price">Rp50.000/Kg</span>
+                                <span class="old-price">Rp100.000</span>
+                            </div>
+                            <p>Pilihan Sayuran Organik</p>
+                        </div>
+                    </div>
+
+                    <!-- Featured Product 3 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1590502593747-42a996133562?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGVtb258ZW58MHx8MHx8fDA%3D" alt="Mixed Fruits">
+                            <div class="discount-badge">-30%</div>
+                            <div class="product-actions">
+                                <button class="action-btn" aria-label="Add to wishlist">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="action-btn" aria-label="Compare">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </button>
+                                <button class="action-btn" aria-label="Add to cart">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category">Fruit</div>
+                            <h3 class="product-title"><a href="#">Lemon</a></h3>
+                            <div class="product-price">
+                                <span class="current-price">Rp35.000/Kg</span>
+                                <span class="old-price">Rp50.000</span>
+                            </div>
+                            <p>Diskon Khusus untuk Pembelian dalam Jumlah Besar</p>
+                        </div>
+                    </div>
+
+                    <!-- Featured Product 4 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1602769515559-e15133a7e992?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGxlZWtzfGVufDB8fDB8fHww" alt="Mixed Fruits">
+                            <div class="discount-badge">-44%</div>
+                            <div class="product-actions">
+                                <button class="action-btn" aria-label="Add to wishlist">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="action-btn" aria-label="Compare">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </button>
+                                <button class="action-btn" aria-label="Add to cart">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category">Vegetable & Fruit</div>
+                            <h3 class="product-title"><a href="#">Bawang Prei</a></h3>
+                            <div class="product-price">
+                                <span class="current-price">Rp15.000/Ikat</span>
+                                <span class="old-price">Rp50.000</span>
+                            </div>
+                            <p>Pilihan Sayuran Organik</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <div class="filter-sort">
+                    <span>Sort By:</span>
+                    <select>
+                        <option value="default">Default</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="name">Name: A to Z</option>
+                    </select>
+                </div>
+                <div class="products-found">
+                    <span>16</span> Products found
+                </div>
+                <div class="view-options">
+                    <div class="view-option active" aria-label="Grid view">
+                        <i class="fas fa-th"></i>
+                    </div>
+                    <div class="view-option" aria-label="List view">
+                        <i class="fas fa-list"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="uas_workshopui/img/featured/selada.png">
+                        <div class="product-actions">
+                            <button class="action-btn" aria-label="Add to wishlist">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button class="action-btn" aria-label="Compare">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <button class="action-btn" aria-label="Add to cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Sayuran</div>
+                        <h3 class="product-title"><a href="#">Fresh Selada Ever</a></h3>
+                        <div class="product-price">
+                            <span class="current-price">Rp20.000/Kg</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="uas_workshopui/img/featured/bayam.png">
+                        <div class="product-actions">
+                            <button class="action-btn" aria-label="Add to wishlist">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button class="action-btn" aria-label="Compare">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <button class="action-btn" aria-label="Add to cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Sayuran</div>
+                        <h3 class="product-title"><a href="#">Local Bayam Fresh</a></h3>
+                        <div class="product-price">
+                            <span class="current-price">Rp10.000/Ikat</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="uas_workshopui/img/featured/mentimun.png">
+                        <div class="product-actions">
+                            <button class="action-btn" aria-label="Add to wishlist">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button class="action-btn" aria-label="Compare">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <button class="action-btn" aria-label="Add to cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Sayuran</div>
+                        <h3 class="product-title"><a href="#">Fresh Cucumber</a></h3>
+                        <div class="product-price">
+                            <span class="current-price">Rp18.000/Kg</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="uas_workshopui/img/featured/paprika.png">
+                        <div class="product-actions">
+                            <button class="action-btn" aria-label="Add to wishlist">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button class="action-btn" aria-label="Compare">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <button class="action-btn" aria-label="Add to cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Sayuran</div>
+                        <h3 class="product-title"><a href="#">Paprika</a></h3>
+                        <div class="product-price">
+                            <span class="current-price">Rp36.000/Kg</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="uas_workshopui/img/featured/singkong.png">
+                        <div class="product-actions">
+                            <button class="action-btn" aria-label="Add to wishlist">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button class="action-btn" aria-label="Compare">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <button class="action-btn" aria-label="Add to cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Sayuran</div>
+                        <h3 class="product-title"><a href="#">Singkong Premium</a></h3>
+                        <div class="product-price">
+                            <span class="current-price">Rp10.000/Kg</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="uas_workshopui/img/featured/panjang.png">
+                        <div class="product-actions">
+                            <button class="action-btn" aria-label="Add to wishlist">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button class="action-btn" aria-label="Compare">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <button class="action-btn" aria-label="Add to cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Sayuran</div>
+                        <h3 class="product-title"><a href="#">Kacang Panjang Premium</a></h3>
+                        <div class="product-price">
+                            <span class="current-price">Rp8.000/Ikat</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#"><i class="fas fa-long-arrow-alt-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__about__logo">
+                            <a href="./index.html"><h2>MiniMarket</h2></a>
+                        </div>
+                        <ul>
+                            <li><i class="fa fa-map-marker-alt"></i> Jl. Mojo II No.11, RT.007/RW.05, Mojo, Kec. Gubeng, Surabaya, Jawa Timur 60285</li>
+                            <li><i class="fa fa-phone"></i> +62 812-6224-7796</li>
+                            <li><i class="fa fa-envelope"></i> cindylubis@gmail.com</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                    <div class="footer__widget">
+                        <h6>Contact Kami</h6>
+                        <p>Hubungi kami melalui media sosial berikut:</p>
+                        <div class="footer__widget__social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="footer__widget">
+                        <h6>Bergabung Bersama Kami Sekarang</h6>
+                        <p>Dapatkan informasi terupdate lainnya dengan mengirimkan email.</p>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your email">
+                            <button type="submit">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__text">
+                            <p>© 2025 MiniMarket. All Rights Reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Preloader
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloder');
+            preloader.style.display = 'none';
+        });
+
+        // Login Sidebar
+        function openLoginSidebar() {
+            document.getElementById("loginSidebar").style.width = "250px";
+            document.body.style.overflow = "hidden";  // Disable scrolling
+        }
+
+        function closeLoginSidebar() {
+            document.getElementById("loginSidebar").style.width = "0";
+            document.body.style.overflow = "auto";  // Enable scrolling
+        }
+
+        // Close sidebar if clicked outside
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("loginSidebar")) {
+                closeLoginSidebar();
+            }
+        }
+
+        // Mobile Menu
+        const humbergerOpen = document.querySelector('.humberger__open');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+        const mobileMenuClose = document.querySelector('.mobile-menu__close');
+
+        if (humbergerOpen) {
+            humbergerOpen.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                mobileMenuOverlay.classList.add('active');
+            });
+        }
+
+        if (mobileMenuClose) {
+            mobileMenuClose.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+        }
+
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+        }
+
+        // Set background images for elements with set-bg class
+        document.addEventListener('DOMContentLoaded', function() {
+            const setBg = document.querySelectorAll('.set-bg');
+            setBg.forEach(function(element) {
+                const bg = element.getAttribute('data-setbg');
+                if (bg) {
+                    element.style.backgroundImage = `url('${bg}')`;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
