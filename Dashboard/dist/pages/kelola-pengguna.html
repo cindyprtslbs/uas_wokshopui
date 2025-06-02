@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MiniMarket - Kelola Pengguna</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="MiniMarket Admin Dashboard">
+    <meta name="keywords" content="admin, dashboard, minimarket, inventory, sales">
+    <meta name="author" content="CodedThemes">
+
+    <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" id="main-font-link">
+    <link rel="stylesheet" href="../assets/fonts/tabler-icons.min.css">
+    <link rel="stylesheet" href="../assets/fonts/feather.css">
+    <link rel="stylesheet" href="../assets/fonts/fontawesome.css">
+    <link rel="stylesheet" href="../assets/fonts/material.css">
+    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link">
+    <link rel="stylesheet" href="../assets/css/style-preset.css">
+
+</head>
+<body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
+    <div class="loader-bg">
+        <div class="loader-track">
+            <div class="loader-fill"></div>
+        </div>
+    </div>
+    <nav class="pc-sidebar">
+        <div class="navbar-wrapper">
+            <div class="m-header">
+                <a href="dashboard.html" class="b-brand text-primary">
+                    <img src="../assets/images/logo-dark.svg" class="img-fluid logo-lg" alt="logo">
+                </a>
+            </div>
+            <div class="navbar-content">
+                <ul class="pc-navbar">
+                    <li class="pc-item pc-caption">
+                        <label>Navigation</label>
+                        <i class="ti ti-dashboard"></i>
+                    </li>
+                    <li class="pc-item">
+                        <a href="dashboard.html" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+                            <span class="pc-mtext">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="pc-item">
+                        <a href="kelola-produk.html" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-box"></i></span>
+                            <span class="pc-mtext">Kelola Produk</span>
+                        </a>
+                    </li>
+                    <li class="pc-item">
+                        <a href="kelola-transaksi.html" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-receipt"></i></span>
+                            <span class="pc-mtext">Kelola Transaksi</span>
+                        </a>
+                    </li>
+                    <li class="pc-item">
+                        <a href="history-transaksi.html" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-history"></i></span>
+                            <span class="pc-mtext">History Transaksi</span>
+                        </a>
+                    </li>
+                    <li class="pc-item active">
+                        <a href="kelola-pengguna.html" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-users"></i></span>
+                            <span class="pc-mtext">Kelola Pengguna</span>
+                        </a>
+                    </li>
+                    <li class="pc-item">
+                        <a href="kelola-artikel.html" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-file-text"></i></span>
+                            <span class="pc-mtext">Kelola Artikel</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header class="pc-header">
+        <div class="header-wrapper">
+            <div class="me-auto pc-mob-drp">
+                <ul class="list-unstyled">
+                    <li class="pc-h-item pc-sidebar-collapse">
+                        <a href="#" class="pc-head-link ms-0" id="sidebar-hide">
+                            <i class="ti ti-menu-2"></i>
+                        </a>
+                    </li>
+                    <li class="pc-h-item pc-sidebar-popup">
+                        <a href="#" class="pc-head-link ms-0" id="mobile-collapse">
+                            <i class="ti ti-menu-2"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown pc-h-item d-inline-flex d-md-none">
+                        <a class="pc-head-link dropdown-toggle arrow-none m-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <i class="ti ti-search"></i>
+                        </a>
+                        <div class="dropdown-menu pc-h-dropdown drp-search">
+                            <form class="px-3">
+                                <div class="form-group mb-0 d-flex align-items-center">
+                                    <i data-feather="search"></i>
+                                    <input type="search" class="form-control border-0 shadow-none" placeholder="Search here. . .">
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="ms-auto">
+                <ul class="list-unstyled">
+                    <li class="dropdown pc-h-item header-user-profile">
+                        <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" data-bs-auto-close="outside" aria-expanded="false">
+                            <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar">
+                            <span>Admin</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
+                            <div class="dropdown-header">
+                                <div class="d-flex mb-1">
+                                    <div class="flex-shrink-0">
+                                        <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar wid-35">
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h6 class="mb-1">Admin</h6>
+                                        <span>Administrator</span>
+                                    </div>
+                                    <a href="#!" class="pc-head-link bg-transparent" id="logout-icon">
+                                        <i class="ti ti-power text-danger"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="#!" class="dropdown-item" id="logout-option">
+                                <i class="ti ti-power"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="pc-container">
+        <div class="pc-content">
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Kelola Pengguna</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+                                <li class="breadcrumb-item" aria-current="page">Kelola Pengguna</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Daftar Pengguna</h5>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal" id="add-user-btn">
+                                <i class="ti ti-plus"></i> Tambah Pengguna
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Cari pengguna..." id="searchUser">
+                                        <button class="btn btn-outline-secondary" type="button" id="searchUserBtn">
+                                            <i class="ti ti-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select" id="filterRole">
+                                        <option value="Semua Role" selected>Semua Role</option>
+                                        <option value="Administrator">Administrator</option>
+                                        <option value="Kasir">Kasir</option>
+                                        <option value="Staf Gudang">Staf Gudang</option>
+                                        <option value="Pelanggan">Pelanggan</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select" id="filterStatus">
+                                        <option value="Semua Status" selected>Semua Status</option>
+                                        <option value="Aktif">Aktif</option>
+                                        <option value="Tidak Aktif">Tidak Aktif</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Foto</th>
+                                            <th>Nama</th>
+                                            <th>Email</th>
+                                            <th>No. Telepon</th>
+                                            <th>Role</th>
+                                            <th>Status</th>
+                                            <th>Terdaftar</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="userTableBody">
+                                        </tbody>
+                                </table>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="paginationUserInfo">Menampilkan 0 sampai 0 dari 0 data</div>
+                                </div>
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="dataTables_paginate">
+                                        <ul class="pagination justify-content-end" id="paginationUserControls">
+                                            </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0">
+                                            <div class="avtar avtar-lg bg-light-primary">
+                                                <i class="ti ti-users text-primary"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h6 class="mb-0">Total Pengguna</h6>
+                                            <p class="text-muted mb-0" id="totalUsersStat">0 Pengguna</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0">
+                                            <div class="avtar avtar-lg bg-light-success">
+                                                <i class="ti ti-user-check text-success"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h6 class="mb-0">Pengguna Aktif</h6>
+                                            <p class="text-muted mb-0" id="activeUsersStat">0 Pengguna</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0">
+                                            <div class="avtar avtar-lg bg-light-warning">
+                                                <i class="ti ti-user-x text-warning"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h6 class="mb-0">Pengguna Tidak Aktif</h6>
+                                            <p class="text-muted mb-0" id="inactiveUsersStat">0 Pengguna</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0">
+                                            <div class="avtar avtar-lg bg-light-info">
+                                                <i class="ti ti-user-plus text-info"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h6 class="mb-0">Pengguna Baru</h6>
+                                            <p class="text-muted mb-0" id="newUsersStat">0 Bulan Ini</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Distribusi Role Pengguna</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div id="user-role-chart"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless">
+                                            <tbody id="userRoleStatsTableBody">
+                                                </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalLabel">Tambah Pengguna</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="userForm">
+                        <input type="hidden" id="editUserId"> <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="userId" class="form-label">ID Pengguna</label>
+                                <input type="text" class="form-control" id="userId" placeholder="Otomatis" disabled>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="userName" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="userName" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="userEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="userEmail" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="userPhone" class="form-label">No. Telepon</label>
+                                <input type="text" class="form-control" id="userPhone" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="userPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="userPassword">
+                                <div class="form-text">Kosongkan jika tidak ingin mengubah password.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="userConfirmPassword" class="form-label">Konfirmasi Password</label>
+                                <input type="password" class="form-control" id="userConfirmPassword">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="userRole" class="form-label">Role</label>
+                                <select class="form-select" id="userRole" required>
+                                    <option value="">Pilih Role</option>
+                                    <option>Administrator</option>
+                                    <option>Kasir</option>
+                                    <option>Staf Gudang</option>
+                                    <option>Pelanggan</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="userStatus" class="form-label">Status</label>
+                                <select class="form-select" id="userStatus" required>
+                                    <option value="Aktif">Aktif</option>
+                                    <option value="Tidak Aktif">Tidak Aktif</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userPhoto" class="form-label">Foto Profil</label>
+                            <input class="form-control" type="file" id="userPhoto">
+                            <div class="form-text">Format: JPG, PNG. Maks: 1MB</div>
+                            <img id="userPhotoPreview" src="" alt="Photo Preview" class="img-fluid mt-2 rounded-circle" style="max-width: 80px; display: none;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="userAddress" class="form-label">Alamat</label>
+                            <textarea class="form-control" id="userAddress" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary" id="saveUserBtn" form="userForm">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="pc-footer">
+        <div class="footer-wrapper container-fluid">
+            <div class="row">
+                <div class="col-sm my-1">
+                    <p class="m-0">MiniMarket Admin Dashboard &copy; 2025</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/plugins/popper.min.js"></script>
+    <script src="../assets/js/plugins/simplebar.min.js"></script>
+    <script src="../assets/js/plugins/bootstrap.min.js"></script>
+    <script src="../assets/js/fonts/custom-font.js"></script>
+    <script src="../assets/js/pcoded.js"></script>
+    <script src="../assets/js/plugins/feather.min.js"></script>
+    <script src="../assets/js/plugins/apexcharts.min.js"></script>
+
+    <script>
+        layout_change('light');
+    </script>
+    <script>
+        change_box_container('false');
+    </script>
+    <script>
+        layout_rtl_change('false');
+    </script>
+    <script>
+        preset_change("preset-1");
+    </script>
+    <script>
+        font_change("Public-Sans");
+    </script>
+
+    <script>
+        // --- User Management JavaScript ---
+        let users = [{
+            id: 'USR001',
+            photo: '../assets/images/user/avatar-1.jpg',
+            name: 'Ahmad Supriadi',
+            email: 'ahmad@example.com',
+            phone: '081234567890',
+            role: 'Administrator',
+            status: 'Aktif',
+            registered: '01 Jan 2025',
+            address: 'Jl. Contoh No. 1, Jakarta'
+        }, {
+            id: 'USR002',
+            photo: '../assets/images/user/avatar-2.jpg',
+            name: 'Siti Aminah',
+            email: 'siti@example.com',
+            phone: '081234567891',
+            role: 'Kasir',
+            status: 'Aktif',
+            registered: '15 Jan 2025',
+            address: 'Jl. Raya No. 10, Bandung'
+        }, {
+            id: 'USR003',
+            photo: '../assets/images/user/avatar-3.jpg',
+            name: 'Budi Santoso',
+            email: 'budi@example.com',
+            phone: '081234567892',
+            role: 'Staf Gudang',
+            status: 'Aktif',
+            registered: '22 Jan 2025',
+            address: 'Jl. Merdeka No. 5, Surabaya'
+        }, {
+            id: 'USR004',
+            photo: '../assets/images/user/avatar-4.jpg',
+            name: 'Dewi Lestari',
+            email: 'dewi@example.com',
+            phone: '081234567893',
+            role: 'Kasir',
+            status: 'Aktif',
+            registered: '05 Feb 2025',
+            address: 'Jl. Pahlawan No. 7, Semarang'
+        }, {
+            id: 'USR005',
+            photo: '../assets/images/user/avatar-5.jpg',
+            name: 'Joko Widodo',
+            email: 'joko@example.com',
+            phone: '081234567894',
+            role: 'Pelanggan',
+            status: 'Aktif',
+            registered: '12 Feb 2025',
+            address: 'Jl. Mawar No. 12, Yogyakarta'
+        }, {
+            id: 'USR006',
+            photo: '../assets/images/user/avatar-6.jpg',
+            name: 'Rina Marlina',
+            email: 'rina@example.com',
+            phone: '081234567895',
+            role: 'Pelanggan',
+            status: 'Aktif',
+            registered: '20 Feb 2025',
+            address: 'Jl. Anggrek No. 20, Malang'
+        }, {
+            id: 'USR007',
+            photo: '../assets/images/user/avatar-7.jpg',
+            name: 'Hadi Sutrisno',
+            email: 'hadi@example.com',
+            phone: '081234567896',
+            role: 'Staf Gudang',
+            status: 'Tidak Aktif',
+            registered: '01 Mar 2025',
+            address: 'Jl. Melati No. 3, Bali'
+        }, {
+            id: 'USR008',
+            photo: '../assets/images/user/avatar-8.jpg',
+            name: 'Sinta Dewi',
+            email: 'sinta@example.com',
+            phone: '081234567897',
+            role: 'Pelanggan',
+            status: 'Tidak Aktif',
+            registered: '10 Mar 2025',
+            address: 'Jl. Kenanga No. 8, Medan'
+        }, ];
+
+        let currentEditUserId = null; // To store the ID of the user being edited
+
+        const userTableBody = document.getElementById('userTableBody');
+        const userForm = document.getElementById('userForm');
+        const saveUserBtn = document.getElementById('saveUserBtn');
+        const userModalLabel = document.getElementById('userModalLabel');
+        const addUserBtn = document.getElementById('add-user-btn');
+
+        // Form inputs
+        const userIdInput = document.getElementById('userId');
+        const userNameInput = document.getElementById('userName');
+        const userEmailInput = document.getElementById('userEmail');
+        const userPhoneInput = document.getElementById('userPhone');
+        const userPasswordInput = document.getElementById('userPassword');
+        const userConfirmPasswordInput = document.getElementById('userConfirmPassword');
+        const userRoleSelect = document.getElementById('userRole');
+        const userStatusSelect = document.getElementById('userStatus');
+        const userPhotoInput = document.getElementById('userPhoto');
+        const userPhotoPreview = document.getElementById('userPhotoPreview');
+        const userAddressTextarea = document.getElementById('userAddress');
+        const editUserIdInput = document.getElementById('editUserId');
+
+
+        // Filter and Search elements
+        const searchUserInput = document.getElementById('searchUser');
+        const searchUserButton = document.getElementById('searchUserBtn');
+        const filterRoleSelect = document.getElementById('filterRole');
+        const filterStatusSelect = document.getElementById('filterStatus');
+
+        // Stats elements
+        const totalUsersStat = document.getElementById('totalUsersStat');
+        const activeUsersStat = document.getElementById('activeUsersStat');
+        const inactiveUsersStat = document.getElementById('inactiveUsersStat');
+        const newUsersStat = document.getElementById('newUsersStat');
+        const userRoleStatsTableBody = document.getElementById('userRoleStatsTableBody');
+
+
+        let currentUserPage = 1;
+        const usersPerPage = 8; // Adjust based on your table height
+
+        // Function to render users in the table
+        function renderUsers(dataToRender = users) {
+            userTableBody.innerHTML = ''; // Clear existing rows
+            const startIndex = (currentUserPage - 1) * usersPerPage;
+            const endIndex = startIndex + usersPerPage;
+            const paginatedUsers = dataToRender.slice(startIndex, endIndex);
+
+            if (paginatedUsers.length === 0 && dataToRender.length > 0) {
+                currentUserPage = Math.max(1, currentUserPage - 1);
+                renderUsers(dataToRender);
+                return;
+            }
+
+            paginatedUsers.forEach(user => {
+                const row = userTableBody.insertRow();
+                row.dataset.userId = user.id; // Store user ID on the row
+
+                let statusBadgeClass = '';
+                if (user.status === 'Aktif') {
+                    statusBadgeClass = 'bg-success';
+                } else if (user.status === 'Tidak Aktif') {
+                    statusBadgeClass = 'bg-danger';
+                }
+
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td><img src="${user.photo}" alt="user" class="img-fluid rounded-circle" width="40"></td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phone}</td>
+                    <td>${user.role}</td>
+                    <td><span class="badge ${statusBadgeClass}">${user.status}</span></td>
+                    <td>${user.registered}</td>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-primary edit-user-btn" data-bs-toggle="modal" data-bs-target="#userModal">
+                                <i class="ti ti-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger delete-user-btn">
+                                <i class="ti ti-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+            });
+            updateUserPaginationControls(dataToRender.length);
+            updateUserPaginationInfo(dataToRender.length);
+            updateUserStatistics(dataToRender);
+            updateUserRoleChart(dataToRender);
+        }
+
+        // Function to generate a unique user ID
+        function generateUserId() {
+            const prefix = 'USR';
+            const existingIds = users.map(u => parseInt(u.id.replace(prefix, '')));
+            const maxIdNum = existingIds.length > 0 ? Math.max(...existingIds) : 0;
+            const newIdNum = maxIdNum + 1;
+            return prefix + String(newIdNum).padStart(3, '0');
+        }
+
+        // Function to handle form submission (Add/Edit user)
+        userForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const userName = userNameInput.value;
+            const userEmail = userEmailInput.value;
+            const userPhone = userPhoneInput.value;
+            const userPassword = userPasswordInput.value;
+            const userConfirmPassword = userConfirmPasswordInput.value;
+            const userRole = userRoleSelect.value;
+            const userStatus = userStatusSelect.value;
+            const userAddress = userAddressTextarea.value;
+            let userPhoto = userPhotoPreview.src || '../assets/images/user/avatar-default.jpg'; // Default placeholder
+
+            // Basic password validation
+            if (userPassword && userPassword !== userConfirmPassword) {
+                alert('Password dan Konfirmasi Password tidak cocok!');
+                return;
+            }
+
+            // Handle photo upload if a new file is selected
+            const file = userPhotoInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    userPhoto = e.target.result;
+                    processUserSave(userName, userEmail, userPhone, userRole, userStatus, userAddress, userPhoto);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                processUserSave(userName, userEmail, userPhone, userRole, userStatus, userAddress, userPhoto);
+            }
+        });
+
+        function processUserSave(userName, userEmail, userPhone, userRole, userStatus, userAddress, userPhoto) {
+            const today = new Date();
+            const registeredDate = today.toLocaleDateString('id-ID', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            }).replace(/\./g, ''); // Format: DD Mon YYYY
+
+            if (currentEditUserId) {
+                // Editing an existing user
+                const userIndex = users.findIndex(u => u.id === currentEditUserId);
+                if (userIndex !== -1) {
+                    users[userIndex] = {
+                        ...users[userIndex], // Keep existing properties if not updated
+                        name: userName,
+                        email: userEmail,
+                        phone: userPhone,
+                        role: userRole,
+                        status: userStatus,
+                        address: userAddress,
+                        photo: userPhoto
+                    };
+                    alert('Pengguna berhasil diperbarui!');
+                }
+            } else {
+                // Adding a new user
+                const newUserId = generateUserId();
+                const newUser = {
+                    id: newUserId,
+                    photo: userPhoto,
+                    name: userName,
+                    email: userEmail,
+                    phone: userPhone,
+                    role: userRole,
+                    status: userStatus,
+                    registered: registeredDate,
+                    address: userAddress
+                };
+                users.push(newUser);
+                alert('Pengguna berhasil ditambahkan!');
+            }
+
+            $('#userModal').modal('hide'); // Close the modal
+            resetUserForm(); // Reset form fields
+            applyUserFiltersAndSorting(); // Re-render users after add/edit
+        }
+
+        // Function to handle image preview for user photo
+        userPhotoInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    userPhotoPreview.src = e.target.result;
+                    userPhotoPreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                userPhotoPreview.src = '';
+                userPhotoPreview.style.display = 'none';
+            }
+        });
+
+        // Function to reset the user form
+        function resetUserForm() {
+            userForm.reset();
+            userIdInput.value = 'Otomatis';
+            userModalLabel.textContent = 'Tambah Pengguna';
+            saveUserBtn.textContent = 'Simpan';
+            currentEditUserId = null;
+            userPasswordInput.setAttribute('required', 'required'); // Require password for new user
+            userConfirmPasswordInput.setAttribute('required', 'required'); // Require confirm password for new user
+            userPhotoPreview.src = '';
+            userPhotoPreview.style.display = 'none';
+        }
+
+        // Event listener for "Tambah Pengguna" button
+        addUserBtn.addEventListener('click', function() {
+            resetUserForm();
+            userPasswordInput.setAttribute('required', 'required');
+            userConfirmPasswordInput.setAttribute('required', 'required');
+        });
+
+        // Event listener for "Edit" and "Delete" buttons (delegated to parent table)
+        userTableBody.addEventListener('click', function(event) {
+            const editBtn = event.target.closest('.edit-user-btn');
+            const deleteBtn = event.target.closest('.delete-user-btn');
+
+            if (editBtn) {
+                const row = editBtn.closest('tr');
+                const userId = row.dataset.userId;
+                const user = users.find(u => u.id === userId);
+
+                if (user) {
+                    userModalLabel.textContent = 'Edit Pengguna';
+                    saveUserBtn.textContent = 'Perbarui';
+                    currentEditUserId = user.id;
+
+                    userIdInput.value = user.id;
+                    userNameInput.value = user.name;
+                    userEmailInput.value = user.email;
+                    userPhoneInput.value = user.phone;
+                    userRoleSelect.value = user.role;
+                    userStatusSelect.value = user.status;
+                    userAddressTextarea.value = user.address || '';
+
+                    userPasswordInput.removeAttribute('required'); // No password required for edit unless changed
+                    userConfirmPasswordInput.removeAttribute('required');
+
+                    if (user.photo) {
+                        userPhotoPreview.src = user.photo;
+                        userPhotoPreview.style.display = 'block';
+                    } else {
+                        userPhotoPreview.src = '';
+                        userPhotoPreview.style.display = 'none';
+                    }
+                }
+            } else if (deleteBtn) {
+                const row = deleteBtn.closest('tr');
+                const userId = row.dataset.userId;
+                if (confirm(`Apakah Anda yakin ingin menghapus pengguna dengan ID ${userId}?`)) {
+                    users = users.filter(u => u.id !== userId);
+                    alert('Pengguna berhasil dihapus!');
+                    applyUserFiltersAndSorting(); // Re-render users after deletion
+                }
+            }
+        });
+
+        // --- Search, Filter, and Stats for Users ---
+        function applyUserFiltersAndSorting() {
+            let filteredUsers = [...users];
+
+            // Search
+            const searchTerm = searchUserInput.value.toLowerCase().trim();
+            if (searchTerm) {
+                filteredUsers = filteredUsers.filter(user =>
+                    user.name.toLowerCase().includes(searchTerm) ||
+                    user.id.toLowerCase().includes(searchTerm) ||
+                    user.email.toLowerCase().includes(searchTerm) ||
+                    user.phone.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Filter by Role
+            const selectedRole = filterRoleSelect.value;
+            if (selectedRole !== 'Semua Role') {
+                filteredUsers = filteredUsers.filter(user =>
+                    user.role === selectedRole
+                );
+            }
+
+            // Filter by Status
+            const selectedStatus = filterStatusSelect.value;
+            if (selectedStatus !== 'Semua Status') {
+                filteredUsers = filteredUsers.filter(user =>
+                    user.status === selectedStatus
+                );
+            }
+
+            // No sorting applied in original HTML, but you can add it here if needed
+            // e.g., filteredUsers.sort((a, b) => a.name.localeCompare(b.name));
+
+            renderUsers(filteredUsers);
+        }
+
+        searchUserButton.addEventListener('click', applyUserFiltersAndSorting);
+        searchUserInput.addEventListener('keyup', applyUserFiltersAndSorting);
+        filterRoleSelect.addEventListener('change', applyUserFiltersAndSorting);
+        filterStatusSelect.addEventListener('change', applyUserFiltersAndSorting);
+
+
+        // --- User Statistics Update Functions ---
+        function updateUserStatistics(usersData) {
+            totalUsersStat.textContent = `${usersData.length} Pengguna`;
+
+            const activeCount = usersData.filter(user => user.status === 'Aktif').length;
+            activeUsersStat.textContent = `${activeCount} Pengguna`;
+
+            const inactiveCount = usersData.filter(user => user.status === 'Tidak Aktif').length;
+            inactiveUsersStat.textContent = `${inactiveCount} Pengguna`;
+
+            // For new users, let's consider users registered in the current month
+            const currentMonth = new Date().toLocaleString('en-US', {
+                month: 'short'
+            }).replace(/\./g, '') + ' ' + new Date().getFullYear(); // e.g., "May 2025"
+            const newUsersCount = usersData.filter(user => user.registered.includes(currentMonth)).length;
+            newUsersStat.textContent = `${newUsersCount} Bulan Ini`;
+        }
+
+        // --- User Role Chart and Table Update ---
+        let userRoleChart; // Declare chart variable globally or in a scope accessible to update function
+
+        function updateUserRoleChart(usersData) {
+            const roleCounts = usersData.reduce((acc, user) => {
+                acc[user.role] = (acc[user.role] || 0) + 1;
+                return acc;
+            }, {});
+
+            const roles = ['Administrator', 'Kasir', 'Staf Gudang', 'Pelanggan'];
+            const seriesData = roles.map(role => roleCounts[role] || 0);
+
+            // Update chart data
+            if (userRoleChart) {
+                userRoleChart.updateOptions({
+                    series: seriesData,
+                    labels: roles, // Ensure labels are consistent with roles
+                    plotOptions: {
+                        pie: {
+                            donut: {
+                                total: {
+                                    formatter: function(w) {
+                                        return usersData.length.toString(); // Update total in chart center
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            } else {
+                // Initialize chart if it doesn't exist
+                var options = {
+                    series: seriesData,
+                    chart: {
+                        type: 'donut',
+                        height: 320
+                    },
+                    labels: roles,
+                    colors: ['#4680FF', '#2CA87F', '#FFAA05', '#00B8D9'],
+                    legend: {
+                        show: false
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        pie: {
+                            donut: {
+                                size: '65%',
+                                labels: {
+                                    show: true,
+                                    name: {
+                                        show: true
+                                    },
+                                    value: {
+                                        show: true
+                                    },
+                                    total: {
+                                        show: true,
+                                        label: 'Total',
+                                        formatter: function(w) {
+                                            return usersData.length.toString();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+                userRoleChart = new ApexCharts(document.querySelector("#user-role-chart"), options);
+                userRoleChart.render();
+            }
+
+            // Update role stats table
+            userRoleStatsTableBody.innerHTML = '';
+            roles.forEach((role, index) => {
+                const count = seriesData[index];
+                const percentage = usersData.length > 0 ? ((count / usersData.length) * 100).toFixed(0) : 0;
+                let colorClass = '';
+                if (role === 'Administrator') colorClass = 'bg-primary';
+                else if (role === 'Kasir') colorClass = 'bg-success';
+                else if (role === 'Staf Gudang') colorClass = 'bg-warning';
+                else if (role === 'Pelanggan') colorClass = 'bg-info';
+
+
+                const row = `
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="badge ${colorClass}" style="width: 15px; height: 15px;"></div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <p class="mb-0">${role}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-end">${count} (${percentage}%)</td>
+                    </tr>
+                `;
+                userRoleStatsTableBody.insertAdjacentHTML('beforeend', row);
+            });
+        }
+
+
+        // --- Pagination functionality for Users ---
+        function updateUserPaginationControls(totalItems) {
+            const totalPages = Math.ceil(totalItems / usersPerPage);
+            const paginationControls = document.getElementById('paginationUserControls');
+            paginationControls.innerHTML = '';
+
+            const createPageItem = (pageNumber, text, isDisabled, isActive) => {
+                const li = document.createElement('li');
+                li.classList.add('page-item');
+                if (isDisabled) li.classList.add('disabled');
+                if (isActive) li.classList.add('active');
+
+                const a = document.createElement('a');
+                a.classList.add('page-link');
+                a.href = '#';
+                a.textContent = text;
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (!isDisabled && !isActive) {
+                        currentUserPage = pageNumber;
+                        applyUserFiltersAndSorting();
+                    }
+                });
+                li.appendChild(a);
+                return li;
+            };
+
+            // Previous button
+            paginationControls.appendChild(createPageItem(currentUserPage - 1, 'Previous', currentUserPage === 1, false));
+
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                paginationControls.appendChild(createPageItem(i, i, false, i === currentUserPage));
+            }
+
+            // Next button
+            paginationControls.appendChild(createPageItem(currentUserPage + 1, 'Next', currentUserPage === totalPages || totalPages === 0, false));
+        }
+
+        function updateUserPaginationInfo(totalItems) {
+            const paginationInfo = document.getElementById('paginationUserInfo');
+            const startIndex = (currentUserPage - 1) * usersPerPage + 1;
+            const endIndex = Math.min(startIndex + usersPerPage - 1, totalItems);
+            paginationInfo.textContent = `Menampilkan ${totalItems === 0 ? 0 : startIndex} sampai ${endIndex} dari ${totalItems} data`;
+        }
+
+
+        // --- Initial Load and Authentication ---
+        document.addEventListener('DOMContentLoaded', () => {
+            applyUserFiltersAndSorting(); // Initial render of users
+            checkUserAuthentication();
+
+            // Event listeners for logout
+            const logoutIcon = document.querySelector('#logout-icon');
+            if (logoutIcon) {
+                logoutIcon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    handleLogout();
+                });
+            }
+
+            const logoutOption = document.querySelector('#logout-option');
+            if (logoutOption) {
+                logoutOption.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    handleLogout();
+                });
+            }
+        });
+
+
+        // --- Functions for logout and user authentication (from your original commented out code) ---
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('minimarket_current_user');
+                showLogoutMessage();
+                setTimeout(() => {
+                    window.location.href = '../pages/login.html';
+                }, 1000);
+            }
+        }
+
+        function showLogoutMessage() {
+            let toast = document.getElementById('logoutToast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'logoutToast';
+                toast.style.position = 'fixed';
+                toast.style.top = '20px';
+                toast.style.right = '20px';
+                toast.style.backgroundColor = '#d1e7dd';
+                toast.style.color = '#0f5132';
+                toast.style.padding = '15px 25px';
+                toast.style.borderRadius = '5px';
+                toast.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+                toast.style.zIndex = '9999';
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+                toast.style.transition = 'opacity 0.3s, transform 0.3s';
+                toast.textContent = 'Logging out...';
+                document.body.appendChild(toast);
+            }
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            }, 100);
+        }
+
+        function checkUserAuthentication() {
+            const currentUser = JSON.parse(localStorage.getItem('minimarket_current_user'));
+            if (!currentUser) {
+                window.location.href = '../pages/login.html';
+            } else {
+                updateUserInfo(currentUser);
+            }
+        }
+
+        function updateUserInfo(user) {
+            const userNameElements = document.querySelectorAll('.header-user-profile span');
+            const userNameInDropdown = document.querySelector('.dropdown-user-profile h6');
+            if (userNameElements.length > 0) {
+                userNameElements.forEach(element => {
+                    element.textContent = user.name || 'User';
+                });
+            }
+            if (userNameInDropdown) {
+                userNameInDropdown.textContent = user.name || 'User';
+            }
+            const userRoleElement = document.querySelector('.dropdown-user-profile span');
+            if (userRoleElement) {
+                userRoleElement.textContent = user.role || 'User';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="MiniMarket - Your Neighborhood Grocery Store">
+    <meta name="keywords" content="minimarket, grocery, shop, food, fresh, organic">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MiniMarket</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <style>
+        /* Add cart count badge (copied from index/shop-grid for consistency) */
+        .header__cart ul li {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            height: 18px;
+            width: 18px;
+            background: #7fad39;
+            font-size: 10px;
+            color: #ffffff;
+            line-height: 18px;
+            text-align: center;
+            font-weight: 700;
+            border-radius: 50%;
+        }
+    </style>
+    <style>
+        /* Add animation for cart notification */
+        @keyframes cartPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .cart-animation {
+            animation: cartPulse 0.5s ease-in-out;
+            color: #7fad39;
+        }
+
+        /* Add cart count badge */
+        .header__cart ul li {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            height: 18px;
+            width: 18px;
+            background: #7fad39;
+            font-size: 10px;
+            color: #ffffff;
+            line-height: 18px;
+            text-align: center;
+            font-weight: 700;
+            border-radius: 50%;
+        }
+
+        /* Toast notification */
+        .toast-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #7fad39;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .toast-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Styling for the new button */
+        .view-more-products-btn {
+            display: inline-block;
+            background-color: #7fad39; /* Example green color */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-top: 30px; /* Space above the button */
+        }
+
+        .view-more-products-btn:hover {
+            background-color: #5f8d2e; /* Darker green on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <div class="mobile-menu">
+        <span class="mobile-menu__close"><i class="fa fa-times"></i></span>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./shop-grid.html">Shop</a></li>
+            <li class="active"><a href="#">Pages</a></li>
+            <li><a href="./blog.html">Artikel</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+        </ul>
+    </div>
+    <div class="mobile-menu-overlay"></div>
+
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="./index.html">
+                            <h2>MiniMarket</h2>
+                        </a>
+                    </div>
+                    <div class="humberger__open">
+                        <i class="fa fa-bars"></i>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li><a href="./index.html">Home</a></li>
+                            <li><a href="./shop-grid.html">Shop</a></li>
+                            <li class="active"><a href="#">Pages</a>
+                                <ul class="header__menu__dropdown">
+                                    <li><a href="shop-details.html">Detail Belanja</a></li>
+                                    <li><a href="shoping-cart.html">Keranjang Belanja</a></li>
+                                    <li><a href="checkout.html">Pembayaran</a></li>
+                                    <li><a href="order-history.html">Riwayat Pesanan</a></li>
+                                    <li><a href="blog-details.html">Detail Artikel</a></li>
+                                    <li><a href="profile.html">Profil Pengguna</a></li> 
+                                </ul>
+                            </li>
+                            <li><a href="./blog.html">Artikel</a></li>
+                            <li><a href="./contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul>
+                            <li>
+                                <a href="shoping-cart.html">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <span class="cart-count" id="cartCount">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="header__top__right__auth">
+                            <a href="javascript:void(0);" onclick="openLoginSidebar()"><i class="fa fa-user"></i>Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="loginSidebar" class="login-sidebar">
+        <div class="login-sidebar-content">
+            <span class="closebtn" onclick="closeLoginSidebar()">&times;</span>
+            <h4>Login As</h4>
+            <a href="../Dashboard/dist/pages/login.html"><i class="fa fa-cogs"></i> Admin</a>
+        </div>
+    </div>
+
+    <section class="breadcrumb-section"
+        style="background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Pembayaran</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="checkout spad">
+        <div class="container">
+            <div class="checkout__form">
+                <h4>Detail Pembayaran</h4>
+                <form id="checkoutForm">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-6">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Nama Lengkap<span>*</span></p>
+                                        <input type="text" placeholder="Masukkan nama lengkap" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Email<span>*</span></p>
+                                        <input type="email" placeholder="Masukkan email" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Alamat Lengkap<span>*</span></p>
+                                <input type="text" placeholder="Nama jalan, nomor rumah" class="checkout__input__add"
+                                    required>
+                                <input type="text" placeholder="Apartemen, suite, unit, dll (opsional)">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Kota<span>*</span></p>
+                                        <input type="text" placeholder="Masukkan kota" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Kode Pos<span>*</span></p>
+                                        <input type="text" placeholder="Masukkan kode pos" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Telepon<span>*</span></p>
+                                        <input type="text" placeholder="Masukkan nomor telepon" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Catatan Pesanan<span></span></p>
+                                <input type="text" placeholder="Catatan tentang pesanan Anda, misalnya catatan khusus untuk pengiriman.">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="checkout__order">
+                                <h4>Pesanan Anda</h4>
+                                <div class="checkout__order__products">Produk <span>Total</span></div>
+                                <ul id="checkoutProductList">
+                                    </ul>
+                                <div class="checkout__order__subtotal">Subtotal <span id="checkoutSubtotal">Rp0</span></div>
+                                <div class="checkout__order__subtotal">Pengiriman <span><span id="shippingCost">Rp10.000</span></span></div>
+                                <div class="checkout__order__total">Total <span id="checkoutTotal">Rp0</span></div>
+                                <div style="margin-bottom: 20px;">
+                                    <h5 style="font-size: 16px; margin-bottom: 15px; font-weight: 600;">Metode Pembayaran</h5>
+                                    <!-- Transfer Bank -->
+                                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                        <input type="radio" id="transfer" name="payment" value="transfer" checked style="width: auto; margin-right: 10px;">
+                                        <label for="transfer" style="margin-bottom: 0;">Transfer Bank</label>
+                                    </div>
+                                    <div style="margin-left: 28px; margin-bottom: 10px;">
+                                        <input type="radio" id="bri" name="bank" value="BRI" style="width: auto; margin-right: 8px;">
+                                        <label for="bri" style="margin-right: 15px;">BRI</label>
+                                        <input type="radio" id="bni" name="bank" value="BNI" style="width: auto; margin-right: 8px;">
+                                        <label for="bni" style="margin-right: 15px;">BNI</label>
+                                        <input type="radio" id="mandiri" name="bank" value="MANDIRI" style="width: auto; margin-right: 8px;">
+                                        <label for="mandiri">MANDIRI</label>
+                                    </div>
+                                    <!-- E-Wallet -->
+                                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                        <input type="radio" id="e-wallet" name="payment" value="e-wallet" style="width: auto; margin-right: 10px;">
+                                        <label for="e-wallet" style="margin-bottom: 0;">E-Wallet</label>
+                                    </div>
+                                    <div style="margin-left: 28px; margin-bottom: 10px;">
+                                        <input type="radio" id="dana" name="ewallet" value="DANA" style="width: auto; margin-right: 8px;">
+                                        <label for="dana" style="margin-right: 15px;">DANA</label>
+                                        <input type="radio" id="gopay" name="ewallet" value="GOPAY" style="width: auto; margin-right: 8px;">
+                                        <label for="gopay" style="margin-right: 15px;">GoPay</label>
+                                        <input type="radio" id="ovo" name="ewallet" value="OVO" style="width: auto; margin-right: 8px;">
+                                        <label for="ovo">OVO</label>
+                                    </div>
+                                    <!-- Kartu Kredit -->
+                                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                        <input type="radio" id="credit-card" name="payment" value="credit-card" style="width: auto; margin-right: 10px;">
+                                        <label for="credit-card" style="margin-bottom: 0;">Kartu Kredit</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="site-btn">Selesaikan Pembayaran</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__about__logo">
+                            <a href="./index.html">
+                                <h2>MiniMarket</h2>
+                            </a>
+                        </div>
+                        <ul>
+                            <li><i class="fa fa-map-marker-alt"></i> Jl. Mojo II No.11, RT.007/RW.05, Mojo, Kec. Gubeng,
+                                Surabaya, Jawa Timur 60285</li>
+                            <li><i class="fa fa-phone"></i> +62 812-6224-7796</li>
+                            <li><i class="fa fa-envelope"></i> cindylubis@gmail.com</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                    <div class="footer__widget">
+                        <h6>Contact Kami</h6>
+                        <p>Hubungi kami melalui media sosial berikut:</p>
+                        <div class="footer__widget__social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="footer__widget">
+                        <h6>Bergabung Bersama Kami Sekarang</h6>
+                        <p>Dapatkan informasi terupdate lainnya dengan mengirimkan email.</p>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your email">
+                            <button type="submit">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__text">
+                            <p>© 2025 MiniMarket. All Rights Reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', function () {
+            const preloader = document.getElementById('preloder');
+            preloader.style.display = 'none';
+        });
+
+        // Login Sidebar
+        function openLoginSidebar() {
+            document.getElementById("loginSidebar").style.width = "250px";
+            document.body.style.overflow = "hidden"; // Disable scrolling
+        }
+
+        function closeLoginSidebar() {
+            document.getElementById("loginSidebar").style.width = "0";
+            document.body.style.overflow = "auto"; // Enable scrolling
+        }
+
+        // Close sidebar if clicked outside
+        window.onclick = function (event) {
+            if (event.target == document.getElementById("loginSidebar")) {
+                closeLoginSidebar();
+            }
+        }
+
+        // Mobile Menu
+        const humbergerOpen = document.querySelector('.humberger__open');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+        const mobileMenuClose = document.querySelector('.mobile-menu__close');
+
+        if (humbergerOpen) {
+            humbergerOpen.addEventListener('click', function () {
+                mobileMenu.classList.add('active');
+                mobileMenuOverlay.classList.add('active');
+            });
+        }
+
+        if (mobileMenuClose) {
+            mobileMenuClose.addEventListener('click', function () {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+        }
+
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', function () {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+        }
+
+        // Set background images for elements with set-bg class
+        document.addEventListener('DOMContentLoaded', function () {
+            const setBg = document.querySelectorAll('.set-bg');
+            setBg.forEach(function (element) {
+                const bg = element.getAttribute('data-setbg');
+                if (bg) {
+                    element.style.backgroundImage = `url('${bg}')`;
+                }
+            });
+        });
+
+
+        // --- Checkout Page Specific Functionality ---
+        let cart = []; // Array to hold cart items
+
+        const cartCountElement = document.createElement('span'); // Create span for cart count
+        cartCountElement.classList.add('cart-count');
+        cartCountElement.id = 'cartCount';
+
+        const headerCartLi = document.querySelector('.header__cart ul li');
+        if (headerCartLi) {
+            // Check if the cart count span already exists to prevent duplicates
+            if (!headerCartLi.querySelector('.cart-count')) {
+                headerCartLi.querySelector('a').appendChild(cartCountElement);
+            }
+        }
+
+
+        const checkoutProductList = document.getElementById('checkoutProductList');
+        const checkoutSubtotalElement = document.getElementById('checkoutSubtotal');
+        const checkoutTotalElement = document.getElementById('checkoutTotal');
+        const shippingCostElement = document.getElementById('shippingCost');
+        const checkoutForm = document.getElementById('checkoutForm');
+
+        const fixedShippingCost = 10000; // Define a fixed shipping cost
+
+        // Function to load cart from localStorage
+        function loadCart() {
+            const storedCart = localStorage.getItem('minimarketCart');
+            if (storedCart) {
+                try {
+                    cart = JSON.parse(storedCart);
+                } catch (e) {
+                    console.error("Error parsing cart data from localStorage:", e);
+                    cart = []; // Reset cart if parsing fails
+                }
+            } else {
+                cart = [];
+            }
+            updateCartCount(); // Update the header cart count
+            renderCheckoutSummary(); // Render items and totals on checkout page
+        }
+
+        // Function to update header cart count display
+        function updateCartCount() {
+            let totalItems = 0;
+            cart.forEach(item => {
+                totalItems += item.quantity;
+            });
+            if (cartCountElement) {
+                cartCountElement.textContent = totalItems;
+            }
+        }
+
+        // Function to render cart items and update totals in checkout summary
+        function renderCheckoutSummary() {
+            checkoutProductList.innerHTML = ''; // Clear previous items
+            let subtotal = 0;
+
+            if (cart.length === 0) {
+                checkoutProductList.innerHTML = `<li>Keranjang Anda kosong.</li>`;
+                checkoutSubtotalElement.textContent = `Rp0`;
+                checkoutTotalElement.textContent = `Rp${fixedShippingCost.toLocaleString('id-ID')}`; // Only show shipping if cart empty
+            } else {
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    subtotal += itemTotal;
+
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${item.name} x ${item.quantity}`;
+                    const span = document.createElement('span');
+                    span.textContent = `Rp${itemTotal.toLocaleString('id-ID')}`;
+                    listItem.appendChild(span);
+                    checkoutProductList.appendChild(listItem);
+                });
+
+                checkoutSubtotalElement.textContent = `Rp${subtotal.toLocaleString('id-ID')}`;
+                const total = subtotal + fixedShippingCost;
+                checkoutTotalElement.textContent = `Rp${total.toLocaleString('id-ID')}`;
+            }
+            shippingCostElement.textContent = `Rp${fixedShippingCost.toLocaleString('id-ID')}`;
+        }
+
+        // Function to get selected payment method
+        function getSelectedPaymentMethod() {
+            const paymentType = document.querySelector('input[name="payment"]:checked');
+            if (!paymentType) return 'Transfer Bank';
+
+            let method = '';
+            switch (paymentType.value) {
+                case 'transfer':
+                    const selectedBank = document.querySelector('input[name="bank"]:checked');
+                    method = selectedBank ? `Transfer Bank (${selectedBank.value})` : 'Transfer Bank';
+                    break;
+                case 'e-wallet':
+                    const selectedEwallet = document.querySelector('input[name="ewallet"]:checked');
+                    method = selectedEwallet ? `E-Wallet (${selectedEwallet.value})` : 'E-Wallet';
+                    break;
+                case 'credit-card':
+                    method = 'Kartu Kredit';
+                    break;
+                default:
+                    method = 'Transfer Bank';
+            }
+            return method;
+        }
+
+        // Handle checkout form submission
+        checkoutForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent actual form submission
+
+            // Basic validation
+            const requiredInputs = checkoutForm.querySelectorAll('input[required]');
+            let allFieldsFilled = true;
+            requiredInputs.forEach(input => {
+                if (!input.value.trim()) {
+                    allFieldsFilled = false;
+                    input.style.borderColor = 'red'; // Simple visual feedback
+                } else {
+                    input.style.borderColor = ''; // Reset border color
+                }
+            });
+
+            if (!allFieldsFilled) {
+                alert('Harap lengkapi semua kolom yang wajib diisi!');
+                return;
+            }
+
+            if (cart.length === 0) {
+                alert('Keranjang Anda kosong. Harap tambahkan produk sebelum checkout.');
+                return;
+            }
+
+            // Calculate total
+            let subtotal = 0;
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+            });
+            const total = subtotal + fixedShippingCost;
+
+            // Save order details to localStorage for the success page
+            localStorage.setItem('lastOrderTotal', `Rp${total.toLocaleString('id-ID')}`);
+            localStorage.setItem('lastPaymentMethod', getSelectedPaymentMethod());
+
+            // Clear the cart after successful checkout
+            localStorage.removeItem('minimarketCart');
+            cart = []; // Reset local cart array
+
+            // Redirect to success page
+            window.location.href = './order-success.html';
+        });
+
+
+        // Load cart data when the DOM is fully loaded on the checkout page
+        document.addEventListener('DOMContentLoaded', loadCart);
+    </script>
+    
+</body>
+
+</html>

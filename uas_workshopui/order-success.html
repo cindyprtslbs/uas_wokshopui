@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="MiniMarket - Your Neighborhood Grocery Store">
+    <meta name="keywords" content="minimarket, grocery, shop, food, fresh, organic">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pesanan Berhasil - MiniMarket</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <style>
+        .header__cart ul li {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            height: 18px;
+            width: 18px;
+            background: #7fad39;
+            font-size: 10px;
+            color: #ffffff;
+            line-height: 18px;
+            text-align: center;
+            font-weight: 700;
+            border-radius: 50%;
+        }
+
+        .success-container {
+            text-align: center;
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            color: #7fad39;
+            margin-bottom: 30px;
+        }
+
+        .success-title {
+            font-size: 32px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .success-message {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .order-details {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .order-details h4 {
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .order-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-info:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            color: #7fad39;
+        }
+
+        .action-buttons {
+            margin-top: 40px;
+        }
+
+        .btn-primary {
+            background: #7fad39;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0 10px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #5f8d2e;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #7fad39;
+            padding: 12px 30px;
+            border: 2px solid #7fad39;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0 10px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #7fad39;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .success-title {
+                font-size: 24px;
+            }
+            
+            .success-message {
+                font-size: 16px;
+            }
+            
+            .order-details {
+                margin: 20px;
+                padding: 20px;
+            }
+            
+            .btn-primary, .btn-secondary {
+                display: block;
+                margin: 10px auto;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <div class="mobile-menu">
+        <span class="mobile-menu__close"><i class="fa fa-times"></i></span>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./shop-grid.html">Shop</a></li>
+            <li><a href="#">Pages</a></li>
+            <li><a href="./blog.html">Artikel</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+        </ul>
+    </div>
+    <div class="mobile-menu-overlay"></div>
+
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="./index.html">
+                            <h2>MiniMarket</h2>
+                        </a>
+                    </div>
+                    <div class="humberger__open">
+                        <i class="fa fa-bars"></i>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li><a href="./index.html">Home</a></li>
+                            <li><a href="./shop-grid.html">Shop</a></li>
+                            <li><a href="#">Pages</a>
+                                <ul class="header__menu__dropdown">
+                                    <li><a href="shop-details.html">Detail Belanja</a></li>
+                                    <li><a href="shoping-cart.html">Keranjang Belanja</a></li>
+                                    <li><a href="checkout.html">Pembayaran</a></li>
+                                    <li><a href="order-history.html">Riwayat Pesanan</a></li>
+                                    <li><a href="blog-details.html">Detail Artikel</a></li>
+                                    <li><a href="profile.html">Profil Pengguna</a></li> 
+                                </ul>
+                            </li>
+                            <li><a href="./blog.html">Artikel</a></li>
+                            <li><a href="./contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul>
+                            <li>
+                                <a href="shoping-cart.html">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <span class="cart-count" id="cartCount">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="header__top__right__auth">
+                            <a href="javascript:void(0);" onclick="openLoginSidebar()"><i class="fa fa-user"></i>Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="loginSidebar" class="login-sidebar">
+        <div class="login-sidebar-content">
+            <span class="closebtn" onclick="closeLoginSidebar()">&times;</span>
+            <h4>Login As</h4>
+            <a href="../Dashboard/dist/pages/login.html"><i class="fa fa-cogs"></i> Admin</a>
+        </div>
+    </div>
+
+    <section class="success-container">
+        <div class="container">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1 class="success-title">Pembayaran Berhasil!</h1>
+            <p class="success-message">
+                Terima kasih telah berbelanja di MiniMarket. Pesanan Anda telah berhasil diproses dan akan segera dikirim ke alamat yang Anda berikan.
+            </p>
+
+            <div class="order-details">
+                <h4>Detail Pesanan</h4>
+                <div class="order-info">
+                    <span>Nomor Pesanan:</span>
+                    <span id="orderNumber">#MM-2025-001</span>
+                </div>
+                <div class="order-info">
+                    <span>Tanggal Pesanan:</span>
+                    <span id="orderDate">-</span>
+                </div>
+                <div class="order-info">
+                    <span>Metode Pembayaran:</span>
+                    <span id="paymentMethod">Transfer Bank</span>
+                </div>
+                <div class="order-info">
+                    <span>Status Pembayaran:</span>
+                    <span style="color: #7fad39; font-weight: 600;">Berhasil</span>
+                </div>
+                <div class="order-info">
+                    <span>Estimasi Pengiriman:</span>
+                    <span id="estimatedDelivery">-</span>
+                </div>
+                <div class="order-info">
+                    <span>Total Pembayaran:</span>
+                    <span id="totalAmount">Rp0</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="order-history.html" class="btn-primary">
+                    <i class="fas fa-history"></i> Lihat Riwayat Pesanan
+                </a>
+                <a href="shop-grid.html" class="btn-secondary">
+                    <i class="fas fa-shopping-cart"></i> Lanjut Belanja
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__about__logo">
+                            <a href="./index.html">
+                                <h2>MiniMarket</h2>
+                            </a>
+                        </div>
+                        <ul>
+                            <li><i class="fa fa-map-marker-alt"></i> Jl. Mojo II No.11, RT.007/RW.05, Mojo, Kec. Gubeng,
+                                Surabaya, Jawa Timur 60285</li>
+                            <li><i class="fa fa-phone"></i> +62 812-6224-7796</li>
+                            <li><i class="fa fa-envelope"></i> cindylubis@gmail.com</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                    <div class="footer__widget">
+                        <h6>Contact Kami</h6>
+                        <p>Hubungi kami melalui media sosial berikut:</p>
+                        <div class="footer__widget__social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="footer__widget">
+                        <h6>Bergabung Bersama Kami Sekarang</h6>
+                        <p>Dapatkan informasi terupdate lainnya dengan mengirimkan email.</p>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your email">
+                            <button type="submit">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__text">
+                            <p>© 2025 MiniMarket. All Rights Reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', function () {
+            const preloader = document.getElementById('preloder');
+            preloader.style.display = 'none';
+        });
+
+        // Login Sidebar
+        function openLoginSidebar() {
+            document.getElementById("loginSidebar").style.width = "250px";
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeLoginSidebar() {
+            document.getElementById("loginSidebar").style.width = "0";
+            document.body.style.overflow = "auto";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == document.getElementById("loginSidebar")) {
+                closeLoginSidebar();
+            }
+        }
+
+        // Mobile Menu
+        const humbergerOpen = document.querySelector('.humberger__open');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+        const mobileMenuClose = document.querySelector('.mobile-menu__close');
+
+        if (humbergerOpen) {
+            humbergerOpen.addEventListener('click', function () {
+                mobileMenu.classList.add('active');
+                mobileMenuOverlay.classList.add('active');
+            });
+        }
+
+        if (mobileMenuClose) {
+            mobileMenuClose.addEventListener('click', function () {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+        }
+
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', function () {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+        }
+
+        // Initialize order success page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Generate order number
+            const orderNumber = '#MM-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 1000) + 1).padStart(3, '0');
+            document.getElementById('orderNumber').textContent = orderNumber;
+
+            // Set current date
+            const currentDate = new Date().toLocaleDateString('id-ID', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('orderDate').textContent = currentDate;
+
+            // Set estimated delivery (3-5 days from now)
+            const deliveryDate = new Date();
+            deliveryDate.setDate(deliveryDate.getDate() + Math.floor(Math.random() * 3) + 3);
+            const estimatedDelivery = deliveryDate.toLocaleDateString('id-ID', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('estimatedDelivery').textContent = estimatedDelivery;
+
+            // Get order total from localStorage or set default
+            const orderTotal = localStorage.getItem('lastOrderTotal') || 'Rp50.000';
+            document.getElementById('totalAmount').textContent = orderTotal;
+
+            // Get payment method from localStorage or set default
+            const paymentMethod = localStorage.getItem('lastPaymentMethod') || 'Transfer Bank';
+            document.getElementById('paymentMethod').textContent = paymentMethod;
+
+            // Save order to history
+            saveOrderToHistory({
+                orderNumber: orderNumber,
+                date: currentDate,
+                total: orderTotal,
+                paymentMethod: paymentMethod,
+                status: 'Berhasil',
+                estimatedDelivery: estimatedDelivery
+            });
+
+            // Update cart count
+            updateCartCount();
+        });
+
+        function saveOrderToHistory(order) {
+            let orderHistory = JSON.parse(localStorage.getItem('minimarketOrderHistory') || '[]');
+            orderHistory.unshift(order); // Add to beginning of array
+            
+            // Keep only last 20 orders
+            if (orderHistory.length > 20) {
+                orderHistory = orderHistory.slice(0, 20);
+            }
+            
+            localStorage.setItem('minimarketOrderHistory', JSON.stringify(orderHistory));
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('minimarketCart') || '[]');
+            let totalItems = 0;
+            cart.forEach(item => {
+                totalItems += item.quantity;
+            });
+            const cartCountElement = document.getElementById('cartCount');
+            if (cartCountElement) {
+                cartCountElement.textContent = totalItems;
+            }
+        }
+    </script>
+</body>
+
+</html>

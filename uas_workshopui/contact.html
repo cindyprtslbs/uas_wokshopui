@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="MiniMarket - Your Neighborhood Grocery Store">
+    <meta name="keywords" content="minimarket, grocery, shop, food, fresh, organic">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MiniMarket</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/styles.css">    
+    <style>
+        /* Add animation for cart notification */
+        @keyframes cartPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .cart-animation {
+            animation: cartPulse 0.5s ease-in-out;
+            color: #7fad39;
+        }
+
+        /* Add cart count badge */
+        .header__cart ul li {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            height: 18px;
+            width: 18px;
+            background: #7fad39;
+            font-size: 10px;
+            color: #ffffff;
+            line-height: 18px;
+            text-align: center;
+            font-weight: 700;
+            border-radius: 50%;
+        }
+
+        /* Toast notification */
+        .toast-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #7fad39;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .toast-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Styling for the new button */
+        .view-more-products-btn {
+            display: inline-block;
+            background-color: #7fad39; /* Example green color */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-top: 30px; /* Space above the button */
+        }
+
+        .view-more-products-btn:hover {
+            background-color: #5f8d2e; /* Darker green on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Page Preloader -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <span class="mobile-menu__close"><i class="fa fa-times"></i></span>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./shop-grid.html">Shop</a></li>
+            <li><a href="#">Pages</a></li>
+            <li><a href="./blog.html">Artikel</a></li>
+            <li class="active"><a href="./contact.html">Contact</a></li>
+        </ul>
+    </div>
+    <div class="mobile-menu-overlay"></div>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="./index.html">
+                            <h2>MiniMarket</h2>
+                        </a>
+                    </div>
+                    <div class="humberger__open">
+                        <i class="fa fa-bars"></i>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li><a href="./index.html">Home</a></li>
+                            <li><a href="./shop-grid.html">Shop</a></li>
+                            <li><a href="#">Pages</a>
+                                <ul class="header__menu__dropdown">
+                                    <li><a href="shop-details.html">Detail Belanja</a></li>
+                                    <li><a href="shoping-cart.html">Keranjang Belanja</a></li>
+                                    <li><a href="checkout.html">Pembayaran</a></li>
+                                    <li><a href="blog-details.html">Detail Artikel</a></li>
+                                    <li><a href="profile.html">Profil Pengguna</a></li> 
+                                </ul>
+                            </li>
+                            <li><a href="./blog.html">Artikel</a></li>
+                            <li class="active"><a href="./contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul>
+                            <li>
+                                <a href="shoping-cart.html">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <span class="cart-count" id="cartCount">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="header__top__right__auth">
+                            <a href="javascript:void(0);" onclick="openLoginSidebar()"><i class="fa fa-user"></i> Login</a>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Sidebar -->
+    <div id="loginSidebar" class="login-sidebar">
+        <div class="login-sidebar-content">
+            <span class="closebtn" onclick="closeLoginSidebar()">&times;</span>
+            <h4>Login As</h4>
+            <a href="../Dashboard/dist/pages/login.html"><i class="fa fa-cogs"></i> Admin</a>
+        </div>
+    </div>    
+
+    <!-- Breadcrumb Section -->
+    <section class="breadcrumb-section" style="background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Hubungi Kami</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="contact__widget">
+                        <i class="fa fa-phone"></i>
+                        <h4>Telepon</h4>
+                        <p>+62 812-6224-7796</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="contact__widget">
+                        <i class="fa fa-map-marker-alt"></i>
+                        <h4>Alamat</h4>
+                        <p>Jl. Mojo II No.11, RT.007/RW.05, Mojo, Kec. Gubeng, Surabaya</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="contact__widget">
+                        <i class="fa fa-clock"></i>
+                        <h4>Jam Buka</h4>
+                        <p>08:00 - 22:00 setiap hari</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="contact__widget">
+                        <i class="fa fa-envelope"></i>
+                        <h4>Email</h4>
+                        <p>cindylubis@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <div class="map">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.6606253667447!2d112.75630807462275!3d-7.2764306927241!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fbf8381ac47f%3A0x3027a76e352ba0!2sMojo%2C%20Kec.%20Gubeng%2C%20Surabaya%2C%20Jawa%20Timur!5e0!3m2!1sen!2sid!4v1683123456789!5m2!1sen!2sid"
+            height="500" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        <div class="map-inside">
+            <i class="fa fa-map-marker-alt"></i>
+            <div class="inside-widget">
+                <h4>MiniMarket Surabaya</h4>
+                <ul>
+                    <li>Telepon: +62 812-6224-7796</li>
+                    <li>Alamat: Jl. Mojo II No.11, RT.007/RW.05, Mojo, Kec. Gubeng, Surabaya</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Form Section -->
+    <div class="contact-form spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="contact__form__title">
+                        <h2>Tinggalkan Pesan</h2>
+                    </div>
+                </div>
+            </div>
+            <form action="#">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <input type="text" placeholder="Nama Anda">
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <input type="text" placeholder="Email Anda">
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        <textarea placeholder="Pesan Anda"></textarea>
+                        <button type="submit" class="site-btn">KIRIM PESAN</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__about__logo">
+                            <a href="./index.html"><h2>MiniMarket</h2></a>
+                        </div>
+                        <ul>
+                            <li><i class="fa fa-map-marker-alt"></i> Jl. Mojo II No.11, RT.007/RW.05, Mojo, Kec. Gubeng, Surabaya, Jawa Timur 60285</li>
+                            <li><i class="fa fa-phone"></i> +62 812-6224-7796</li>
+                            <li><i class="fa fa-envelope"></i> cindylubis@gmail.com</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                    <div class="footer__widget">
+                        <h6>Contact Kami</h6>
+                        <p>Hubungi kami melalui media sosial berikut:</p>
+                        <div class="footer__widget__social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="footer__widget">
+                        <h6>Bergabung Bersama Kami Sekarang</h6>
+                        <p>Dapatkan informasi terupdate lainnya dengan mengirimkan email.</p>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your email">
+                            <button type="submit">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__text">
+                            <p>© 2025 MiniMarket. All Rights Reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Preloader
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloder');
+            preloader.style.display = 'none';
+        });
+
+        // Login Sidebar
+        function openLoginSidebar() {
+            document.getElementById("loginSidebar").style.width = "250px";
+            document.body.style.overflow = "hidden";  // Disable scrolling
+        }
+
+        function closeLoginSidebar() {
+            document.getElementById("loginSidebar").style.width = "0";
+            document.body.style.overflow = "auto";  // Enable scrolling
+        }
+
+        // Close sidebar if clicked outside
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("loginSidebar")) {
+                closeLoginSidebar();
+            }
+        }
+
+        // Mobile Menu
+        const humbergerOpen = document.querySelector('.humberger__open');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+        const mobileMenuClose = document.querySelector('.mobile-menu__close');
+
+        if (humbergerOpen) {
+            humbergerOpen.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                mobileMenuOverlay.classList.add('active');
+            });
+        }
+
+        if (mobileMenuClose) {
+            mobileMenuClose.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+        }
+
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+        }
+
+        // Set background images for elements with set-bg class
+        document.addEventListener('DOMContentLoaded', function() {
+            const setBg = document.querySelectorAll('.set-bg');
+            setBg.forEach(function(element) {
+                const bg = element.getAttribute('data-setbg');
+                if (bg) {
+                    element.style.backgroundImage = `url('${bg}')`;
+                }
+            });
+        });
+    </script>
+    <script>
+        // --- Shopping Cart Functionality ---
+        let cart = []; // Array to hold cart items
+
+        const cartCountElement = document.getElementById('cartCount');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        const toastNotificationElement = document.createElement('div');
+        toastNotificationElement.id = 'toastNotification';
+        toastNotificationElement.classList.add('toast-notification');
+        document.body.appendChild(toastNotificationElement);
+
+
+        // Function to load cart from localStorage
+        function loadCart() {
+            const storedCart = localStorage.getItem('minimarketCart');
+            if (storedCart) {
+                try {
+                    cart = JSON.parse(storedCart);
+                } catch (e) {
+                    console.error("Error parsing cart data from localStorage:", e);
+                    cart = []; // Reset cart if parsing fails
+                }
+            } else {
+                cart = [];
+            }
+            updateCartCount(); // Update the displayed count immediately after loading
+        }
+
+        // Function to save cart to localStorage
+        function saveCart() {
+            localStorage.setItem('minimarketCart', JSON.stringify(cart));
+        }
+
+        // Function to update cart count display and add animation
+        function updateCartCount() {
+            let totalItems = 0;
+            cart.forEach(item => {
+                totalItems += item.quantity;
+            });
+
+            if (cartCountElement) {
+                cartCountElement.textContent = totalItems;
+                // Add a pulsing animation to the cart icon for visual feedback
+                const cartIcon = cartCountElement.previousElementSibling; // The <i> tag
+                if (cartIcon) {
+                    cartIcon.classList.add('cart-animation');
+                    setTimeout(() => {
+                        cartIcon.classList.remove('cart-animation');
+                    }, 500); // Duration of the animation (should match CSS)
+                }
+            }
+        }
+
+        // Function to show a toast notification
+        function showToastNotification(message) {
+            if (toastNotificationElement) {
+                toastNotificationElement.textContent = message;
+                toastNotificationElement.classList.add('show');
+                setTimeout(() => {
+                    toastNotificationElement.classList.remove('show');
+                }, 3000); // Hide after 3 seconds
+            }
+        }
+
+        // Function to add item to cart
+        function addItemToCart(product) {
+            let productExists = false;
+            cart.forEach(item => {
+                if (item.id === product.id) {
+                    item.quantity++;
+                    productExists = true;
+                }
+            });
+
+            if (!productExists) {
+                cart.push({ ...product,
+                    quantity: 1
+                });
+            }
+
+            saveCart();
+            updateCartCount();
+            showToastNotification(`${product.name} ditambahkan ke keranjang!`);
+        }
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                const product = {
+                    id: button.dataset.id,
+                    name: button.dataset.name,
+                    price: parseFloat(button.dataset.price),
+                    img: button.dataset.img,
+                    category: button.dataset.category
+                };
+
+                addItemToCart(product);
+            });
+        });
+
+        // Load cart on initial page load
+        document.addEventListener('DOMContentLoaded', loadCart);
+    </script>
+    <div id="toastNotification" class="toast-notification"></div>
+    
+</body>
+
+</html>

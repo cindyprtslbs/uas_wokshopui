@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MiniMarket - Kelola Artikel</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="MiniMarket Admin Dashboard">
+  <meta name="keywords" content="admin, dashboard, minimarket, inventory, sales">
+  <meta name="author" content="CodedThemes">
+
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" id="main-font-link">
+  <link rel="stylesheet" href="../assets/fonts/tabler-icons.min.css">
+  <link rel="stylesheet" href="../assets/fonts/feather.css">
+  <link rel="stylesheet" href="../assets/fonts/fontawesome.css">
+  <link rel="stylesheet" href="../assets/fonts/material.css">
+  <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link">
+  <link rel="stylesheet" href="../assets/css/style-preset.css">
+
+</head>
+<body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
+  <div class="loader-bg">
+    <div class="loader-track">
+      <div class="loader-fill"></div>
+    </div>
+  </div>
+  <nav class="pc-sidebar">
+    <div class="navbar-wrapper">
+      <div class="m-header">
+        <a href="dashboard.html" class="b-brand text-primary">
+          <img src="../assets/images/logo-dark.svg" class="img-fluid logo-lg" alt="logo">
+        </a>
+      </div>
+      <div class="navbar-content">
+        <ul class="pc-navbar">
+          <li class="pc-item pc-caption">
+            <label>Navigation</label>
+            <i class="ti ti-dashboard"></i>
+          </li>
+          <li class="pc-item">
+            <a href="dashboard.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <span class="pc-mtext">Dashboard</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="kelola-produk.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-box"></i></span>
+              <span class="pc-mtext">Kelola Produk</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="kelola-transaksi.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-receipt"></i></span>
+              <span class="pc-mtext">Kelola Transaksi</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="history-transaksi.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-history"></i></span>
+              <span class="pc-mtext">History Transaksi</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="kelola-pengguna.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-users"></i></span>
+              <span class="pc-mtext">Kelola Pengguna</span>
+            </a>
+          </li>
+          <li class="pc-item active">
+            <a href="kelola-artikel.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-file-text"></i></span>
+              <span class="pc-mtext">Kelola Artikel</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <header class="pc-header">
+    <div class="header-wrapper">
+      <div class="me-auto pc-mob-drp">
+        <ul class="list-unstyled">
+          <li class="pc-h-item pc-sidebar-collapse">
+            <a href="#" class="pc-head-link ms-0" id="sidebar-hide">
+              <i class="ti ti-menu-2"></i>
+            </a>
+          </li>
+          <li class="pc-h-item pc-sidebar-popup">
+            <a href="#" class="pc-head-link ms-0" id="mobile-collapse">
+              <i class="ti ti-menu-2"></i>
+            </a>
+          </li>
+          <li class="dropdown pc-h-item d-inline-flex d-md-none">
+            <a class="pc-head-link dropdown-toggle arrow-none m-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+              <i class="ti ti-search"></i>
+            </a>
+            <div class="dropdown-menu pc-h-dropdown drp-search">
+              <form class="px-3">
+                <div class="form-group mb-0 d-flex align-items-center">
+                  <i data-feather="search"></i>
+                  <input type="search" class="form-control border-0 shadow-none" placeholder="Search here. . .">
+                </div>
+              </form>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="ms-auto">
+        <ul class="list-unstyled">
+          <li class="dropdown pc-h-item header-user-profile">
+            <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" data-bs-auto-close="outside" aria-expanded="false">
+              <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar">
+              <span>Admin</span>
+            </a>
+            <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
+              <div class="dropdown-header">
+                <div class="d-flex mb-1">
+                  <div class="flex-shrink-0">
+                    <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar wid-35">
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">Admin</h6>
+                    <span>Administrator</span>
+                  </div>
+                  <a href="#!" class="pc-head-link bg-transparent" id="logout-icon">
+                    <i class="ti ti-power text-danger"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a href="#!" class="dropdown-item" id="logout-option">
+                <i class="ti ti-power"></i>
+                <span>Logout</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <div class="pc-container">
+    <div class="pc-content">
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <div class="page-header-title">
+                <h5 class="m-b-10">Kelola Artikel</h5>
+              </div>
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Kelola Artikel</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              <h5>Daftar Artikel</h5>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#articleModal" id="add-article-btn">
+                <i class="ti ti-plus"></i> Tambah Artikel
+              </button>
+            </div>
+            <div class="card-body">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Cari artikel..." id="searchArticle">
+                    <button class="btn btn-outline-secondary" type="button" id="searchArticleBtn">
+                      <i class="ti ti-search"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <select class="form-select" id="filterArticleCategory">
+                    <option value="Semua Kategori" selected>Semua Kategori</option>
+                    <option>Promo</option>
+                    <option>Tips & Trik</option>
+                    <option>Berita</option>
+                    <option>Resep</option>
+                    <option>Edukasi</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <select class="form-select" id="filterArticleStatus">
+                    <option value="Semua Status" selected>Semua Status</option>
+                    <option value="Dipublikasikan">Dipublikasikan</option>
+                    <option value="Draft">Draft</option>
+                  </select>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Gambar</th>
+                      <th>Judul</th>
+                      <th>Kategori</th>
+                      <th>Penulis</th>
+                      <th>Tanggal</th>
+                      <th>Status</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="articleTableBody">
+                    </tbody>
+                </table>
+              </div>
+              <div class="row mt-3">
+                <div class="col-sm-12 col-md-5">
+                  <div class="dataTables_info" id="paginationArticleInfo">Menampilkan 0 sampai 0 dari 0 data</div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                  <div class="dataTables_paginate">
+                    <ul class="pagination justify-content-end" id="paginationArticleControls">
+                      </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                      <div class="avtar avtar-lg bg-light-primary">
+                        <i class="ti ti-file-text text-primary"></i>
+                      </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                      <h6 class="mb-0">Total Artikel</h6>
+                      <p class="text-muted mb-0" id="totalArticlesStat">0 Artikel</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                      <div class="avtar avtar-lg bg-light-success">
+                        <i class="ti ti-check text-success"></i>
+                      </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                      <h6 class="mb-0">Artikel Dipublikasikan</h6>
+                      <p class="text-muted mb-0" id="publishedArticlesStat">0 Artikel</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                      <div class="avtar avtar-lg bg-light-warning">
+                        <i class="ti ti-pencil text-warning"></i>
+                      </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                      <h6 class="mb-0">Artikel Draft</h6>
+                      <p class="text-muted mb-0" id="draftArticlesStat">0 Artikel</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="articleModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="articleModalLabel">Tambah Artikel</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="articleForm">
+            <input type="hidden" id="editArticleId"> <div class="row mb-3">
+              <div class="col-md-8">
+                <label for="articleTitle" class="form-label">Judul Artikel</label>
+                <input type="text" class="form-control" id="articleTitle" required>
+              </div>
+              <div class="col-md-4">
+                <label for="articleCategory" class="form-label">Kategori</label>
+                <select class="form-select" id="articleCategory" required>
+                  <option value="">Pilih Kategori</option>
+                  <option>Promo</option>
+                  <option>Tips & Trik</option>
+                  <option>Berita</option>
+                  <option>Resep</option>
+                  <option>Edukasi</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="articleImage" class="form-label">Gambar Artikel</label>
+              <input class="form-control" type="file" id="articleImage">
+              <div class="form-text">Format: JPG, PNG. Maks: 2MB</div>
+              <img id="articleImagePreview" src="" alt="Article Image Preview" class="img-fluid mt-2" style="max-width: 150px; display: none;">
+            </div>
+            <div class="mb-3">
+              <label for="articleSummary" class="form-label">Ringkasan</label>
+              <textarea class="form-control" id="articleSummary" rows="2" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="articleContent" class="form-label">Konten Artikel</label>
+              <textarea class="form-control" id="articleContent" rows="10" required></textarea>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="articleAuthor" class="form-label">Penulis</label>
+                <input type="text" class="form-control" id="articleAuthor" value="Admin" required>
+              </div>
+              <div class="col-md-6">
+                <label for="articleTags" class="form-label">Tags (pisahkan dengan koma)</label>
+                <input type="text" class="form-control" id="articleTags">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="articleStatus" class="form-label">Status</label>
+              <select class="form-select" id="articleStatus" required>
+                <option value="Dipublikasikan">Publikasikan</option>
+                <option value="Draft">Simpan sebagai Draft</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary" id="saveArticleBtn" form="articleForm">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="pc-footer">
+    <div class="footer-wrapper container-fluid">
+      <div class="row">
+        <div class="col-sm my-1">
+          <p class="m-0">MiniMarket Admin Dashboard &copy; 2025</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/plugins/popper.min.js"></script>
+  <script src="../assets/js/plugins/simplebar.min.js"></script>
+  <script src="../assets/js/plugins/bootstrap.min.js"></script>
+  <script src="../assets/js/fonts/custom-font.js"></script>
+  <script src="../assets/js/pcoded.js"></script>
+  <script src="../assets/js/plugins/feather.min.js"></script>
+
+  <script>layout_change('light');</script>
+  <script>change_box_container('false');</script>
+  <script>layout_rtl_change('false');</script>
+  <script>preset_change("preset-1");</script>
+  <script>font_change("Public-Sans");</script>
+
+  <script>
+    // --- Article Management JavaScript ---
+    let articles = [{
+      id: 'ART001',
+      image: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
+      title: '7 Manfaat Luar Biasa Mengonsumsi Sayuran Setiap Hari',
+      category: 'Tips & Trik',
+      author: 'Admin',
+      date: '15 Mei 2025',
+      status: 'Dipublikasikan',
+      summary: 'Pelajari manfaat mengonsumsi sayuran untuk kesehatan tubuh Anda.',
+      content: 'Detail lengkap tentang manfaat sayuran, termasuk kandungan vitamin, mineral, dan serat. Artikel ini juga memberikan tips untuk memasukkan lebih banyak sayuran ke dalam diet harian Anda.',
+      tags: ['kesehatan', 'sayuran', 'gizi', 'tips']
+    }, {
+      id: 'ART002',
+      image: 'https://images.unsplash.com/photo-1560493676-04071c5f467b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80',
+      title: 'Wisata Edukasi: Menjelajahi Kebun Organik Ramah Lingkungan di Indonesia',
+      category: 'Edukasi',
+      author: 'Admin',
+      date: '14 Mei 2025',
+      status: 'Dipublikasikan',
+      summary: 'Temukan pengalaman unik di kebun organik yang ramah lingkungan di Indonesia.',
+      content: 'Panduan wisata ke kebun organik, menjelaskan praktik pertanian berkelanjutan, manfaat produk organik, dan bagaimana Anda bisa berpartisipasi dalam mendukung pertanian lokal.',
+      tags: ['edukasi', 'organik', 'lingkungan', 'wisata']
+    }, {
+      id: 'ART003',
+      image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
+      title: 'Tips Memasak Praktis untuk Hasil Selezat Restoran',
+      category: 'Tips & Trik',
+      author: 'Admin',
+      date: '13 Mei 2025',
+      status: 'Dipublikasikan',
+      summary: 'Beberapa tips mudah untuk meningkatkan kualitas masakan Anda di rumah.',
+      content: 'Sajikan hidangan lezat ala restoran di rumah dengan tips dan trik memasak profesional, termasuk teknik dasar, pemilihan bahan, dan presentasi.',
+      tags: ['memasak', 'tips', 'resep', 'kuliner']
+    }, {
+      id: 'ART004',
+      image: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
+      title: 'Kebiasaan Makan Sehat untuk Orang Sibuk',
+      category: 'Berita',
+      author: 'Admin',
+      date: '12 Mei 2025',
+      status: 'Dipublikasikan',
+      summary: 'Bagaimana menjaga pola makan sehat di tengah kesibukan sehari-hari.',
+      content: 'Panduan praktis untuk orang sibuk yang ingin menjaga pola makan sehat, meliputi perencanaan makan, pilihan camilan sehat, dan cara mengatasi godaan makanan tidak sehat.',
+      tags: ['kesehatan', 'makan sehat', 'gaya hidup', 'sibuk']
+    }, {
+      id: 'ART005',
+      image: 'https://plus.unsplash.com/premium_photo-1686529896385-8a8d581d0225?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFya2V0fGVufDB8fDB8fHww',
+      title: 'Cara Memilih Sayuran Organik Berkualitas di Pasar',
+      category: 'Tips & Trik',
+      author: 'Admin',
+      date: '11 Mei 2025',
+      status: 'Draft',
+      summary: 'Tips memilih sayuran organik yang segar dan berkualitas baik di pasar.',
+      content: 'Panduan lengkap untuk memilih sayuran organik terbaik, mengenali tanda-tanda kesegaran, dan memahami label organik.',
+      tags: ['sayuran', 'organik', 'pasar', 'tips']
+    }, {
+      id: 'ART006',
+      image: 'https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y29va2luZ3xlbnwwfHwwfHx8MA%3D%3D',
+      title: 'Memasak Musiman: Edisi Musim Semi',
+      category: 'Berita',
+      author: 'Admin',
+      date: '10 Mei 2025',
+      status: 'Draft',
+      summary: 'Resep dan bahan-bahan terbaik untuk masakan musim semi.',
+      content: 'Eksplorasi bahan-bahan segar yang tersedia di musim semi dan resep-resep inovatif untuk mengolahnya.',
+      tags: ['resep', 'musiman', 'memasak']
+    }, {
+      id: 'ART007',
+      image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
+      title: 'Resep Kue Lebaran Praktis',
+      category: 'Resep',
+      author: 'Admin',
+      date: '09 Mei 2025',
+      status: 'Dipublikasikan',
+      summary: 'Kumpulan resep kue kering dan basah untuk Lebaran yang mudah dibuat.',
+      content: 'Resep-resep kue Lebaran favorit yang praktis dan lezat, cocok untuk disajikan saat hari raya.',
+      tags: ['resep', 'kue', 'lebaran', 'praktis']
+    }, {
+      id: 'ART008',
+      image: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
+      title: 'Program CSR MiniMarket untuk Pendidikan',
+      category: 'Berita',
+      author: 'Admin',
+      date: '08 Mei 2025',
+      status: 'Dipublikasikan',
+      summary: 'Inisiatif MiniMarket dalam mendukung pendidikan melalui program CSR.',
+      content: 'Berita tentang komitmen MiniMarket terhadap tanggung jawab sosial perusahaan, khususnya dalam program pendidikan dan pengembangan masyarakat.',
+      tags: ['CSR', 'pendidikan', 'sosial', 'berita']
+    }, ];
+
+    let currentEditArticleId = null; // To store the ID of the article being edited
+
+    const articleTableBody = document.getElementById('articleTableBody');
+    const articleForm = document.getElementById('articleForm');
+    const saveArticleBtn = document.getElementById('saveArticleBtn');
+    const articleModalLabel = document.getElementById('articleModalLabel');
+    const addArticleBtn = document.getElementById('add-article-btn');
+
+    // Form inputs
+    const articleTitleInput = document.getElementById('articleTitle');
+    const articleCategorySelect = document.getElementById('articleCategory');
+    const articleImageInput = document.getElementById('articleImage');
+    const articleImagePreview = document.getElementById('articleImagePreview');
+    const articleSummaryTextarea = document.getElementById('articleSummary');
+    const articleContentTextarea = document.getElementById('articleContent');
+    const articleAuthorInput = document.getElementById('articleAuthor');
+    const articleTagsInput = document.getElementById('articleTags');
+    const articleStatusSelect = document.getElementById('articleStatus');
+    const editArticleIdInput = document.getElementById('editArticleId'); // Hidden input for edit ID
+
+
+    // Filter and Search elements
+    const searchArticleInput = document.getElementById('searchArticle');
+    const searchArticleButton = document.getElementById('searchArticleBtn');
+    const filterArticleCategorySelect = document.getElementById('filterArticleCategory');
+    const filterArticleStatusSelect = document.getElementById('filterArticleStatus');
+
+    // Stats elements
+    const totalArticlesStat = document.getElementById('totalArticlesStat');
+    const publishedArticlesStat = document.getElementById('publishedArticlesStat');
+    const draftArticlesStat = document.getElementById('draftArticlesStat');
+
+    let currentArticlePage = 1;
+    const articlesPerPage = 8; // Number of articles per page
+
+    // Function to render articles in the table
+    function renderArticles(dataToRender = articles) {
+      articleTableBody.innerHTML = ''; // Clear existing rows
+      const startIndex = (currentArticlePage - 1) * articlesPerPage;
+      const endIndex = startIndex + articlesPerPage;
+      const paginatedArticles = dataToRender.slice(startIndex, endIndex);
+
+      if (paginatedArticles.length === 0 && dataToRender.length > 0) {
+        currentArticlePage = Math.max(1, currentArticlePage - 1);
+        renderArticles(dataToRender);
+        return;
+      }
+
+      paginatedArticles.forEach(article => {
+        const row = articleTableBody.insertRow();
+        row.dataset.articleId = article.id; // Store article ID on the row
+
+        let statusBadgeClass = '';
+        if (article.status === 'Dipublikasikan') {
+          statusBadgeClass = 'bg-success';
+        } else if (article.status === 'Draft') {
+          statusBadgeClass = 'bg-secondary';
+        }
+
+        row.innerHTML = `
+          <td>${article.id}</td>
+          <td><img src="${article.image}" alt="article" class="img-fluid" width="80"></td>
+          <td>${article.title}</td>
+          <td>${article.category}</td>
+          <td>${article.author}</td>
+          <td>${article.date}</td>
+          <td><span class="badge ${statusBadgeClass}">${article.status}</span></td>
+          <td>
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-outline-primary edit-article-btn" data-bs-toggle="modal" data-bs-target="#articleModal">
+                <i class="ti ti-edit"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-info view-article-btn">
+                <i class="ti ti-eye"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-danger delete-article-btn">
+                <i class="ti ti-trash"></i>
+              </button>
+            </div>
+          </td>
+        `;
+      });
+      updateArticlePaginationControls(dataToRender.length);
+      updateArticlePaginationInfo(dataToRender.length);
+      updateArticleStatistics(dataToRender);
+    }
+
+    // Function to generate a unique article ID
+    function generateArticleId() {
+      const prefix = 'ART';
+      const existingIds = articles.map(a => parseInt(a.id.replace(prefix, '')));
+      const maxIdNum = existingIds.length > 0 ? Math.max(...existingIds) : 0;
+      const newIdNum = maxIdNum + 1;
+      return prefix + String(newIdNum).padStart(3, '0');
+    }
+
+    // Function to handle form submission (Add/Edit article)
+    articleForm.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const articleTitle = articleTitleInput.value;
+      const articleCategory = articleCategorySelect.value;
+      const articleSummary = articleSummaryTextarea.value;
+      const articleContent = articleContentTextarea.value;
+      const articleAuthor = articleAuthorInput.value;
+      const articleTags = articleTagsInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
+      const articleStatus = articleStatusSelect.value;
+      let articleImage = articleImagePreview.src || ''; // Use current preview if no new image is selected
+
+      // Handle image upload if a new file is selected
+      const file = articleImageInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          articleImage = e.target.result;
+          processArticleSave(articleTitle, articleCategory, articleSummary, articleContent, articleAuthor, articleTags, articleStatus, articleImage);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        processArticleSave(articleTitle, articleCategory, articleSummary, articleContent, articleAuthor, articleTags, articleStatus, articleImage);
+      }
+    });
+
+    function processArticleSave(articleTitle, articleCategory, articleSummary, articleContent, articleAuthor, articleTags, articleStatus, articleImage) {
+      const today = new Date();
+      const articleDate = today.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/\./g, '');
+
+      if (currentEditArticleId) {
+        // Editing an existing article
+        const articleIndex = articles.findIndex(a => a.id === currentEditArticleId);
+        if (articleIndex !== -1) {
+          articles[articleIndex] = {
+            ...articles[articleIndex], // Keep existing properties if not updated
+            title: articleTitle,
+            category: articleCategory,
+            summary: articleSummary,
+            content: articleContent,
+            author: articleAuthor,
+            tags: articleTags,
+            status: articleStatus,
+            image: articleImage,
+            date: articleDate // Update date on edit as well
+          };
+          alert('Artikel berhasil diperbarui!');
+        }
+      } else {
+        // Adding a new article
+        const newArticleId = generateArticleId();
+        const newArticle = {
+          id: newArticleId,
+          image: articleImage || 'https://via.placeholder.com/80x80/EEEEEE/888888?text=No+Image', // Default placeholder
+          title: articleTitle,
+          category: articleCategory,
+          author: articleAuthor,
+          date: articleDate,
+          status: articleStatus,
+          summary: articleSummary,
+          content: articleContent,
+          tags: articleTags
+        };
+        articles.push(newArticle);
+        alert('Artikel berhasil ditambahkan!');
+      }
+
+      $('#articleModal').modal('hide'); // Close the modal
+      resetArticleForm(); // Reset form fields
+      applyArticleFiltersAndSorting(); // Re-render articles after add/edit
+    }
+
+    // Function to handle image preview for article image
+    articleImageInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          articleImagePreview.src = e.target.result;
+          articleImagePreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        articleImagePreview.src = '';
+        articleImagePreview.style.display = 'none';
+      }
+    });
+
+    // Function to reset the article form
+    function resetArticleForm() {
+      articleForm.reset();
+      articleModalLabel.textContent = 'Tambah Artikel';
+      saveArticleBtn.textContent = 'Simpan';
+      currentEditArticleId = null;
+      articleAuthorInput.value = 'Admin'; // Default author
+      articleImagePreview.src = '';
+      articleImagePreview.style.display = 'none';
+      articleImageInput.value = ''; // Clear file input
+    }
+
+    // Event listener for "Tambah Artikel" button
+    addArticleBtn.addEventListener('click', function() {
+      resetArticleForm();
+    });
+
+    // Event listener for "Edit", "View", and "Delete" buttons (delegated to parent table)
+    articleTableBody.addEventListener('click', function(event) {
+      const editBtn = event.target.closest('.edit-article-btn');
+      const viewBtn = event.target.closest('.view-article-btn');
+      const deleteBtn = event.target.closest('.delete-article-btn');
+
+      if (editBtn) {
+        const row = editBtn.closest('tr');
+        const articleId = row.dataset.articleId;
+        const article = articles.find(a => a.id === articleId);
+
+        if (article) {
+          articleModalLabel.textContent = 'Edit Artikel';
+          saveArticleBtn.textContent = 'Perbarui';
+          currentEditArticleId = article.id;
+
+          articleTitleInput.value = article.title;
+          articleCategorySelect.value = article.category;
+          articleSummaryTextarea.value = article.summary || '';
+          articleContentTextarea.value = article.content || '';
+          articleAuthorInput.value = article.author || 'Admin';
+          articleTagsInput.value = (article.tags && article.tags.join(', ')) || '';
+          articleStatusSelect.value = article.status;
+
+          if (article.image) {
+            articleImagePreview.src = article.image;
+            articleImagePreview.style.display = 'block';
+          } else {
+            articleImagePreview.src = '';
+            articleImagePreview.style.display = 'none';
+          }
+          // Note: Cannot set value of file input for security reasons
+          articleImageInput.value = '';
+        }
+      } else if (viewBtn) {
+        const row = viewBtn.closest('tr');
+        const articleId = row.dataset.articleId;
+        const article = articles.find(a => a.id === articleId);
+        if (article) {
+          alert(`Judul: ${article.title}\nPenulis: ${article.author}\nTanggal: ${article.date}\nStatus: ${article.status}\n\nRingkasan:\n${article.summary}\n\nKonten:\n${article.content}`);
+          // For a real app, you'd open a new modal or page to show the full article
+        }
+      } else if (deleteBtn) {
+        const row = deleteBtn.closest('tr');
+        const articleId = row.dataset.articleId;
+        if (confirm(`Apakah Anda yakin ingin menghapus artikel dengan ID ${articleId}?`)) {
+          articles = articles.filter(a => a.id !== articleId);
+          alert('Artikel berhasil dihapus!');
+          applyArticleFiltersAndSorting(); // Re-render articles after deletion
+        }
+      }
+    });
+
+    // --- Search, Filter, and Stats for Articles ---
+    function applyArticleFiltersAndSorting() {
+      let filteredArticles = [...articles];
+
+      // Search
+      const searchTerm = searchArticleInput.value.toLowerCase().trim();
+      if (searchTerm) {
+        filteredArticles = filteredArticles.filter(article =>
+          article.title.toLowerCase().includes(searchTerm) ||
+          article.id.toLowerCase().includes(searchTerm) ||
+          article.summary.toLowerCase().includes(searchTerm) ||
+          (article.tags && article.tags.some(tag => tag.toLowerCase().includes(searchTerm)))
+        );
+      }
+
+      // Filter by Category
+      const selectedCategory = filterArticleCategorySelect.value;
+      if (selectedCategory !== 'Semua Kategori') {
+        filteredArticles = filteredArticles.filter(article =>
+          article.category === selectedCategory
+        );
+      }
+
+      // Filter by Status
+      const selectedStatus = filterArticleStatusSelect.value;
+      if (selectedStatus !== 'Semua Status') {
+        filteredArticles = filteredArticles.filter(article =>
+          article.status === selectedStatus
+        );
+      }
+
+      // No sorting applied in original HTML, but you can add it here if needed
+      // e.g., filteredArticles.sort((a, b) => a.title.localeCompare(b.title));
+
+      renderArticles(filteredArticles);
+    }
+
+    searchArticleButton.addEventListener('click', applyArticleFiltersAndSorting);
+    searchArticleInput.addEventListener('keyup', applyArticleFiltersAndSorting);
+    filterArticleCategorySelect.addEventListener('change', applyArticleFiltersAndSorting);
+    filterArticleStatusSelect.addEventListener('change', applyArticleFiltersAndSorting);
+
+    // --- Article Statistics Update Functions ---
+    function updateArticleStatistics(articlesData) {
+      totalArticlesStat.textContent = `${articlesData.length} Artikel`;
+
+      const publishedCount = articlesData.filter(article => article.status === 'Dipublikasikan').length;
+      publishedArticlesStat.textContent = `${publishedCount} Artikel`;
+
+      const draftCount = articlesData.filter(article => article.status === 'Draft').length;
+      draftArticlesStat.textContent = `${draftCount} Artikel`;
+    }
+
+    // --- Pagination functionality for Articles ---
+    function updateArticlePaginationControls(totalItems) {
+      const totalPages = Math.ceil(totalItems / articlesPerPage);
+      const paginationControls = document.getElementById('paginationArticleControls');
+      paginationControls.innerHTML = '';
+
+      const createPageItem = (pageNumber, text, isDisabled, isActive) => {
+        const li = document.createElement('li');
+        li.classList.add('page-item');
+        if (isDisabled) li.classList.add('disabled');
+        if (isActive) li.classList.add('active');
+
+        const a = document.createElement('a');
+        a.classList.add('page-link');
+        a.href = '#';
+        a.textContent = text;
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (!isDisabled && !isActive) {
+            currentArticlePage = pageNumber;
+            applyArticleFiltersAndSorting();
+          }
+        });
+        li.appendChild(a);
+        return li;
+      };
+
+      // Previous button
+      paginationControls.appendChild(createPageItem(currentArticlePage - 1, 'Previous', currentArticlePage === 1, false));
+
+      // Page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        paginationControls.appendChild(createPageItem(i, i, false, i === currentArticlePage));
+      }
+
+      // Next button
+      paginationControls.appendChild(createPageItem(currentArticlePage + 1, 'Next', currentArticlePage === totalPages || totalPages === 0, false));
+    }
+
+    function updateArticlePaginationInfo(totalItems) {
+      const paginationInfo = document.getElementById('paginationArticleInfo');
+      const startIndex = (currentArticlePage - 1) * articlesPerPage + 1;
+      const endIndex = Math.min(startIndex + articlesPerPage - 1, totalItems);
+      paginationInfo.textContent = `Menampilkan ${totalItems === 0 ? 0 : startIndex} sampai ${endIndex} dari ${totalItems} data`;
+    }
+
+
+    // --- Initial Load and Authentication ---
+    document.addEventListener('DOMContentLoaded', () => {
+      applyArticleFiltersAndSorting(); // Initial render of articles
+      checkUserAuthentication();
+
+      // Event listeners for logout
+      const logoutIcon = document.querySelector('#logout-icon');
+      if (logoutIcon) {
+        logoutIcon.addEventListener('click', function(e) {
+          e.preventDefault();
+          handleLogout();
+        });
+      }
+
+      const logoutOption = document.querySelector('#logout-option');
+      if (logoutOption) {
+        logoutOption.addEventListener('click', function(e) {
+          e.preventDefault();
+          handleLogout();
+        });
+      }
+    });
+
+    // --- Functions for logout and user authentication (from your original commented out code) ---
+    function handleLogout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('minimarket_current_user');
+        showLogoutMessage();
+        setTimeout(() => {
+          window.location.href = '../pages/login.html';
+        }, 1000);
+      }
+    }
+
+    function showLogoutMessage() {
+      let toast = document.getElementById('logoutToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'logoutToast';
+        toast.style.position = 'fixed';
+        toast.style.top = '20px';
+        toast.style.right = '20px';
+        toast.style.backgroundColor = '#d1e7dd';
+        toast.style.color = '#0f5132';
+        toast.style.padding = '15px 25px';
+        toast.style.borderRadius = '5px';
+        toast.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+        toast.style.zIndex = '9999';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-20px)';
+        toast.style.transition = 'opacity 0.3s, transform 0.3s';
+        toast.textContent = 'Logging out...';
+        document.body.appendChild(toast);
+      }
+      setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateY(0)';
+      }, 100);
+    }
+
+    function checkUserAuthentication() {
+      const currentUser = JSON.parse(localStorage.getItem('minimarket_current_user'));
+      if (!currentUser) {
+        window.location.href = '../pages/login.html';
+      } else {
+        updateUserInfo(currentUser);
+      }
+    }
+
+    function updateUserInfo(user) {
+      const userNameElements = document.querySelectorAll('.header-user-profile span');
+      const userNameInDropdown = document.querySelector('.dropdown-user-profile h6');
+      if (userNameElements.length > 0) {
+        userNameElements.forEach(element => {
+          element.textContent = user.name || 'User';
+        });
+      }
+      if (userNameInDropdown) {
+        userNameInDropdown.textContent = user.name || 'User';
+      }
+      const userRoleElement = document.querySelector('.dropdown-user-profile span');
+      if (userRoleElement) {
+        userRoleElement.textContent = user.role || 'User';
+      }
+    }
+  </script>
+</body>
+</html>

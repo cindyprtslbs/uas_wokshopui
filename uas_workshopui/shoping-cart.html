@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="MiniMarket - Your Neighborhood Grocery Store">
+    <meta name="keywords" content="minimarket, grocery, shop, food, fresh, organic">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MiniMarket - Keranjang Belanja</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <style>
+        /* Add cart count badge */
+        .header__cart ul li {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            height: 18px;
+            width: 18px;
+            background: #7fad39;
+            font-size: 10px;
+            color: #ffffff;
+            line-height: 18px;
+            text-align: center;
+            font-weight: 700;
+            border-radius: 50%;
+        }
+
+        /* Basic styling for quantity buttons to ensure they appear as buttons */
+        .pro-qty2 .qtybtn {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .pro-qty2 .qtybtn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .pro-qty2 .qty-value {
+            padding: 5px 10px;
+            display: inline-block;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        /* Styles for login sidebar */
+        .login-sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #f8f8f8;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-sidebar .login-sidebar-content {
+            padding: 0px 15px;
+        }
+
+        .login-sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .login-sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .login-sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .login-sidebar .closebtn:hover {
+            color: #000;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            /* Start off-screen */
+            width: 280px;
+            height: 100%;
+            background-color: #fff;
+            z-index: 999;
+            padding-top: 50px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mobile-menu ul li {
+            padding: 10px 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .mobile-menu ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            display: block;
+        }
+
+        .mobile-menu__close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <div class="mobile-menu">
+        <span class="mobile-menu__close"><i class="fa fa-times"></i></span>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./shop-grid.html">Shop</a></li>
+            <li class="active"><a href="#">Pages</a></li>
+            <li><a href="./blog.html">Artikel</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+        </ul>
+    </div>
+    <div class="mobile-menu-overlay"></div>
+
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="./index.html">
+                            <h2>MiniMarket</h2>
+                        </a>
+                    </div>
+                    <div class="humberger__open">
+                        <i class="fa fa-bars"></i>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li><a href="./index.html">Home</a></li>
+                            <li><a href="./shop-grid.html">Shop</a></li>
+                            <li class="active"><a href="#">Pages</a>
+                                <ul class="header__menu__dropdown">
+                                    <li><a href="shop-details.html">Detail Belanja</a></li>
+                                    <li><a href="shoping-cart.html">Keranjang Belanja</a></li>
+                                    <li><a href="checkout.html">Pembayaran</a></li>
+                                    <li><a href="blog-details.html">Detail Artikel</a></li>
+                                    <li><a href="profile.html">Profil Pengguna</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="./blog.html">Artikel</a></li>
+                            <li><a href="./contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul>
+                            <li>
+                                <a href="shoping-cart.html">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <span class="cart-count" id="cartCount">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="header__top__right__auth">
+                            <a href="javascript:void(0);" onclick="openLoginSidebar()"><i class="fa fa-user"></i>
+                                Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="loginSidebar" class="login-sidebar">
+        <div class="login-sidebar-content">
+            <span class="closebtn" onclick="closeLoginSidebar()">&times;</span>
+            <h4>Login As</h4>
+            <a href="../Dashboard/dist/pages/login.html"><i class="fa fa-cogs"></i> Admin</a>
+        </div>
+    </div>
+
+    <section class="breadcrumb-section"
+        style="background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Keranjang Belanja</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shopping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="shopping__product">Barang</th>
+                                    <th>Harga</th>
+                                    <th>Jumlah</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="cartTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="shopping__cart__buttons">
+                        <a href="./shop-grid.html" class="primary-btn"
+                            style="display: inline-block; width: auto; margin-right: 15px;">Lanjut Belanja</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shopping__checkout">
+                        <h5>Total Keranjang</h5>
+                        <ul>
+                            <li>Subtotal <span id="cartSubtotal">Rp0</span></li>
+                            <li>Total <span id="cartTotal">Rp0</span></li>
+                        </ul>
+                        <a href="./checkout.html" class="primary-btn">Lanjut Bayar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__about__logo">
+                            <a href="./index.html">
+                                <h2>MiniMarket</h2>
+                            </a>
+                        </div>
+                        <ul>
+                            <li><i class="fa fa-map-marker-alt"></i> Jl. Mojo II No.11, RT.007/RW.05, Mojo, Kec.
+                                Gubeng, Surabaya, Jawa Timur 60285</li>
+                            <li><i class="fa fa-phone"></i> +62 812-6224-7796</li>
+                            <li><i class="fa fa-envelope"></i> cindylubis@gmail.com</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                    <div class="footer__widget">
+                        <h6>Contact Kami</h6>
+                        <p>Hubungi kami melalui media sosial berikut:</p>
+                        <div class="footer__widget__social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="footer__widget">
+                        <h6>Bergabung Bersama Kami Sekarang</h6>
+                        <p>Dapatkan informasi terupdate lainnya dengan mengirimkan email.</p>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your email">
+                            <button type="submit">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__text">
+                            <p>© 2025 MiniMarket. All Rights Reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', function () {
+            const preloader = document.getElementById('preloder');
+            preloader.style.display = 'none';
+        });
+
+        // Login Sidebar
+        function openLoginSidebar() {
+            document.getElementById("loginSidebar").style.width = "250px";
+            document.body.style.overflow = "hidden"; // Disable scrolling
+        }
+
+        function closeLoginSidebar() {
+            document.getElementById("loginSidebar").style.width = "0";
+            document.body.style.overflow = "auto"; // Enable scrolling
+        }
+
+        // Close sidebar if clicked outside
+        window.onclick = function (event) {
+            if (event.target == document.getElementById("loginSidebar")) {
+                closeLoginSidebar();
+            }
+        }
+
+        // Mobile Menu
+        const humbergerOpen = document.querySelector('.humberger__open');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+        const mobileMenuClose = document.querySelector('.mobile-menu__close');
+
+        if (humbergerOpen) {
+            humbergerOpen.addEventListener('click', function () {
+                mobileMenu.classList.add('active');
+                mobileMenuOverlay.classList.add('active');
+            });
+        }
+
+        if (mobileMenuClose) {
+            mobileMenuClose.addEventListener('click', function () {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+        }
+
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', function () {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+        }
+
+        // Set background images for elements with set-bg class
+        document.addEventListener('DOMContentLoaded', function () {
+            const setBg = document.querySelectorAll('.set-bg');
+            setBg.forEach(function (element) {
+                const bg = element.getAttribute('data-setbg');
+                if (bg) {
+                    element.style.backgroundImage = `url('${bg}')`;
+                }
+            });
+        });
+    </script>
+    <script>
+        // --- Shopping Cart Page Functionality ---
+        let cart = []; // Array to hold cart items
+
+        const cartTableBody = document.getElementById('cartTableBody');
+        const cartSubtotalElement = document.getElementById('cartSubtotal');
+        const cartTotalElement = document.getElementById('cartTotal');
+        const cartCountElement = document.getElementById('cartCount'); // For header cart count
+
+        // Function to load cart from localStorage
+        function loadCart() {
+            const storedCart = localStorage.getItem('minimarketCart');
+            if (storedCart) {
+                try {
+                    cart = JSON.parse(storedCart);
+                } catch (e) {
+                    console.error("Error parsing cart data from localStorage:", e);
+                    cart = []; // Reset cart if parsing fails
+                }
+            } else {
+                cart = [];
+            }
+            renderCartItems(); // Render items after loading
+            updateCartSummary(); // Update summary after loading
+            updateCartCount(); // Update header cart count
+        }
+
+        // Function to save cart to localStorage
+        function saveCart() {
+            localStorage.setItem('minimarketCart', JSON.stringify(cart));
+            updateCartCount(); // Update header cart count after saving
+        }
+
+        // Function to update header cart count display
+        function updateCartCount() {
+            let totalItems = 0;
+            cart.forEach(item => {
+                totalItems += item.quantity;
+            });
+            if (cartCountElement) {
+                cartCountElement.textContent = totalItems;
+            }
+        }
+
+        // Function to render cart items in the table
+        function renderCartItems() {
+            cartTableBody.innerHTML = '';
+            let subtotal = 0;
+
+            if (cart.length === 0) {
+                cartTableBody.innerHTML = `<tr><td colspan="5" class="text-center">Keranjang Anda kosong.</td></tr>`;
+            } else {
+                cart.forEach(item => {
+                    const row = document.createElement('tr');
+                    const itemTotal = item.price * item.quantity;
+                    subtotal += itemTotal;
+
+                    row.innerHTML = `
+                        <td class="shopping__cart__item">
+                            <a href="shop-details.html?id=${item.id}">
+                                <img src="${item.img}" alt="${item.name}" style="width: 70px; height: 70px; object-fit: cover;">
+                            </a>
+                            <h5>
+                                <a href="shop-details.html?id=${item.id}" style="color: inherit; text-decoration: none;">
+                                    ${item.name}
+                                </a>
+                            </h5>
+                        </td>
+                        <td class="shopping__cart__price">
+                            Rp${item.price.toLocaleString('id-ID')}/${item.unit || ''}
+                        </td>
+                        <td class="shopping__cart__quantity">
+                            <div class="quantity2">
+                                <div class="pro-qty2">
+                                    <button class="dec qtybtn" data-id="${item.id}">-</button>
+                                    <span class="qty-value">${item.quantity}</span>
+                                    <button class="inc qtybtn" data-id="${item.id}">+</button>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="shopping__cart__total">
+                            Rp${itemTotal.toLocaleString('id-ID')}
+                        </td>
+                        <td class="shopping__cart__item__close">
+                            <span class="fa fa-times" data-id="${item.id}"></span>
+                        </td>
+                    `;
+                    cartTableBody.appendChild(row);
+                });
+            }
+
+            updateCartSummary(subtotal);
+            attachEventListenersToCartItems();
+        }
+
+        // Function to update subtotal and total
+        function updateCartSummary(subtotal = 0) {
+            if (cart.length > 0) {
+                subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            }
+            cartSubtotalElement.textContent = `Rp${subtotal.toLocaleString('id-ID')}`;
+            cartTotalElement.textContent = `Rp${subtotal.toLocaleString('id-ID')}`; // Assuming total is same as subtotal for now
+        }
+
+        // Function to attach event listeners to quantity buttons and remove buttons
+        function attachEventListenersToCartItems() {
+            document.querySelectorAll('.pro-qty2 .dec').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const itemId = event.target.dataset.id;
+                    updateQuantity(itemId, -1);
+                });
+            });
+
+            document.querySelectorAll('.pro-qty2 .inc').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const itemId = event.target.dataset.id;
+                    updateQuantity(itemId, 1);
+                });
+            });
+
+            document.querySelectorAll('.shopping__cart__item__close .fa-times').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const itemId = event.target.dataset.id;
+                    removeItemFromCart(itemId);
+                });
+            });
+        }
+
+        // Function to update item quantity
+        function updateQuantity(itemId, change) {
+            const itemIndex = cart.findIndex(item => item.id === itemId);
+            if (itemIndex > -1) {
+                cart[itemIndex].quantity += change;
+                if (cart[itemIndex].quantity <= 0) {
+                    cart.splice(itemIndex, 1); // Remove item if quantity is 0 or less
+                }
+                saveCart();
+                renderCartItems(); // Re-render the cart to reflect changes
+            }
+        }
+
+        // Function to remove item from cart
+        function removeItemFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            saveCart();
+            renderCartItems(); // Re-render the cart to reflect changes
+        }
+
+
+        // Load cart data when the DOM is fully loaded on the shopping cart page
+        document.addEventListener('DOMContentLoaded', loadCart);
+    </script>
+</body>
+
+</html>

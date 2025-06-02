@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="MiniMarket - Your Neighborhood Grocery Store">
+    <meta name="keywords" content="minimarket, grocery, shop, food, fresh, organic">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MiniMarket - Detail Belanja</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <style>
+        /* Add animation for cart notification */
+        @keyframes cartPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .cart-animation {
+            animation: cartPulse 0.5s ease-in-out;
+            color: #7fad39;
+        }
+
+        /* Add cart count badge */
+        .header__cart ul li {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            height: 18px;
+            width: 18px;
+            background: #7fad39;
+            font-size: 10px;
+            color: #ffffff;
+            line-height: 18px;
+            text-align: center;
+            font-weight: 700;
+            border-radius: 50%;
+        }
+
+        /* Toast notification */
+        .toast-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #7fad39;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .toast-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Styling for the new button */
+        .view-more-products-btn {
+            display: inline-block;
+            background-color: #7fad39;
+            /* Example green color */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-top: 30px;
+            /* Space above the button */
+        }
+
+        .view-more-products-btn:hover {
+            background-color: #5f8d2e;
+            /* Darker green on hover */
+        }
+
+        /* Basic styling for quantity buttons to ensure they appear as buttons */
+        .pro-qty .qtybtn {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .pro-qty .qtybtn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .pro-qty .qty-value {
+            padding: 5px 10px;
+            display: inline-block;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        /* Styles for login sidebar */
+        .login-sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #f8f8f8;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-sidebar .login-sidebar-content {
+            padding: 0px 15px;
+        }
+
+        .login-sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .login-sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .login-sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .login-sidebar .closebtn:hover {
+            color: #000;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            /* Start off-screen */
+            width: 280px;
+            height: 100%;
+            background-color: #fff;
+            z-index: 999;
+            padding-top: 50px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mobile-menu ul li {
+            padding: 10px 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .mobile-menu ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            display: block;
+        }
+
+        .mobile-menu__close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <div class="mobile-menu">
+        <span class="mobile-menu__close"><i class="fa fa-times"></i></span>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./shop-grid.html">Shop</a></li>
+            <li class="active"><a href="#">Pages</a></li>
+            <li><a href="./blog.html">Artikel</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+        </ul>
+    </div>
+    <div class="mobile-menu-overlay"></div>
+
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="./index.html">
+                            <h2>MiniMarket</h2>
+                        </a>
+                    </div>
+                    <div class="humberger__open">
+                        <i class="fa fa-bars"></i>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li><a href="./index.html">Home</a></li>
+                            <li><a href="./shop-grid.html">Shop</a></li>
+                            <li class="active"><a href="#">Pages</a>
+                                <ul class="header__menu__dropdown">
+                                    <li><a href="shop-details.html">Detail Belanja</a></li>
+                                    <li><a href="shoping-cart.html">Keranjang Belanja</a></li>
+                                    <li><a href="checkout.html">Pembayaran</a></li>
+                                    <li><a href="blog-details.html">Detail Artikel</a></li>
+                                    <li><a href="profile.html">Profil Pengguna</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="./blog.html">Artikel</a></li>
+                            <li><a href="./contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul>
+                            <li>
+                                <a href="shoping-cart.html">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <span class="cart-count" id="cartCount">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="header__top__right__auth">
+                            <a href="javascript:void(0);" onclick="openLoginSidebar()"><i class="fa fa-user"></i>
+                                Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="loginSidebar" class="login-sidebar">
+        <div class="login-sidebar-content">
+            <span class="closebtn" onclick="closeLoginSidebar()">&times;</span>
+            <h4>Login As</h4>
+            <a href="../Dashboard/dist/pages/login.html"><i class="fa fa-cogs"></i> Admin</a>
+        </div>
+    </div>
+
+    <section class="breadcrumb-section"
+        style="background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Detail Belanja</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__pic">
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large" id="productImage" src="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__text">
+                        <h3 id="productName"></h3>
+                        <div class="product__details__price" id="productPrice"></div>
+                        <p id="productDescription"></p>
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <button class="dec qtybtn">-</button>
+                                    <span class="qty-value" id="productQuantity">1</span>
+                                    <button class="inc qtybtn">+</button>
+                                </div>
+                            </div>
+                            <button id="addToCartButton" class="primary-btn">Tambah ke keranjang</button>
+                        </div>
+                        <ul>
+                            <li><b>Shipping</b> <span>Gratis Pengantaran</span></li>
+                            <li><b>Ketersediaan</b> <span id="productAvailability"></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="related-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title related__product__title">
+                        <h2>Barang Serupa</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="relatedProductsContainer">
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__about__logo">
+                            <a href="./index.html">
+                                <h2>MiniMarket</h2>
+                            </a>
+                        </div>
+                        <ul>
+                            <li><i class="fa fa-map-marker-alt"></i> Jl. Mojo II No.11, RT.007/RW.05, Mojo, Kec.
+                                Gubeng, Surabaya, Jawa Timur 60285</li>
+                            <li><i class="fa fa-phone"></i> +62 812-6224-7796</li>
+                            <li><i class="fa fa-envelope"></i> cindylubis@gmail.com</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                    <div class="footer__widget">
+                        <h6>Contact Kami</h6>
+                        <p>Hubungi kami melalui media sosial berikut:</p>
+                        <div class="footer__widget__social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="footer__widget">
+                        <h6>Bergabung Bersama Kami Sekarang</h6>
+                        <p>Dapatkan informasi terupdate lainnya dengan mengirimkan email.</p>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your email">
+                            <button type="submit">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__text">
+                            <p>© 2025 MiniMarket. All Rights Reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', function () {
+            const preloader = document.getElementById('preloder');
+            preloader.style.display = 'none';
+        });
+
+        // Login Sidebar
+        function openLoginSidebar() {
+            document.getElementById("loginSidebar").style.width = "250px";
+            document.body.style.overflow = "hidden"; // Disable scrolling
+        }
+
+        function closeLoginSidebar() {
+            document.getElementById("loginSidebar").style.width = "0";
+            document.body.style.overflow = "auto"; // Enable scrolling
+        }
+
+        // Close sidebar if clicked outside
+        window.onclick = function (event) {
+            if (event.target == document.getElementById("loginSidebar")) {
+                closeLoginSidebar();
+            }
+        }
+
+        // Mobile Menu
+        const humbergerOpen = document.querySelector('.humberger__open');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+        const mobileMenuClose = document.querySelector('.mobile-menu__close');
+
+        if (humbergerOpen) {
+            humbergerOpen.addEventListener('click', function () {
+                mobileMenu.classList.add('active');
+                mobileMenuOverlay.classList.add('active');
+            });
+        }
+
+        if (mobileMenuClose) {
+            mobileMenuClose.addEventListener('click', function () {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+        }
+
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', function () {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+        }
+
+        // Set background images for elements with set-bg class
+        document.addEventListener('DOMContentLoaded', function () {
+            const setBg = document.querySelectorAll('.set-bg');
+            setBg.forEach(function (element) {
+                const bg = element.getAttribute('data-setbg');
+                if (bg) {
+                    element.style.backgroundImage = `url('${bg}')`;
+                }
+            });
+        });
+    </script>
+    <script>
+        // --- Product Data (Simulated Database) ---
+        const products = [
+            {
+                id: 'shop-product-radish',
+                name: 'Premium Lobak Merah & Fresh',
+                price: 45000,
+                unit: 'Kg',
+                img: 'https://plus.unsplash.com/premium_photo-1667049290968-d0e2b9c36e01?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dmVnZXRhYmxlc3xlbnwwfHwwfHx8MA%3D%3D',
+                description: 'Tersedia dalam Kemasan Ritel dan Grosir',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'shop-product-corn',
+                name: 'Jagung Manis',
+                price: 50000,
+                unit: 'Kg',
+                img: 'https://plus.unsplash.com/premium_photo-1667047165840-803e47970128?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29ybnxlbnwwfHwwfHx8MA%3D%3D',
+                description: 'Pilihan Sayuran Organik',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'shop-product-lemon',
+                name: 'Lemon',
+                price: 35000,
+                unit: 'Kg',
+                img: 'https://images.unsplash.com/photo-1590502593747-42a996133562?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGVtb258ZW58MHx8MHx8fDA%3D',
+                description: 'Diskon Khusus untuk Pembelian dalam Jumlah Besar',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'shop-product-leek',
+                name: 'Bawang Prei',
+                price: 15000,
+                unit: 'Ikat',
+                img: 'https://images.unsplash.com/photo-1602769515559-e15133a7e992?w=600&auto=format&fit=q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGxlZWtzfGVufDB8fDB8fHww',
+                description: 'Pilihan Sayuran Organik',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'shop-product-selada',
+                name: 'Fresh Selada Ever',
+                price: 20000,
+                unit: 'Kg',
+                img: './img/featured/selada.png',
+                description: 'Selada segar pilihan dari petani lokal.',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'shop-product-bayam',
+                name: 'Local Bayam Fresh',
+                price: 10000,
+                unit: 'Ikat',
+                img: './img/featured/bayam.png',
+                description: 'Bayam hijau segar, cocok untuk masakan rumahan.',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'shop-product-mentimun',
+                name: 'Fresh Cucumber',
+                price: 18000,
+                unit: 'Kg',
+                img: './img/featured/mentimun.png',
+                description: 'Timun segar, renyah, dan cocok untuk salad atau lalapan.',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'shop-product-paprika',
+                name: 'Paprika',
+                price: 36000,
+                unit: 'Kg',
+                img: './img/featured/paprika.png',
+                description: 'Paprika aneka warna, manis dan kaya vitamin.',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'shop-product-singkong',
+                name: 'Singkong Premium',
+                price: 10000,
+                unit: 'Kg',
+                img: './img/featured/singkong.png',
+                description: 'Singkong kualitas terbaik, cocok untuk direbus atau digoreng.',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'shop-product-kacangpanjang',
+                name: 'Kacang Panjang Premium',
+                price: 8000,
+                unit: 'Ikat',
+                img: './img/featured/panjang.png',
+                description: 'Kacang panjang segar dan renyah.',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'shop-product-apel',
+                name: 'Apel',
+                price: 36000,
+                unit: 'Kg',
+                img: './img/featured/apel.jpg',
+                description: 'Apel merah segar, manis, dan bergizi.',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'shop-product-pisang',
+                name: 'Pisang Premium',
+                price: 20000,
+                unit: 'Kg',
+                img: './img/featured/pisang.jpg',
+                description: 'Pisang ambon premium, manis dan legit.',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'shop-product-wortel-featured', 
+                name: 'Wortel',
+                price: 10000,
+                unit: 'Kg',
+                img: './img/featured/wortel.png',
+                description: 'Wortel segar kaya vitamin A.',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'shop-product-naga',
+                name: 'Buah Naga',
+                price: 25000,
+                unit: 'Kg',
+                img: './img/featured/naga.png',
+                description: 'Buah naga merah, manis, dan menyegarkan.',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'pakcoy-segar',
+                name: 'Sayur Pakcoy Segar',
+                price: 20000,
+                unit: 'Kg',
+                img: 'img/featured/parkcoy.png',
+                description: 'Pakcoy (juga dikenal sebagai bok choy) adalah sayuran hijau segar yang kaya akan vitamin A, C, dan K serta serat alami. Cocok untuk tumisan, sup, atau hidangan sehat lainnya. Dipanen langsung dari kebun lokal setiap hari untuk menjaga kesegarannya.',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'wortel-segar',
+                name: 'Wortel Segar',
+                price: 15000,
+                unit: 'Kg',
+                img: 'https://images.unsplash.com/photo-1447175008436-054170c2e979?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80',
+                description: 'Wortel segar, kaya akan beta-karoten, vitamin A, dan antioksidan. Ideal untuk jus, salad, atau masakan. Dipanen segar untuk kualitas terbaik.',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'bayam-segar',
+                name: 'Bayam Segar',
+                price: 12000,
+                unit: 'Ikat',
+                img: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
+                description: 'Bayam segar adalah sumber zat besi dan vitamin K yang sangat baik. Cocok untuk berbagai masakan, seperti tumisan, sup, atau pecel. Langsung dari petani lokal.',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'buncis-segar',
+                name: 'Buncis Segar',
+                price: 18000,
+                unit: 'Kg',
+                img: 'img/featured/bunciss.png',
+                description: 'Buncis segar, renyah, dan kaya serat. Sempurna untuk tumisan, sup, atau pelengkap hidangan utama. Dipanen secara organik untuk kualitas premium.',
+                availability: 'Tersedia'
+            },
+            {
+                id: 'sawi-putih-segar',
+                name: 'Sawi Putih Segar',
+                price: 17500,
+                unit: 'Kg',
+                img: 'https://images.unsplash.com/photo-1603049404411-13c2ca81a316?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
+                description: 'Sawi putih segar, ideal untuk capcay, kimchi, atau hidangan sayuran lainnya. Kaya akan vitamin dan mineral, menjaga kesehatan tubuh.',
+                availability: 'Tersedia'
+            }
+        ];
+
+        // --- Shopping Cart Functionality (from shoping-cart.html) ---
+        let cart = []; // Array to hold cart items
+
+        const cartCountElement = document.getElementById('cartCount');
+        const toastNotificationElement = document.getElementById('toastNotification'); // Defined in HTML
+
+        // Function to load cart from localStorage
+        function loadCart() {
+            const storedCart = localStorage.getItem('minimarketCart');
+            if (storedCart) {
+                try {
+                    cart = JSON.parse(storedCart);
+                } catch (e) {
+                    console.error("Error parsing cart data from localStorage:", e);
+                    cart = []; // Reset cart if parsing fails
+                }
+            } else {
+                cart = [];
+            }
+            updateCartCount(); // Update the displayed count immediately after loading
+        }
+
+        // Function to save cart to localStorage
+        function saveCart() {
+            localStorage.setItem('minimarketCart', JSON.stringify(cart));
+        }
+
+        // Function to update cart count display and add animation
+        function updateCartCount() {
+            let totalItems = 0;
+            cart.forEach(item => {
+                totalItems += item.quantity;
+            });
+
+            if (cartCountElement) {
+                cartCountElement.textContent = totalItems;
+                // Add a pulsing animation to the cart icon for visual feedback
+                const cartIcon = cartCountElement.previousElementSibling; // The <i> tag
+                if (cartIcon) {
+                    cartIcon.classList.add('cart-animation');
+                    setTimeout(() => {
+                        cartIcon.classList.remove('cart-animation');
+                    }, 500); // Duration of the animation (should match CSS)
+                }
+            }
+        }
+
+        // Function to show a toast notification
+        function showToastNotification(message) {
+            if (toastNotificationElement) {
+                toastNotificationElement.textContent = message;
+                toastNotificationElement.classList.add('show');
+                setTimeout(() => {
+                    toastNotificationElement.classList.remove('show');
+                }, 3000); // Hide after 3 seconds
+            }
+        }
+
+        // Function to add item to cart
+        function addItemToCart(product) {
+            let productExists = false;
+            cart.forEach(item => {
+                if (item.id === product.id) {
+                    item.quantity += product.quantity; // Add the specified quantity
+                    productExists = true;
+                }
+            });
+
+            if (!productExists) {
+                cart.push({ ...product
+                }); // Add the product with its initial quantity
+            }
+
+            saveCart();
+            updateCartCount();
+            showToastNotification(`${product.name} (${product.quantity} ${product.unit || ''}) ditambahkan ke keranjang!`);
+        }
+
+        // --- Product Details Page Logic ---
+        document.addEventListener('DOMContentLoaded', function () {
+            loadCart(); // Load cart when the page loads
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+
+            const productImage = document.getElementById('productImage');
+            const productName = document.getElementById('productName');
+            const productPrice = document.getElementById('productPrice');
+            const productDescription = document.getElementById('productDescription');
+            const productAvailability = document.getElementById('productAvailability');
+            const productQuantityElement = document.getElementById('productQuantity');
+            const addToCartButton = document.getElementById('addToCartButton');
+            const decBtn = document.querySelector('.pro-qty .dec');
+            const incBtn = document.querySelector('.pro-qty .inc');
+            const relatedProductsContainer = document.getElementById('relatedProductsContainer');
+
+
+            let currentProduct = null;
+
+            if (productId) {
+                currentProduct = products.find(p => p.id === productId);
+                if (currentProduct) {
+                    productImage.src = currentProduct.img;
+                    productName.textContent = currentProduct.name;
+                    productPrice.textContent = `Rp${currentProduct.price.toLocaleString('id-ID')}/${currentProduct.unit}`;
+                    productDescription.textContent = currentProduct.description;
+                    productAvailability.textContent = currentProduct.availability;
+                } else {
+                    // Handle product not found, e.g., redirect or show message
+                    productName.textContent = 'Produk tidak ditemukan.';
+                    productPrice.textContent = '';
+                    productDescription.textContent = 'Produk yang Anda cari tidak tersedia.';
+                    productAvailability.textContent = 'Tidak Tersedia';
+                    if (addToCartButton) {
+                        addToCartButton.style.display = 'none'; // Hide add to cart button
+                    }
+                }
+            } else {
+                // If no ID is provided, display a default product or redirect
+                // For now, let's just display the first product as a default
+                currentProduct = products[0];
+                if (currentProduct) {
+                    productImage.src = currentProduct.img;
+                    productName.textContent = currentProduct.name;
+                    productPrice.textContent = `Rp${currentProduct.price.toLocaleString('id-ID')}/${currentProduct.unit}`;
+                    productDescription.textContent = currentProduct.description;
+                    productAvailability.textContent = currentProduct.availability;
+                    window.history.replaceState({}, '', `shop-details.html?id=${currentProduct.id}`); // Update URL
+                } else {
+                       // No products available at all
+                    productName.textContent = 'Tidak ada produk untuk ditampilkan.';
+                    productPrice.textContent = '';
+                    productDescription.textContent = '';
+                    productAvailability.textContent = '';
+                    if (addToCartButton) {
+                        addToCartButton.style.display = 'none';
+                    }
+                }
+            }
+
+
+            // Quantity control for product details page
+            if (decBtn && incBtn && productQuantityElement) {
+                decBtn.addEventListener('click', () => {
+                    let current = parseInt(productQuantityElement.textContent);
+                    if (current > 1) {
+                        productQuantityElement.textContent = current - 1;
+                    }
+                });
+
+                incBtn.addEventListener('click', () => {
+                    let current = parseInt(productQuantityElement.textContent);
+                    productQuantityElement.textContent = current + 1;
+                });
+            }
+
+            // Add to Cart Button on Product Details Page
+            if (addToCartButton && currentProduct) {
+                addToCartButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const quantityToAdd = parseInt(productQuantityElement.textContent);
+                    const productForCart = {
+                        id: currentProduct.id,
+                        name: currentProduct.name,
+                        price: currentProduct.price,
+                        img: currentProduct.img,
+                        unit: currentProduct.unit,
+                        quantity: quantityToAdd
+                    };
+                    addItemToCart(productForCart);
+                });
+            }
+
+            // Render Related Products
+            function renderRelatedProducts() {
+                if (relatedProductsContainer && currentProduct) {
+                    relatedProductsContainer.innerHTML = ''; // Clear previous content
+                    // Filter out the current product from related products
+                    const filteredProducts = products.filter(p => p.id !== currentProduct.id);
+
+                    // Take a maximum of 4 related products
+                    const productsToDisplay = filteredProducts.slice(0, 4);
+
+                    productsToDisplay.forEach(product => {
+                        const productItemHtml = `
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" style="background-image: url('${product.img}');">
+                                        <ul class="product__item__pic__hover">
+                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                            <li><a href="javascript:void(0);" class="add-to-cart-related"
+                                                data-id="${product.id}"
+                                                data-name="${product.name}"
+                                                data-price="${product.price}"
+                                                data-img="${product.img}"
+                                                data-unit="${product.unit}"
+                                                ><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h6><a href="shop-details.html?id=${product.id}">${product.name}</a></h6>
+                                        <h5>Rp${product.price.toLocaleString('id-ID')}/${product.unit}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        relatedProductsContainer.insertAdjacentHTML('beforeend', productItemHtml);
+                    });
+
+                    // Re-attach event listeners for "Add to Cart" on related products
+                    document.querySelectorAll('.add-to-cart-related').forEach(button => {
+                        button.addEventListener('click', (event) => {
+                            event.preventDefault();
+                            const product = {
+                                id: button.dataset.id,
+                                name: button.dataset.name,
+                                price: parseFloat(button.dataset.price),
+                                img: button.dataset.img,
+                                unit: button.dataset.unit,
+                                quantity: 1 // Default quantity for related products
+                            };
+                            addItemToCart(product);
+                        });
+                    });
+
+                    // Reinitialize background images for newly added related product cards
+                    const newSetBgElements = relatedProductsContainer.querySelectorAll('.set-bg');
+                    newSetBgElements.forEach(function(element) {
+                        const bg = element.getAttribute('style').match(/url\(['"]?(.*?)['"]?\)/);
+                        if (bg && bg[1]) {
+                            element.style.backgroundImage = `url('${bg[1]}')`;
+                        }
+                    });
+                }
+            }
+
+            renderRelatedProducts();
+        });
+    </script>
+    <div id="toastNotification" class="toast-notification"></div>
+
+</body>
+
+</html>
