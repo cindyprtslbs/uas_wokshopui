@@ -5,286 +5,884 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="MiniMarket Admin Dashboard">
-  <meta name="keywords" content="admin, dashboard, minimarket, inventory, sales">
-  <meta name="author" content="CodedThemes">
+  <meta name="description" content="MiniMarket Professional Article Management">
+  <meta name="keywords" content="admin, dashboard, minimarket, articles, content">
+  <meta name="author" content="MiniMarket">
 
-  <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" id="main-font-link">
-  <link rel="stylesheet" href="../assets/fonts/tabler-icons.min.css">
-  <link rel="stylesheet" href="../assets/fonts/feather.css">
-  <link rel="stylesheet" href="../assets/fonts/fontawesome.css">
-  <link rel="stylesheet" href="../assets/fonts/material.css">
-  <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link">
-  <link rel="stylesheet" href="../assets/css/style-preset.css">
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏪</text></svg>" type="image/svg+xml">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-light: #dbeafe;
+      --secondary-color: #64748b;
+      --success-color: #059669;
+      --success-light: #d1fae5;
+      --warning-color: #d97706;
+      --warning-light: #fef3c7;
+      --danger-color: #dc2626;
+      --danger-light: #fee2e2;
+      --info-color: #0891b2;
+      --info-light: #cffafe;
+      --dark-color: #1e293b;
+      --light-color: #f8fafc;
+      --border-color: #e2e8f0;
+      --text-muted: #64748b;
+      --sidebar-width: 280px;
+      --header-height: 70px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .sidebar-brand i {
+      margin-right: 0.75rem;
+      font-size: 2rem;
+    }
+
+    .sidebar-nav {
+      padding: 1rem 0;
+    }
+
+    .nav-section {
+      margin-bottom: 2rem;
+    }
+
+    .nav-section-title {
+      padding: 0 1.5rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .nav-item {
+      margin: 0.25rem 1rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .nav-link i {
+      margin-right: 0.75rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Header Styles */
+    .header {
+      position: fixed;
+      top: 0;
+      left: var(--sidebar-width);
+      right: 0;
+      height: var(--header-height);
+      background: white;
+      border-bottom: 1px solid var(--border-color);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--dark-color);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 1rem;
+      background: var(--light-color);
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .user-profile:hover {
+      background: var(--primary-light);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      margin-top: var(--header-height);
+      padding: 2rem;
+      min-height: calc(100vh - var(--header-height));
+    }
+
+    /* Breadcrumb */
+    .breadcrumb-container {
+      margin-bottom: 2rem;
+    }
+
+    .breadcrumb {
+      background: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .breadcrumb-item {
+      color: var(--text-muted);
+    }
+
+    .breadcrumb-item.active {
+      color: var(--dark-color);
+      font-weight: 500;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+      content: ">";
+      color: var(--text-muted);
+    }
+
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+
+    .stat-card.primary::before { background: var(--primary-color); }
+    .stat-card.success::before { background: var(--success-color); }
+    .stat-card.warning::before { background: var(--warning-color); }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .stat-content {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .stat-icon.primary { background: var(--primary-light); color: var(--primary-color); }
+    .stat-icon.success { background: var(--success-light); color: var(--success-color); }
+    .stat-icon.warning { background: var(--warning-light); color: var(--warning-color); }
+
+    .stat-info h6 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--dark-color);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-count {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .stat-count.primary { color: var(--primary-color); }
+    .stat-count.success { color: var(--success-color); }
+    .stat-count.warning { color: var(--warning-color); }
+
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--light-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--dark-color);
+      margin: 0;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+      border-radius: 0.5rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-outline-primary {
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      background: transparent;
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .btn-outline-info {
+      border: 1px solid var(--info-color);
+      color: var(--info-color);
+      background: transparent;
+    }
+
+    .btn-outline-info:hover {
+      background: var(--info-color);
+      color: white;
+    }
+
+    .btn-outline-danger {
+      border: 1px solid var(--danger-color);
+      color: var(--danger-color);
+      background: transparent;
+    }
+
+    .btn-outline-danger:hover {
+      background: var(--danger-color);
+      color: white;
+    }
+
+    .btn-outline-secondary {
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      background: transparent;
+    }
+
+    .btn-outline-secondary:hover {
+      background: var(--secondary-color);
+      color: white;
+      border-color: var(--secondary-color);
+    }
+
+    /* Form Controls */
+    .form-control,
+    .form-select {
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: var(--dark-color);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Filter Controls */
+    .filter-controls {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Table */
+    .table-container {
+      background: white;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border-color);
+    }
+
+    .table {
+      margin: 0;
+      border-collapse: collapse;
+    }
+
+    .table th {
+      background: var(--light-color);
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--dark-color);
+      border-bottom: 2px solid var(--border-color);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--dark-color);
+      vertical-align: middle;
+    }
+
+    .table tbody tr:hover {
+      background: var(--light-color);
+    }
+
+    .table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Article Image */
+    .article-image {
+      width: 80px;
+      height: 60px;
+      border-radius: 0.5rem;
+      object-fit: cover;
+      border: 2px solid var(--border-color);
+    }
+
+    /* Status Badges */
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-dipublikasikan {
+      background: var(--success-light);
+      color: var(--success-color);
+    }
+
+    .status-draft {
+      background: var(--warning-light);
+      color: var(--warning-color);
+    }
+
+    /* Category Badges */
+    .category-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .category-promo {
+      background: var(--danger-light);
+      color: var(--danger-color);
+    }
+
+    .category-tips {
+      background: var(--info-light);
+      color: var(--info-color);
+    }
+
+    .category-berita {
+      background: var(--primary-light);
+      color: var(--primary-color);
+    }
+
+    .category-resep {
+      background: var(--success-light);
+      color: var(--success-color);
+    }
+
+    .category-edukasi {
+      background: var(--warning-light);
+      color: var(--warning-color);
+    }
+
+    /* Modal */
+    .modal-content {
+      border-radius: 1rem;
+      border: none;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-header {
+      border-bottom: 1px solid var(--border-color);
+      padding: 1.5rem;
+    }
+
+    .modal-title {
+      font-weight: 600;
+      color: var(--dark-color);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-footer {
+      border-top: 1px solid var(--border-color);
+      padding: 1.5rem;
+    }
+
+    /* Image Preview */
+    .image-preview {
+      max-width: 200px;
+      max-height: 150px;
+      border-radius: 0.5rem;
+      border: 2px solid var(--border-color);
+      margin-top: 0.5rem;
+    }
+
+    /* Pagination */
+    .pagination {
+      margin: 0;
+    }
+
+    .page-link {
+      border: 1px solid var(--border-color);
+      color: var(--dark-color);
+      padding: 0.5rem 0.75rem;
+      margin: 0 0.125rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .page-link:hover {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      color: white;
+    }
+
+    .page-item.active .page-link {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      color: white;
+    }
+
+    .page-item.disabled .page-link {
+      color: var(--text-muted);
+      background: var(--light-color);
+      border-color: var(--border-color);
+    }
+
+    /* Footer */
+    .footer {
+      margin-left: var(--sidebar-width);
+      padding: 1.5rem 2rem;
+      background: white;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .header {
+        left: 0;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .footer {
+        margin-left: 0;
+      }
+
+      .filter-controls .row > div {
+        margin-bottom: 1rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card, .stat-card {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .stat-card:nth-child(1) { animation-delay: 0.1s; }
+    .stat-card:nth-child(2) { animation-delay: 0.2s; }
+    .stat-card:nth-child(3) { animation-delay: 0.3s; }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .action-buttons .btn {
+      padding: 0.375rem 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    /* Article Title */
+    .article-title {
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Tags */
+    .tag {
+      display: inline-block;
+      background: var(--light-color);
+      color: var(--text-muted);
+      padding: 0.125rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+      margin-right: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
+  </style>
 </head>
-<body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
-  <div class="loader-bg">
-    <div class="loader-track">
-      <div class="loader-fill"></div>
+
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <a href="../../../uas_workshopui/index.html" class="sidebar-brand">
+        <i class="fas fa-store"></i>
+        MiniMarket
+      </a>
     </div>
+    
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Main Navigation</div>
+        <div class="nav-item">
+          <a href="dashboard.html" class="nav-link">
+            <i class="fas fa-chart-line"></i>
+            Dashboard
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-produk.html" class="nav-link">
+            <i class="fas fa-box"></i>
+            Kelola Produk
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-transaksi.html" class="nav-link">
+            <i class="fas fa-receipt"></i>
+            Kelola Transaksi
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="history-transaksi.html" class="nav-link">
+            <i class="fas fa-history"></i>
+            History Transaksi
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-pengguna.html" class="nav-link">
+            <i class="fas fa-users"></i>
+            Kelola Pengguna
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-artikel.html" class="nav-link active">
+            <i class="fas fa-file-alt"></i>
+            Kelola Artikel
+          </a>
+        </div>
+      </div>
+    </nav>
   </div>
-  <nav class="pc-sidebar">
-    <div class="navbar-wrapper">
-      <div class="m-header">
-        <a href="dashboard.html" class="b-brand text-primary">
-          <img src="../assets/images/logo-dark.svg" class="img-fluid logo-lg" alt="logo">
-        </a>
-      </div>
-      <div class="navbar-content">
-        <ul class="pc-navbar">
-          <li class="pc-item pc-caption">
-            <label>Navigation</label>
-            <i class="ti ti-dashboard"></i>
-          </li>
-          <li class="pc-item">
-            <a href="dashboard.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-              <span class="pc-mtext">Dashboard</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="kelola-produk.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-box"></i></span>
-              <span class="pc-mtext">Kelola Produk</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="kelola-transaksi.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-receipt"></i></span>
-              <span class="pc-mtext">Kelola Transaksi</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="history-transaksi.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-history"></i></span>
-              <span class="pc-mtext">History Transaksi</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="kelola-pengguna.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-users"></i></span>
-              <span class="pc-mtext">Kelola Pengguna</span>
-            </a>
-          </li>
-          <li class="pc-item active">
-            <a href="kelola-artikel.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-file-text"></i></span>
-              <span class="pc-mtext">Kelola Artikel</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <h1 class="header-title">Kelola Artikel</h1>
     </div>
-  </nav>
-  <header class="pc-header">
-    <div class="header-wrapper">
-      <div class="me-auto pc-mob-drp">
-        <ul class="list-unstyled">
-          <li class="pc-h-item pc-sidebar-collapse">
-            <a href="#" class="pc-head-link ms-0" id="sidebar-hide">
-              <i class="ti ti-menu-2"></i>
-            </a>
-          </li>
-          <li class="pc-h-item pc-sidebar-popup">
-            <a href="#" class="pc-head-link ms-0" id="mobile-collapse">
-              <i class="ti ti-menu-2"></i>
-            </a>
-          </li>
-          <li class="dropdown pc-h-item d-inline-flex d-md-none">
-            <a class="pc-head-link dropdown-toggle arrow-none m-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-              <i class="ti ti-search"></i>
-            </a>
-            <div class="dropdown-menu pc-h-dropdown drp-search">
-              <form class="px-3">
-                <div class="form-group mb-0 d-flex align-items-center">
-                  <i data-feather="search"></i>
-                  <input type="search" class="form-control border-0 shadow-none" placeholder="Search here. . .">
-                </div>
-              </form>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="ms-auto">
-        <ul class="list-unstyled">
-          <li class="dropdown pc-h-item header-user-profile">
-            <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" data-bs-auto-close="outside" aria-expanded="false">
-              <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar">
-              <span>Admin</span>
-            </a>
-            <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
-              <div class="dropdown-header">
-                <div class="d-flex mb-1">
-                  <div class="flex-shrink-0">
-                    <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar wid-35">
-                  </div>
-                  <div class="flex-grow-1 ms-3">
-                    <h6 class="mb-1">Admin</h6>
-                    <span>Administrator</span>
-                  </div>
-                  <a href="#!" class="pc-head-link bg-transparent" id="logout-icon">
-                    <i class="ti ti-power text-danger"></i>
-                  </a>
-                </div>
-              </div>
-              <div class="dropdown-divider"></div>
-              <a href="#!" class="dropdown-item" id="logout-option">
-                <i class="ti ti-power"></i>
-                <span>Logout</span>
-              </a>
-            </div>
-          </li>
-        </ul>
+    <div class="header-right">
+      <div class="user-profile" onclick="handleLogout()">
+        <div class="user-avatar">A</div>
+        <div>
+          <div style="font-weight: 600; font-size: 0.875rem;">Admin</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Administrator</div>
+        </div>
+        <i class="fas fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
       </div>
     </div>
   </header>
-  <div class="pc-container">
-    <div class="pc-content">
-      <div class="page-header">
-        <div class="page-block">
-          <div class="row align-items-center">
-            <div class="col-md-12">
-              <div class="page-header-title">
-                <h5 class="m-b-10">Kelola Artikel</h5>
-              </div>
-              <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
-                <li class="breadcrumb-item" aria-current="page">Kelola Artikel</li>
-              </ul>
-            </div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Kelola Artikel</li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Article Statistics -->
+    <div class="stats-grid">
+      <div class="stat-card primary">
+        <div class="stat-content">
+          <div class="stat-icon primary">
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <div class="stat-info">
+            <h6>Total Artikel</h6>
+            <p class="stat-count primary" id="totalArticles">8</p>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="card">
-            <div class="card-header">
-              <h5>Daftar Artikel</h5>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#articleModal" id="add-article-btn">
-                <i class="ti ti-plus"></i> Tambah Artikel
-              </button>
-            </div>
-            <div class="card-body">
-              <div class="row mb-3">
-                <div class="col-md-6">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Cari artikel..." id="searchArticle">
-                    <button class="btn btn-outline-secondary" type="button" id="searchArticleBtn">
-                      <i class="ti ti-search"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <select class="form-select" id="filterArticleCategory">
-                    <option value="Semua Kategori" selected>Semua Kategori</option>
-                    <option>Promo</option>
-                    <option>Tips & Trik</option>
-                    <option>Berita</option>
-                    <option>Resep</option>
-                    <option>Edukasi</option>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <select class="form-select" id="filterArticleStatus">
-                    <option value="Semua Status" selected>Semua Status</option>
-                    <option value="Dipublikasikan">Dipublikasikan</option>
-                    <option value="Draft">Draft</option>
-                  </select>
-                </div>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Gambar</th>
-                      <th>Judul</th>
-                      <th>Kategori</th>
-                      <th>Penulis</th>
-                      <th>Tanggal</th>
-                      <th>Status</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody id="articleTableBody">
-                    </tbody>
-                </table>
-              </div>
-              <div class="row mt-3">
-                <div class="col-sm-12 col-md-5">
-                  <div class="dataTables_info" id="paginationArticleInfo">Menampilkan 0 sampai 0 dari 0 data</div>
-                </div>
-                <div class="col-sm-12 col-md-7">
-                  <div class="dataTables_paginate">
-                    <ul class="pagination justify-content-end" id="paginationArticleControls">
-                      </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+
+      <div class="stat-card success">
+        <div class="stat-content">
+          <div class="stat-icon success">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="stat-info">
+            <h6>Dipublikasikan</h6>
+            <p class="stat-count success" id="publishedArticles">6</p>
           </div>
         </div>
-        
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                      <div class="avtar avtar-lg bg-light-primary">
-                        <i class="ti ti-file-text text-primary"></i>
-                      </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                      <h6 class="mb-0">Total Artikel</h6>
-                      <p class="text-muted mb-0" id="totalArticlesStat">0 Artikel</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                      <div class="avtar avtar-lg bg-light-success">
-                        <i class="ti ti-check text-success"></i>
-                      </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                      <h6 class="mb-0">Artikel Dipublikasikan</h6>
-                      <p class="text-muted mb-0" id="publishedArticlesStat">0 Artikel</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                      <div class="avtar avtar-lg bg-light-warning">
-                        <i class="ti ti-pencil text-warning"></i>
-                      </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                      <h6 class="mb-0">Artikel Draft</h6>
-                      <p class="text-muted mb-0" id="draftArticlesStat">0 Artikel</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      </div>
+
+      <div class="stat-card warning">
+        <div class="stat-content">
+          <div class="stat-icon warning">
+            <i class="fas fa-edit"></i>
+          </div>
+          <div class="stat-info">
+            <h6>Draft</h6>
+            <p class="stat-count warning" id="draftArticles">2</p>
           </div>
         </div>
       </div>
     </div>
-  </div>
+
+    <!-- Filter Controls -->
+    <div class="filter-controls">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Cari artikel..." id="searchArticle">
+            <button class="btn btn-outline-secondary" type="button" id="searchButton">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" id="filterCategory">
+            <option value="">Semua Kategori</option>
+            <option value="Promo">Promo</option>
+            <option value="Tips & Trik">Tips & Trik</option>
+            <option value="Berita">Berita</option>
+            <option value="Resep">Resep</option>
+            <option value="Edukasi">Edukasi</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" id="filterStatus">
+            <option value="">Semua Status</option>
+            <option value="Dipublikasikan">Dipublikasikan</option>
+            <option value="Draft">Draft</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#articleModal" id="addArticleBtn">
+            <i class="fas fa-plus"></i> Tambah
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Articles Table -->
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Gambar</th>
+            <th>Judul</th>
+            <th>Kategori</th>
+            <th>Penulis</th>
+            <th>Tanggal</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="articleTableBody">
+          <!-- Articles will be rendered here -->
+        </tbody>
+      </table>
+      
+      <!-- Pagination -->
+      <div class="d-flex justify-content-between align-items-center p-3">
+        <div>
+          <span id="paginationInfo" class="text-muted">Menampilkan 0 sampai 0 dari 0 data</span>
+        </div>
+        <nav aria-label="Article pagination">
+          <ul class="pagination" id="paginationControls">
+            <!-- Pagination controls will be rendered here -->
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </main>
+
+  <!-- Article Modal -->
   <div class="modal fade" id="articleModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
@@ -294,89 +892,96 @@
         </div>
         <div class="modal-body">
           <form id="articleForm">
-            <input type="hidden" id="editArticleId"> <div class="row mb-3">
+            <input type="hidden" id="editArticleId">
+            <div class="row g-3">
               <div class="col-md-8">
-                <label for="articleTitle" class="form-label">Judul Artikel</label>
+                <label for="articleTitle" class="form-label">Judul Artikel <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="articleTitle" required>
               </div>
               <div class="col-md-4">
-                <label for="articleCategory" class="form-label">Kategori</label>
+                <label for="articleCategory" class="form-label">Kategori <span class="text-danger">*</span></label>
                 <select class="form-select" id="articleCategory" required>
                   <option value="">Pilih Kategori</option>
-                  <option>Promo</option>
-                  <option>Tips & Trik</option>
-                  <option>Berita</option>
-                  <option>Resep</option>
-                  <option>Edukasi</option>
+                  <option value="Promo">Promo</option>
+                  <option value="Tips & Trik">Tips & Trik</option>
+                  <option value="Berita">Berita</option>
+                  <option value="Resep">Resep</option>
+                  <option value="Edukasi">Edukasi</option>
                 </select>
               </div>
-            </div>
-            <div class="mb-3">
-              <label for="articleImage" class="form-label">Gambar Artikel</label>
-              <input class="form-control" type="file" id="articleImage">
-              <div class="form-text">Format: JPG, PNG. Maks: 2MB</div>
-              <img id="articleImagePreview" src="" alt="Article Image Preview" class="img-fluid mt-2" style="max-width: 150px; display: none;">
-            </div>
-            <div class="mb-3">
-              <label for="articleSummary" class="form-label">Ringkasan</label>
-              <textarea class="form-control" id="articleSummary" rows="2" required></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="articleContent" class="form-label">Konten Artikel</label>
-              <textarea class="form-control" id="articleContent" rows="10" required></textarea>
-            </div>
-            <div class="row mb-3">
+              <div class="col-12">
+                <label for="articleImage" class="form-label">Gambar Artikel</label>
+                <input class="form-control" type="file" id="articleImage" accept="image/*">
+                <div class="form-text">Format: JPG, PNG. Maksimal: 2MB</div>
+                <img id="articleImagePreview" src="/placeholder.svg" alt="Preview" class="image-preview" style="display: none;">
+              </div>
+              <div class="col-12">
+                <label for="articleSummary" class="form-label">Ringkasan <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="articleSummary" rows="3" required placeholder="Ringkasan singkat artikel..."></textarea>
+              </div>
+              <div class="col-12">
+                <label for="articleContent" class="form-label">Konten Artikel <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="articleContent" rows="8" required placeholder="Tulis konten artikel lengkap di sini..."></textarea>
+              </div>
               <div class="col-md-6">
-                <label for="articleAuthor" class="form-label">Penulis</label>
+                <label for="articleAuthor" class="form-label">Penulis <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="articleAuthor" value="Admin" required>
               </div>
               <div class="col-md-6">
-                <label for="articleTags" class="form-label">Tags (pisahkan dengan koma)</label>
-                <input type="text" class="form-control" id="articleTags">
+                <label for="articleTags" class="form-label">Tags</label>
+                <input type="text" class="form-control" id="articleTags" placeholder="pisahkan dengan koma">
+                <div class="form-text">Contoh: kesehatan, tips, makanan</div>
               </div>
-            </div>
-            <div class="mb-3">
-              <label for="articleStatus" class="form-label">Status</label>
-              <select class="form-select" id="articleStatus" required>
-                <option value="Dipublikasikan">Publikasikan</option>
-                <option value="Draft">Simpan sebagai Draft</option>
-              </select>
+              <div class="col-md-6">
+                <label for="articleStatus" class="form-label">Status <span class="text-danger">*</span></label>
+                <select class="form-select" id="articleStatus" required>
+                  <option value="Dipublikasikan">Publikasikan</option>
+                  <option value="Draft">Simpan sebagai Draft</option>
+                </select>
+              </div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-primary" id="saveArticleBtn" form="articleForm">Simpan</button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary" id="saveArticleBtn" form="articleForm">
+            <i class="fas fa-save"></i> Simpan
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <footer class="pc-footer">
-    <div class="footer-wrapper container-fluid">
-      <div class="row">
-        <div class="col-sm my-1">
-          <p class="m-0">MiniMarket Admin Dashboard &copy; 2025</p>
+  <!-- Article View Modal -->
+  <div class="modal fade" id="articleViewModal" tabindex="-1" aria-labelledby="articleViewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="articleViewModalLabel">Detail Artikel</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="articleViewContent">
+            <!-- Article content will be displayed here -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 MiniMarket Professional Dashboard. All rights reserved.</p>
   </footer>
 
-  <script src="../assets/js/plugins/popper.min.js"></script>
-  <script src="../assets/js/plugins/simplebar.min.js"></script>
-  <script src="../assets/js/plugins/bootstrap.min.js"></script>
-  <script src="../assets/js/fonts/custom-font.js"></script>
-  <script src="../assets/js/pcoded.js"></script>
-  <script src="../assets/js/plugins/feather.min.js"></script>
-
-  <script>layout_change('light');</script>
-  <script>change_box_container('false');</script>
-  <script>layout_rtl_change('false');</script>
-  <script>preset_change("preset-1");</script>
-  <script>font_change("Public-Sans");</script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // --- Article Management JavaScript ---
+    // Sample article data
     let articles = [{
       id: 'ART001',
       image: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
@@ -467,15 +1072,17 @@
       tags: ['CSR', 'pendidikan', 'sosial', 'berita']
     }, ];
 
-    let currentEditArticleId = null; // To store the ID of the article being edited
+    let currentEditArticleId = null;
+    let currentPage = 1;
+    const rowsPerPage = 6;
 
+    // DOM Elements
     const articleTableBody = document.getElementById('articleTableBody');
     const articleForm = document.getElementById('articleForm');
     const saveArticleBtn = document.getElementById('saveArticleBtn');
     const articleModalLabel = document.getElementById('articleModalLabel');
-    const addArticleBtn = document.getElementById('add-article-btn');
+    const addArticleBtn = document.getElementById('addArticleBtn');
 
-    // Form inputs
     const articleTitleInput = document.getElementById('articleTitle');
     const articleCategorySelect = document.getElementById('articleCategory');
     const articleImageInput = document.getElementById('articleImage');
@@ -485,76 +1092,74 @@
     const articleAuthorInput = document.getElementById('articleAuthor');
     const articleTagsInput = document.getElementById('articleTags');
     const articleStatusSelect = document.getElementById('articleStatus');
-    const editArticleIdInput = document.getElementById('editArticleId'); // Hidden input for edit ID
 
-
-    // Filter and Search elements
     const searchArticleInput = document.getElementById('searchArticle');
-    const searchArticleButton = document.getElementById('searchArticleBtn');
-    const filterArticleCategorySelect = document.getElementById('filterArticleCategory');
-    const filterArticleStatusSelect = document.getElementById('filterArticleStatus');
+    const searchButton = document.getElementById('searchButton');
+    const filterCategorySelect = document.getElementById('filterCategory');
+    const filterStatusSelect = document.getElementById('filterStatus');
 
-    // Stats elements
-    const totalArticlesStat = document.getElementById('totalArticlesStat');
-    const publishedArticlesStat = document.getElementById('publishedArticlesStat');
-    const draftArticlesStat = document.getElementById('draftArticlesStat');
-
-    let currentArticlePage = 1;
-    const articlesPerPage = 8; // Number of articles per page
-
-    // Function to render articles in the table
+    // Render articles in table
     function renderArticles(dataToRender = articles) {
-      articleTableBody.innerHTML = ''; // Clear existing rows
-      const startIndex = (currentArticlePage - 1) * articlesPerPage;
-      const endIndex = startIndex + articlesPerPage;
+      articleTableBody.innerHTML = '';
+      const startIndex = (currentPage - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
       const paginatedArticles = dataToRender.slice(startIndex, endIndex);
 
       if (paginatedArticles.length === 0 && dataToRender.length > 0) {
-        currentArticlePage = Math.max(1, currentArticlePage - 1);
+        currentPage = Math.max(1, currentPage - 1);
         renderArticles(dataToRender);
         return;
       }
 
       paginatedArticles.forEach(article => {
         const row = articleTableBody.insertRow();
-        row.dataset.articleId = article.id; // Store article ID on the row
+        row.dataset.articleId = article.id;
 
-        let statusBadgeClass = '';
-        if (article.status === 'Dipublikasikan') {
-          statusBadgeClass = 'bg-success';
-        } else if (article.status === 'Draft') {
-          statusBadgeClass = 'bg-secondary';
+        let statusClass = article.status === 'Dipublikasikan' ? 'status-dipublikasikan' : 'status-draft';
+        let categoryClass = '';
+        switch (article.category) {
+          case 'Promo': categoryClass = 'category-promo'; break;
+          case 'Tips & Trik': categoryClass = 'category-tips'; break;
+          case 'Berita': categoryClass = 'category-berita'; break;
+          case 'Resep': categoryClass = 'category-resep'; break;
+          case 'Edukasi': categoryClass = 'category-edukasi'; break;
         }
 
         row.innerHTML = `
-          <td>${article.id}</td>
-          <td><img src="${article.image}" alt="article" class="img-fluid" width="80"></td>
-          <td>${article.title}</td>
-          <td>${article.category}</td>
+          <td><strong>${article.id}</strong></td>
+          <td><img src="${article.image}" alt="article" class="article-image"></td>
+          <td>
+            <div class="article-title" title="${article.title}">
+              <strong>${article.title}</strong>
+            </div>
+            <small class="text-muted">${article.summary}</small>
+          </td>
+          <td><span class="category-badge ${categoryClass}">${article.category}</span></td>
           <td>${article.author}</td>
           <td>${article.date}</td>
-          <td><span class="badge ${statusBadgeClass}">${article.status}</span></td>
+          <td><span class="status-badge ${statusClass}">${article.status}</span></td>
           <td>
-            <div class="btn-group">
-              <button type="button" class="btn btn-sm btn-outline-primary edit-article-btn" data-bs-toggle="modal" data-bs-target="#articleModal">
-                <i class="ti ti-edit"></i>
+            <div class="action-buttons">
+              <button type="button" class="btn btn-outline-primary btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#articleModal" title="Edit">
+                <i class="fas fa-edit"></i>
               </button>
-              <button type="button" class="btn btn-sm btn-outline-info view-article-btn">
-                <i class="ti ti-eye"></i>
+              <button type="button" class="btn btn-outline-info btn-sm view-btn" data-bs-toggle="modal" data-bs-target="#articleViewModal" title="Lihat">
+                <i class="fas fa-eye"></i>
               </button>
-              <button type="button" class="btn btn-sm btn-outline-danger delete-article-btn">
-                <i class="ti ti-trash"></i>
+              <button type="button" class="btn btn-outline-danger btn-sm delete-btn" title="Hapus">
+                <i class="fas fa-trash"></i>
               </button>
             </div>
           </td>
         `;
       });
-      updateArticlePaginationControls(dataToRender.length);
-      updateArticlePaginationInfo(dataToRender.length);
-      updateArticleStatistics(dataToRender);
+
+      updatePaginationControls(dataToRender.length);
+      updatePaginationInfo(dataToRender.length);
+      updateStatistics(dataToRender);
     }
 
-    // Function to generate a unique article ID
+    // Generate unique article ID
     function generateArticleId() {
       const prefix = 'ART';
       const existingIds = articles.map(a => parseInt(a.id.replace(prefix, '')));
@@ -563,9 +1168,9 @@
       return prefix + String(newIdNum).padStart(3, '0');
     }
 
-    // Function to handle form submission (Add/Edit article)
+    // Handle form submission
     articleForm.addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent default form submission
+      event.preventDefault();
 
       const articleTitle = articleTitleInput.value;
       const articleCategory = articleCategorySelect.value;
@@ -574,9 +1179,8 @@
       const articleAuthor = articleAuthorInput.value;
       const articleTags = articleTagsInput.value.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
       const articleStatus = articleStatusSelect.value;
-      let articleImage = articleImagePreview.src || ''; // Use current preview if no new image is selected
+      let articleImage = articleImagePreview.src || '/placeholder.svg?height=60&width=80';
 
-      // Handle image upload if a new file is selected
       const file = articleImageInput.files[0];
       if (file) {
         const reader = new FileReader();
@@ -592,14 +1196,17 @@
 
     function processArticleSave(articleTitle, articleCategory, articleSummary, articleContent, articleAuthor, articleTags, articleStatus, articleImage) {
       const today = new Date();
-      const articleDate = today.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/\./g, '');
+      const articleDate = today.toLocaleDateString('id-ID', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      });
 
       if (currentEditArticleId) {
-        // Editing an existing article
         const articleIndex = articles.findIndex(a => a.id === currentEditArticleId);
         if (articleIndex !== -1) {
           articles[articleIndex] = {
-            ...articles[articleIndex], // Keep existing properties if not updated
+            ...articles[articleIndex],
             title: articleTitle,
             category: articleCategory,
             summary: articleSummary,
@@ -608,16 +1215,15 @@
             tags: articleTags,
             status: articleStatus,
             image: articleImage,
-            date: articleDate // Update date on edit as well
+            date: articleDate
           };
-          alert('Artikel berhasil diperbarui!');
+          showToast('Artikel berhasil diperbarui!', 'success');
         }
       } else {
-        // Adding a new article
         const newArticleId = generateArticleId();
         const newArticle = {
           id: newArticleId,
-          image: articleImage || 'https://via.placeholder.com/80x80/EEEEEE/888888?text=No+Image', // Default placeholder
+          image: articleImage,
           title: articleTitle,
           category: articleCategory,
           author: articleAuthor,
@@ -628,15 +1234,15 @@
           tags: articleTags
         };
         articles.push(newArticle);
-        alert('Artikel berhasil ditambahkan!');
+        showToast('Artikel berhasil ditambahkan!', 'success');
       }
 
-      $('#articleModal').modal('hide'); // Close the modal
-      resetArticleForm(); // Reset form fields
-      applyArticleFiltersAndSorting(); // Re-render articles after add/edit
+      bootstrap.Modal.getInstance(document.getElementById('articleModal')).hide();
+      resetArticleForm();
+      applyFiltersAndSorting();
     }
 
-    // Function to handle image preview for article image
+    // Handle image preview
     articleImageInput.addEventListener('change', function() {
       const file = this.files[0];
       if (file) {
@@ -652,28 +1258,27 @@
       }
     });
 
-    // Function to reset the article form
+    // Reset form
     function resetArticleForm() {
       articleForm.reset();
       articleModalLabel.textContent = 'Tambah Artikel';
-      saveArticleBtn.textContent = 'Simpan';
+      saveArticleBtn.innerHTML = '<i class="fas fa-save"></i> Simpan';
       currentEditArticleId = null;
-      articleAuthorInput.value = 'Admin'; // Default author
+      articleAuthorInput.value = 'Admin';
       articleImagePreview.src = '';
       articleImagePreview.style.display = 'none';
-      articleImageInput.value = ''; // Clear file input
     }
 
-    // Event listener for "Tambah Artikel" button
+    // Add article button
     addArticleBtn.addEventListener('click', function() {
       resetArticleForm();
     });
 
-    // Event listener for "Edit", "View", and "Delete" buttons (delegated to parent table)
+    // Handle edit, view, and delete buttons
     articleTableBody.addEventListener('click', function(event) {
-      const editBtn = event.target.closest('.edit-article-btn');
-      const viewBtn = event.target.closest('.view-article-btn');
-      const deleteBtn = event.target.closest('.delete-article-btn');
+      const editBtn = event.target.closest('.edit-btn');
+      const viewBtn = event.target.closest('.view-btn');
+      const deleteBtn = event.target.closest('.delete-btn');
 
       if (editBtn) {
         const row = editBtn.closest('tr');
@@ -682,7 +1287,7 @@
 
         if (article) {
           articleModalLabel.textContent = 'Edit Artikel';
-          saveArticleBtn.textContent = 'Perbarui';
+          saveArticleBtn.innerHTML = '<i class="fas fa-save"></i> Perbarui';
           currentEditArticleId = article.id;
 
           articleTitleInput.value = article.title;
@@ -700,33 +1305,65 @@
             articleImagePreview.src = '';
             articleImagePreview.style.display = 'none';
           }
-          // Note: Cannot set value of file input for security reasons
           articleImageInput.value = '';
         }
       } else if (viewBtn) {
         const row = viewBtn.closest('tr');
         const articleId = row.dataset.articleId;
         const article = articles.find(a => a.id === articleId);
+        
         if (article) {
-          alert(`Judul: ${article.title}\nPenulis: ${article.author}\nTanggal: ${article.date}\nStatus: ${article.status}\n\nRingkasan:\n${article.summary}\n\nKonten:\n${article.content}`);
-          // For a real app, you'd open a new modal or page to show the full article
+          showArticleView(article);
         }
       } else if (deleteBtn) {
         const row = deleteBtn.closest('tr');
         const articleId = row.dataset.articleId;
-        if (confirm(`Apakah Anda yakin ingin menghapus artikel dengan ID ${articleId}?`)) {
+        const article = articles.find(a => a.id === articleId);
+        
+        if (confirm(`Apakah Anda yakin ingin menghapus artikel "${article.title}"?`)) {
           articles = articles.filter(a => a.id !== articleId);
-          alert('Artikel berhasil dihapus!');
-          applyArticleFiltersAndSorting(); // Re-render articles after deletion
+          showToast('Artikel berhasil dihapus!', 'success');
+          applyFiltersAndSorting();
         }
       }
     });
 
-    // --- Search, Filter, and Stats for Articles ---
-    function applyArticleFiltersAndSorting() {
+    // Show article view
+    function showArticleView(article) {
+      const viewContent = document.getElementById('articleViewContent');
+      const tagsHtml = article.tags ? article.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : '';
+      
+      viewContent.innerHTML = `
+        <div class="mb-3">
+          <img src="${article.image}" alt="${article.title}" class="img-fluid rounded" style="max-height: 300px; width: 100%; object-fit: cover;">
+        </div>
+        <h4>${article.title}</h4>
+        <div class="mb-3">
+          <span class="badge bg-primary me-2">${article.category}</span>
+          <span class="badge bg-${article.status === 'Dipublikasikan' ? 'success' : 'warning'}">${article.status}</span>
+        </div>
+        <p class="text-muted mb-3">
+          <i class="fas fa-user me-1"></i> ${article.author} | 
+          <i class="fas fa-calendar me-1"></i> ${article.date}
+        </p>
+        <div class="mb-3">
+          <h6>Ringkasan:</h6>
+          <p>${article.summary}</p>
+        </div>
+        <div class="mb-3">
+          <h6>Konten:</h6>
+          <p>${article.content}</p>
+        </div>
+        ${tagsHtml ? `<div class="mb-3"><h6>Tags:</h6>${tagsHtml}</div>` : ''}
+      `;
+      
+      document.getElementById('articleViewModalLabel').textContent = `Detail Artikel - ${article.id}`;
+    }
+
+    // Search, filter, and sort
+    function applyFiltersAndSorting() {
       let filteredArticles = [...articles];
 
-      // Search
       const searchTerm = searchArticleInput.value.toLowerCase().trim();
       if (searchTerm) {
         filteredArticles = filteredArticles.filter(article =>
@@ -737,48 +1374,30 @@
         );
       }
 
-      // Filter by Category
-      const selectedCategory = filterArticleCategorySelect.value;
-      if (selectedCategory !== 'Semua Kategori') {
-        filteredArticles = filteredArticles.filter(article =>
-          article.category === selectedCategory
-        );
+      const selectedCategory = filterCategorySelect.value;
+      if (selectedCategory) {
+        filteredArticles = filteredArticles.filter(article => article.category === selectedCategory);
       }
 
-      // Filter by Status
-      const selectedStatus = filterArticleStatusSelect.value;
-      if (selectedStatus !== 'Semua Status') {
-        filteredArticles = filteredArticles.filter(article =>
-          article.status === selectedStatus
-        );
+      const selectedStatus = filterStatusSelect.value;
+      if (selectedStatus) {
+        filteredArticles = filteredArticles.filter(article => article.status === selectedStatus);
       }
-
-      // No sorting applied in original HTML, but you can add it here if needed
-      // e.g., filteredArticles.sort((a, b) => a.title.localeCompare(b.title));
 
       renderArticles(filteredArticles);
     }
 
-    searchArticleButton.addEventListener('click', applyArticleFiltersAndSorting);
-    searchArticleInput.addEventListener('keyup', applyArticleFiltersAndSorting);
-    filterArticleCategorySelect.addEventListener('change', applyArticleFiltersAndSorting);
-    filterArticleStatusSelect.addEventListener('change', applyArticleFiltersAndSorting);
-
-    // --- Article Statistics Update Functions ---
-    function updateArticleStatistics(articlesData) {
-      totalArticlesStat.textContent = `${articlesData.length} Artikel`;
-
-      const publishedCount = articlesData.filter(article => article.status === 'Dipublikasikan').length;
-      publishedArticlesStat.textContent = `${publishedCount} Artikel`;
-
-      const draftCount = articlesData.filter(article => article.status === 'Draft').length;
-      draftArticlesStat.textContent = `${draftCount} Artikel`;
+    // Update statistics
+    function updateStatistics(articlesData) {
+      document.getElementById('totalArticles').textContent = articlesData.length;
+      document.getElementById('publishedArticles').textContent = articlesData.filter(a => a.status === 'Dipublikasikan').length;
+      document.getElementById('draftArticles').textContent = articlesData.filter(a => a.status === 'Draft').length;
     }
 
-    // --- Pagination functionality for Articles ---
-    function updateArticlePaginationControls(totalItems) {
-      const totalPages = Math.ceil(totalItems / articlesPerPage);
-      const paginationControls = document.getElementById('paginationArticleControls');
+    // Pagination
+    function updatePaginationControls(totalItems) {
+      const totalPages = Math.ceil(totalItems / rowsPerPage);
+      const paginationControls = document.getElementById('paginationControls');
       paginationControls.innerHTML = '';
 
       const createPageItem = (pageNumber, text, isDisabled, isActive) => {
@@ -794,119 +1413,85 @@
         a.addEventListener('click', (e) => {
           e.preventDefault();
           if (!isDisabled && !isActive) {
-            currentArticlePage = pageNumber;
-            applyArticleFiltersAndSorting();
+            currentPage = pageNumber;
+            applyFiltersAndSorting();
           }
         });
         li.appendChild(a);
         return li;
       };
 
-      // Previous button
-      paginationControls.appendChild(createPageItem(currentArticlePage - 1, 'Previous', currentArticlePage === 1, false));
+      paginationControls.appendChild(createPageItem(currentPage - 1, 'Previous', currentPage === 1, false));
 
-      // Page numbers
       for (let i = 1; i <= totalPages; i++) {
-        paginationControls.appendChild(createPageItem(i, i, false, i === currentArticlePage));
+        paginationControls.appendChild(createPageItem(i, i, false, i === currentPage));
       }
 
-      // Next button
-      paginationControls.appendChild(createPageItem(currentArticlePage + 1, 'Next', currentArticlePage === totalPages || totalPages === 0, false));
+      paginationControls.appendChild(createPageItem(currentPage + 1, 'Next', currentPage === totalPages || totalPages === 0, false));
     }
 
-    function updateArticlePaginationInfo(totalItems) {
-      const paginationInfo = document.getElementById('paginationArticleInfo');
-      const startIndex = (currentArticlePage - 1) * articlesPerPage + 1;
-      const endIndex = Math.min(startIndex + articlesPerPage - 1, totalItems);
+    function updatePaginationInfo(totalItems) {
+      const paginationInfo = document.getElementById('paginationInfo');
+      const startIndex = (currentPage - 1) * rowsPerPage + 1;
+      const endIndex = Math.min(startIndex + rowsPerPage - 1, totalItems);
       paginationInfo.textContent = `Menampilkan ${totalItems === 0 ? 0 : startIndex} sampai ${endIndex} dari ${totalItems} data`;
     }
 
-
-    // --- Initial Load and Authentication ---
-    document.addEventListener('DOMContentLoaded', () => {
-      applyArticleFiltersAndSorting(); // Initial render of articles
-      checkUserAuthentication();
-
-      // Event listeners for logout
-      const logoutIcon = document.querySelector('#logout-icon');
-      if (logoutIcon) {
-        logoutIcon.addEventListener('click', function(e) {
-          e.preventDefault();
-          handleLogout();
-        });
+    // Toast notification
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.style.position = 'fixed';
+      toast.style.top = '20px';
+      toast.style.right = '20px';
+      toast.style.padding = '15px 25px';
+      toast.style.borderRadius = '0.5rem';
+      toast.style.color = 'white';
+      toast.style.fontWeight = '500';
+      toast.style.zIndex = '9999';
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(-20px)';
+      toast.style.transition = 'all 0.3s ease';
+      
+      if (type === 'success') {
+        toast.style.background = 'var(--success-color)';
+      } else if (type === 'error') {
+        toast.style.background = 'var(--danger-color)';
       }
+      
+      toast.textContent = message;
+      document.body.appendChild(toast);
 
-      const logoutOption = document.querySelector('#logout-option');
-      if (logoutOption) {
-        logoutOption.addEventListener('click', function(e) {
-          e.preventDefault();
-          handleLogout();
-        });
-      }
-    });
-
-    // --- Functions for logout and user authentication (from your original commented out code) ---
-    function handleLogout() {
-      if (confirm('Are you sure you want to logout?')) {
-        localStorage.removeItem('minimarket_current_user');
-        showLogoutMessage();
-        setTimeout(() => {
-          window.location.href = '../pages/login.html';
-        }, 1000);
-      }
-    }
-
-    function showLogoutMessage() {
-      let toast = document.getElementById('logoutToast');
-      if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'logoutToast';
-        toast.style.position = 'fixed';
-        toast.style.top = '20px';
-        toast.style.right = '20px';
-        toast.style.backgroundColor = '#d1e7dd';
-        toast.style.color = '#0f5132';
-        toast.style.padding = '15px 25px';
-        toast.style.borderRadius = '5px';
-        toast.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
-        toast.style.zIndex = '9999';
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(-20px)';
-        toast.style.transition = 'opacity 0.3s, transform 0.3s';
-        toast.textContent = 'Logging out...';
-        document.body.appendChild(toast);
-      }
       setTimeout(() => {
         toast.style.opacity = '1';
         toast.style.transform = 'translateY(0)';
       }, 100);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+          document.body.removeChild(toast);
+        }, 300);
+      }, 3000);
     }
 
-    function checkUserAuthentication() {
-      const currentUser = JSON.parse(localStorage.getItem('minimarket_current_user'));
-      if (!currentUser) {
-        window.location.href = '../pages/login.html';
-      } else {
-        updateUserInfo(currentUser);
+    // Event listeners
+    searchButton.addEventListener('click', applyFiltersAndSorting);
+    searchArticleInput.addEventListener('keyup', applyFiltersAndSorting);
+    filterCategorySelect.addEventListener('change', applyFiltersAndSorting);
+    filterStatusSelect.addEventListener('change', applyFiltersAndSorting);
+
+    // Logout functionality
+    function handleLogout() {
+      if (confirm('Apakah Anda yakin ingin logout?')) {
+      window.location.href = 'login.html';
       }
     }
 
-    function updateUserInfo(user) {
-      const userNameElements = document.querySelectorAll('.header-user-profile span');
-      const userNameInDropdown = document.querySelector('.dropdown-user-profile h6');
-      if (userNameElements.length > 0) {
-        userNameElements.forEach(element => {
-          element.textContent = user.name || 'User';
-        });
-      }
-      if (userNameInDropdown) {
-        userNameInDropdown.textContent = user.name || 'User';
-      }
-      const userRoleElement = document.querySelector('.dropdown-user-profile span');
-      if (userRoleElement) {
-        userRoleElement.textContent = user.role || 'User';
-      }
-    }
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      applyFiltersAndSorting();
+    });
   </script>
 </body>
 </html>

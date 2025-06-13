@@ -1,518 +1,1027 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- [Head] start -->
-
 <head>
   <title>MiniMarket - History Transaksi</title>
-  <!-- [Meta] -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="MiniMarket Admin Dashboard">
-  <meta name="keywords" content="admin, dashboard, minimarket, inventory, sales">
-  <meta name="author" content="CodedThemes">
+  <meta name="description" content="MiniMarket Professional Transaction History">
+  <meta name="keywords" content="admin, dashboard, minimarket, history, transactions">
+  <meta name="author" content="MiniMarket">
 
-  <!-- [Favicon] icon -->
-  <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon">
-  <!-- [Google Font] Family -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" id="main-font-link">
-  <!-- [Tabler Icons] https://tablericons.com -->
-  <link rel="stylesheet" href="../assets/fonts/tabler-icons.min.css">
-  <!-- [Feather Icons] https://feathericons.com -->
-  <link rel="stylesheet" href="../assets/fonts/feather.css">
-  <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
-  <link rel="stylesheet" href="../assets/fonts/fontawesome.css">
-  <!-- [Material Icons] https://fonts.google.com/icons -->
-  <link rel="stylesheet" href="../assets/fonts/material.css">
-  <!-- [Template CSS Files] -->
-  <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link">
-  <link rel="stylesheet" href="../assets/css/style-preset.css">
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏪</text></svg>" type="image/svg+xml">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-light: #dbeafe;
+      --secondary-color: #64748b;
+      --success-color: #059669;
+      --success-light: #d1fae5;
+      --warning-color: #d97706;
+      --warning-light: #fef3c7;
+      --danger-color: #dc2626;
+      --danger-light: #fee2e2;
+      --info-color: #0891b2;
+      --info-light: #cffafe;
+      --dark-color: #1e293b;
+      --light-color: #f8fafc;
+      --border-color: #e2e8f0;
+      --text-muted: #64748b;
+      --sidebar-width: 280px;
+      --header-height: 70px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .sidebar-brand i {
+      margin-right: 0.75rem;
+      font-size: 2rem;
+    }
+
+    .sidebar-nav {
+      padding: 1rem 0;
+    }
+
+    .nav-section {
+      margin-bottom: 2rem;
+    }
+
+    .nav-section-title {
+      padding: 0 1.5rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .nav-item {
+      margin: 0.25rem 1rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .nav-link i {
+      margin-right: 0.75rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Header Styles */
+    .header {
+      position: fixed;
+      top: 0;
+      left: var(--sidebar-width);
+      right: 0;
+      height: var(--header-height);
+      background: white;
+      border-bottom: 1px solid var(--border-color);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--dark-color);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 1rem;
+      background: var(--light-color);
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .user-profile:hover {
+      background: var(--primary-light);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      margin-top: var(--header-height);
+      padding: 2rem;
+      min-height: calc(100vh - var(--header-height));
+    }
+
+    /* Breadcrumb */
+    .breadcrumb-container {
+      margin-bottom: 2rem;
+    }
+
+    .breadcrumb {
+      background: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .breadcrumb-item {
+      color: var(--text-muted);
+    }
+
+    .breadcrumb-item.active {
+      color: var(--dark-color);
+      font-weight: 500;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+      content: ">";
+      color: var(--text-muted);
+    }
+
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+
+    .stat-card.success::before { background: var(--success-color); }
+    .stat-card.danger::before { background: var(--danger-color); }
+    .stat-card.warning::before { background: var(--warning-color); }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .stat-content {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .stat-icon.success { background: var(--success-light); color: var(--success-color); }
+    .stat-icon.danger { background: var(--danger-light); color: var(--danger-color); }
+    .stat-icon.warning { background: var(--warning-light); color: var(--warning-color); }
+
+    .stat-info h6 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--dark-color);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-count {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-amount {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .stat-amount.success { color: var(--success-color); }
+    .stat-amount.danger { color: var(--danger-color); }
+    .stat-amount.warning { color: var(--warning-color); }
+
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--light-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--dark-color);
+      margin: 0;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+      border-radius: 0.5rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-outline-primary {
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      background: transparent;
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .btn-outline-secondary {
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      background: transparent;
+    }
+
+    .btn-outline-secondary:hover {
+      background: var(--secondary-color);
+      color: white;
+      border-color: var(--secondary-color);
+    }
+
+    /* Form Controls */
+    .form-control,
+    .form-select {
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: var(--dark-color);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Filter Controls */
+    .filter-controls {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Table */
+    .table-container {
+      background: white;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border-color);
+    }
+
+    .table {
+      margin: 0;
+      border-collapse: collapse;
+    }
+
+    .table th {
+      background: var(--light-color);
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--dark-color);
+      border-bottom: 2px solid var(--border-color);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--dark-color);
+      vertical-align: middle;
+    }
+
+    .table tbody tr:hover {
+      background: var(--light-color);
+    }
+
+    .table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Status Badges */
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-selesai {
+      background: var(--success-light);
+      color: var(--success-color);
+    }
+
+    .status-dibatalkan {
+      background: var(--danger-light);
+      color: var(--danger-color);
+    }
+
+    .status-dikembalikan {
+      background: var(--warning-light);
+      color: var(--warning-color);
+    }
+
+    /* Modal */
+    .modal-content {
+      border-radius: 1rem;
+      border: none;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-header {
+      border-bottom: 1px solid var(--border-color);
+      padding: 1.5rem;
+    }
+
+    .modal-title {
+      font-weight: 600;
+      color: var(--dark-color);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-footer {
+      border-top: 1px solid var(--border-color);
+      padding: 1.5rem;
+    }
+
+    /* Transaction Summary */
+    .transaction-summary {
+      background: var(--light-color);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    /* Status History */
+    .status-history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+      background: white;
+    }
+
+    .status-history-item:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Pagination */
+    .pagination {
+      margin: 0;
+    }
+
+    .page-link {
+      border: 1px solid var(--border-color);
+      color: var(--dark-color);
+      padding: 0.5rem 0.75rem;
+      margin: 0 0.125rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .page-link:hover {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      color: white;
+    }
+
+    .page-item.active .page-link {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      color: white;
+    }
+
+    .page-item.disabled .page-link {
+      color: var(--text-muted);
+      background: var(--light-color);
+      border-color: var(--border-color);
+    }
+
+    /* Footer */
+    .footer {
+      margin-left: var(--sidebar-width);
+      padding: 1.5rem 2rem;
+      background: white;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .header {
+        left: 0;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .footer {
+        margin-left: 0;
+      }
+
+      .filter-controls .row > div {
+        margin-bottom: 1rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card, .stat-card {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .stat-card:nth-child(1) { animation-delay: 0.1s; }
+    .stat-card:nth-child(2) { animation-delay: 0.2s; }
+    .stat-card:nth-child(3) { animation-delay: 0.3s; }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .action-buttons .btn {
+      padding: 0.375rem 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    /* Transaction Link */
+    .transaction-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .transaction-link:hover {
+      color: #1d4ed8;
+      text-decoration: underline;
+    }
+
+    /* Export Buttons */
+    .export-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+  </style>
 </head>
-<!-- [Head] end -->
-<!-- [Body] Start -->
 
-<body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
-  <!-- [ Pre-loader ] start -->
-  <div class="loader-bg">
-    <div class="loader-track">
-      <div class="loader-fill"></div>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <a href="../../../uas_workshopui/index.html" class="sidebar-brand">
+        <i class="fas fa-store"></i>
+        MiniMarket
+      </a>
     </div>
+    
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Main Navigation</div>
+        <div class="nav-item">
+          <a href="dashboard.html" class="nav-link">
+            <i class="fas fa-chart-line"></i>
+            Dashboard
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-produk.html" class="nav-link">
+            <i class="fas fa-box"></i>
+            Kelola Produk
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-transaksi.html" class="nav-link">
+            <i class="fas fa-receipt"></i>
+            Kelola Transaksi
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="history-transaksi.html" class="nav-link active">
+            <i class="fas fa-history"></i>
+            History Transaksi
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-pengguna.html" class="nav-link">
+            <i class="fas fa-users"></i>
+            Kelola Pengguna
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-artikel.html" class="nav-link">
+            <i class="fas fa-file-alt"></i>
+            Kelola Artikel
+          </a>
+        </div>
+      </div>
+    </nav>
   </div>
-  <!-- [ Pre-loader ] End -->
-  <!-- [ Sidebar Menu ] start -->
-  <nav class="pc-sidebar">
-    <div class="navbar-wrapper">
-      <div class="m-header">
-        <a href="dashboard.html" class="b-brand text-primary">
-          <img src="../assets/images/logo-dark.svg" class="img-fluid logo-lg" alt="logo">
-        </a>
-      </div>
-      <div class="navbar-content">
-        <ul class="pc-navbar">
-          <li class="pc-item pc-caption">
-            <label>Navigation</label>
-            <i class="ti ti-dashboard"></i>
-          </li>
-          <li class="pc-item">
-            <a href="dashboard.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-              <span class="pc-mtext">Dashboard</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="kelola-produk.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-box"></i></span>
-              <span class="pc-mtext">Kelola Produk</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="kelola-transaksi.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-receipt"></i></span>
-              <span class="pc-mtext">Kelola Transaksi</span>
-            </a>
-          </li>
-          <li class="pc-item active">
-            <a href="history-transaksi.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-history"></i></span>
-              <span class="pc-mtext">History Transaksi</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="kelola-pengguna.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-users"></i></span>
-              <span class="pc-mtext">Kelola Pengguna</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="kelola-artikel.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-file-text"></i></span>
-              <span class="pc-mtext">Kelola Artikel</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <h1 class="header-title">History Transaksi</h1>
     </div>
-  </nav>
-  <!-- [ Sidebar Menu ] end -->
-  <!-- [ Header Topbar ] start -->
-  <header class="pc-header">
-    <div class="header-wrapper">
-      <!-- [Mobile Media Block] start -->
-      <div class="me-auto pc-mob-drp">
-        <ul class="list-unstyled">
-          <!-- ======= Menu collapse Icon ===== -->
-          <li class="pc-h-item pc-sidebar-collapse">
-            <a href="#" class="pc-head-link ms-0" id="sidebar-hide">
-              <i class="ti ti-menu-2"></i>
-            </a>
-          </li>
-          <li class="pc-h-item pc-sidebar-popup">
-            <a href="#" class="pc-head-link ms-0" id="mobile-collapse">
-              <i class="ti ti-menu-2"></i>
-            </a>
-          </li>
-          <li class="dropdown pc-h-item d-inline-flex d-md-none">
-            <a class="pc-head-link dropdown-toggle arrow-none m-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-              <i class="ti ti-search"></i>
-            </a>
-            <div class="dropdown-menu pc-h-dropdown drp-search">
-              <form class="px-3">
-                <div class="form-group mb-0 d-flex align-items-center">
-                  <i data-feather="search"></i>
-                  <input type="search" class="form-control border-0 shadow-none" placeholder="Search here. . .">
-                </div>
-              </form>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <!-- [Mobile Media Block end] -->
-      <div class="ms-auto">
-        <ul class="list-unstyled">
-          <li class="dropdown pc-h-item header-user-profile">
-            <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" data-bs-auto-close="outside" aria-expanded="false">
-              <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar">
-              <span>Admin</span>
-            </a>
-            <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
-              <div class="dropdown-header">
-                <div class="d-flex mb-1">
-                  <div class="flex-shrink-0">
-                    <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar wid-35">
-                  </div>
-                  <div class="flex-grow-1 ms-3">
-                    <h6 class="mb-1">Admin</h6>
-                    <span>Administrator</span>
-                  </div>
-                  <a href="#!" class="pc-head-link bg-transparent" id="logout-icon">
-                    <i class="ti ti-power text-danger"></i>
-                  </a>
-                </div>
-              </div>
-              <div class="dropdown-divider"></div>
-              <a href="#!" class="dropdown-item" id="logout-option">
-                <i class="ti ti-power"></i>
-                <span>Logout</span>
-              </a>
-            </div>
-          </li>
-        </ul>
+    <div class="header-right">
+      <div class="user-profile" onclick="handleLogout()">
+        <div class="user-avatar">A</div>
+        <div>
+          <div style="font-weight: 600; font-size: 0.875rem;">Admin</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Administrator</div>
+        </div>
+        <i class="fas fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
       </div>
     </div>
   </header>
-  <!-- [ Header ] end -->
 
-  <!-- [ Main Content ] start -->
-  <div class="pc-container">
-    <div class="pc-content">
-      <!-- [ breadcrumb ] start -->
-      <div class="page-header">
-        <div class="page-block">
-          <div class="row align-items-center">
-            <div class="col-md-12">
-              <div class="page-header-title">
-                <h5 class="m-b-10">History Transaksi</h5>
-              </div>
-              <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
-                <li class="breadcrumb-item" aria-current="page">History Transaksi</li>
-              </ul>
-            </div>
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">History Transaksi</li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Transaction Summary Stats -->
+    <div class="stats-grid">
+      <div class="stat-card success">
+        <div class="stat-content">
+          <div class="stat-icon success">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="stat-info">
+            <h6>Transaksi Selesai</h6>
+            <div class="stat-count">Total: 125 transaksi</div>
+            <p class="stat-amount success">Rp 40,857,000</p>
           </div>
         </div>
       </div>
-      <!-- [ breadcrumb ] end -->
-      <!-- [ Main Content ] start -->
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="card">
-            <div class="card-header">
-              <h5>Riwayat Transaksi</h5>
-              <div class="btn-group">
-                <button type="button" class="btn btn-outline-primary">
-                  <i class="ti ti-file-export"></i> Export Excel
-                </button>
-                <button type="button" class="btn btn-outline-primary">
-                  <i class="ti ti-printer"></i> Print
-                </button>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="row mb-3">
-                <div class="col-md-3">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Cari transaksi...">
-                    <button class="btn btn-outline-secondary" type="button">
-                      <i class="ti ti-search"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <select class="form-select">
-                    <option selected>Semua Status</option>
-                    <option>Selesai</option>
-                    <option>Dibatalkan</option>
-                    <option>Dikembalikan</option>
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <div class="input-group">
-                    <span class="input-group-text">Periode</span>
-                    <input type="date" class="form-control" value="2025-05-01">
-                    <span class="input-group-text">-</span>
-                    <input type="date" class="form-control" value="2025-05-15">
-                  </div>
-                </div>
-                <div class="col-md-2">
-                </div>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>ID Transaksi</th>
-                      <th>Pelanggan</th>
-                      <th>Tanggal</th>
-                      <th>Total</th>
-                      <th>Status</th>
-                      <th>Metode Pembayaran</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">TRX-001238</a></td>
-                      <td>Budi Santoso</td>
-                      <td>12 Mei 2025</td>
-                      <td>Rp 106,000</td>
-                      <td><span class="badge bg-success">Selesai</span></td>
-                      <td>Transfer Bank</td>
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">
-                            <i class="ti ti-eye"></i>
-                          </button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary">
-                            <i class="ti ti-printer"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">TRX-001237</a></td>
-                      <td>Siti Aminah</td>
-                      <td>11 Mei 2025</td>
-                      <td>Rp 75,000</td>
-                      <td><span class="badge bg-success">Selesai</span></td>
-                      <td>E-Wallet</td>
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">
-                            <i class="ti ti-eye"></i>
-                          </button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary">
-                            <i class="ti ti-printer"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">TRX-001236</a></td>
-                      <td>Joko Widodo</td>
-                      <td>10 Mei 2025</td>
-                      <td>Rp 250,000</td>
-                      <td><span class="badge bg-success">Selesai</span></td>
-                      <td>Kartu Kredit</td>
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">
-                            <i class="ti ti-eye"></i>
-                          </button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary">
-                            <i class="ti ti-printer"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">TRX-001235</a></td>
-                      <td>Dewi Lestari</td>
-                      <td>10 Mei 2025</td>
-                      <td>Rp 280,000</td>
-                      <td><span class="badge bg-danger">Dibatalkan</span></td>
-                      <td>Transfer Bank</td>
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">
-                            <i class="ti ti-eye"></i>
-                          </button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary">
-                            <i class="ti ti-printer"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">TRX-001234</a></td>
-                      <td>Ahmad Dahlan</td>
-                      <td>09 Mei 2025</td>
-                      <td>Rp 750,000</td>
-                      <td><span class="badge bg-success">Selesai</span></td>
-                      <td>E-Wallet</td>
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">
-                            <i class="ti ti-eye"></i>
-                          </button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary">
-                            <i class="ti ti-printer"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">TRX-001233</a></td>
-                      <td>Rina Marlina</td>
-                      <td>08 Mei 2025</td>
-                      <td>Rp 800,000</td>
-                      <td><span class="badge bg-success">Selesai</span></td>
-                      <td>Transfer Bank</td>
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">
-                            <i class="ti ti-eye"></i>
-                          </button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary">
-                            <i class="ti ti-printer"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">TRX-001232</a></td>
-                      <td>Hadi Sutrisno</td>
-                      <td>07 Mei 2025</td>
-                      <td>Rp 500,000</td>
-                      <td><span class="badge bg-warning">Dikembalikan</span></td>
-                      <td>Kartu Kredit</td>
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">
-                            <i class="ti ti-eye"></i>
-                          </button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary">
-                            <i class="ti ti-printer"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">TRX-001231</a></td>
-                      <td>Sinta Dewi</td>
-                      <td>06 Mei 2025</td>
-                      <td>Rp 800,000</td>
-                      <td><span class="badge bg-success">Selesai</span></td>
-                      <td>E-Wallet</td>
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">
-                            <i class="ti ti-eye"></i>
-                          </button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary">
-                            <i class="ti ti-printer"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">TRX-001230</a></td>
-                      <td>Rudi Hermawan</td>
-                      <td>05 Mei 2025</td>
-                      <td>Rp 450,000</td>
-                      <td><span class="badge bg-success">Selesai</span></td>
-                      <td>Transfer Bank</td>
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">
-                            <i class="ti ti-eye"></i>
-                          </button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary">
-                            <i class="ti ti-printer"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">TRX-001229</a></td>
-                      <td>Tuti Winarti</td>
-                      <td>04 Mei 2025</td>
-                      <td>Rp 400,000</td>
-                      <td><span class="badge bg-danger">Dibatalkan</span></td>
-                      <td>E-Wallet</td>
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#transactionDetailModal">
-                            <i class="ti ti-eye"></i>
-                          </button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary">
-                            <i class="ti ti-printer"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="row mt-3">
-                <div class="col-sm-12 col-md-5">
-                  <div class="dataTables_info">Menampilkan 1 sampai 10 dari 150 data</div>
-                </div>
-                <div class="col-sm-12 col-md-7">
-                  <div class="dataTables_paginate">
-                    <ul class="pagination justify-content-end">
-                      <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                      </li>
-                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#">5</a></li>
-                      <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+
+      <div class="stat-card danger">
+        <div class="stat-content">
+          <div class="stat-icon danger">
+            <i class="fas fa-times"></i>
+          </div>
+          <div class="stat-info">
+            <h6>Transaksi Dibatalkan</h6>
+            <div class="stat-count">Total: 15 transaksi</div>
+            <p class="stat-amount danger">Rp 10,200,000</p>
           </div>
         </div>
-        
-        <!-- Transaction Summary Card -->
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                      <div class="avtar avtar-lg bg-light-success">
-                        <i class="ti ti-check text-success"></i>
-                      </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                      <h6 class="mb-0">Transaksi Selesai</h6>
-                      <p class="text-muted mb-0">Total: 125</p>
-                      <p class="text-success mb-0">Rp 40,857,000</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                      <div class="avtar avtar-lg bg-light-danger">
-                        <i class="ti ti-x text-danger"></i>
-                      </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                      <h6 class="mb-0">Transaksi Dibatalkan</h6>
-                      <p class="text-muted mb-0">Total: 15</p>
-                      <p class="text-danger mb-0">Rp 10,200,000</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                      <div class="avtar avtar-lg bg-light-warning">
-                        <i class="ti ti-arrow-back-up text-warning"></i>
-                      </div>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                      <h6 class="mb-0">Transaksi Dikembalikan</h6>
-                      <p class="text-muted mb-0">Total: 10</p>
-                      <p class="text-warning mb-0">Rp 5,000,000</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      </div>
+
+      <div class="stat-card warning">
+        <div class="stat-content">
+          <div class="stat-icon warning">
+            <i class="fas fa-undo"></i>
+          </div>
+          <div class="stat-info">
+            <h6>Transaksi Dikembalikan</h6>
+            <div class="stat-count">Total: 10 transaksi</div>
+            <p class="stat-amount warning">Rp 5,000,000</p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- [ Main Content ] end -->
+
+    <!-- Filter Controls -->
+    <div class="filter-controls">
+      <div class="row g-3">
+        <div class="col-md-3">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Cari transaksi..." id="searchInput">
+            <button class="btn btn-outline-secondary" type="button" id="searchButton">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <select class="form-select" id="statusFilter">
+            <option value="">Semua Status</option>
+            <option value="Selesai">Selesai</option>
+            <option value="Dibatalkan">Dibatalkan</option>
+            <option value="Dikembalikan">Dikembalikan</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-text">Periode</span>
+            <input type="date" class="form-control" id="startDate" value="2025-05-01">
+            <span class="input-group-text">-</span>
+            <input type="date" class="form-control" id="endDate" value="2025-05-15">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="export-buttons">
+            <button type="button" class="btn btn-outline-primary">
+              <i class="fas fa-file-excel"></i> Export Excel
+            </button>
+            <button type="button" class="btn btn-outline-primary">
+              <i class="fas fa-print"></i> Print
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transaction History Table -->
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID Transaksi</th>
+            <th>Pelanggan</th>
+            <th>Tanggal</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Metode Pembayaran</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="transactionTableBody">
+          <tr>
+            <td>
+              <a href="#" class="transaction-link" data-bs-toggle="modal" data-bs-target="#transactionDetailModal" data-transaction-id="TRX-001238">
+                TRX-001238
+              </a>
+            </td>
+            <td>Budi Santoso</td>
+            <td>12 Mei 2025</td>
+            <td><strong>Rp 106,000</strong></td>
+            <td><span class="status-badge status-selesai">Selesai</span></td>
+            <td>Transfer Bank</td>
+            <td>
+              <div class="action-buttons">
+                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#transactionDetailModal" title="Lihat Detail">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" title="Print Invoice">
+                  <i class="fas fa-print"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="#" class="transaction-link" data-bs-toggle="modal" data-bs-target="#transactionDetailModal" data-transaction-id="TRX-001237">
+                TRX-001237
+              </a>
+            </td>
+            <td>Siti Aminah</td>
+            <td>11 Mei 2025</td>
+            <td><strong>Rp 75,000</strong></td>
+            <td><span class="status-badge status-selesai">Selesai</span></td>
+            <td>E-Wallet</td>
+            <td>
+              <div class="action-buttons">
+                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#transactionDetailModal" title="Lihat Detail">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" title="Print Invoice">
+                  <i class="fas fa-print"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="#" class="transaction-link" data-bs-toggle="modal" data-bs-target="#transactionDetailModal" data-transaction-id="TRX-001236">
+                TRX-001236
+              </a>
+            </td>
+            <td>Joko Widodo</td>
+            <td>10 Mei 2025</td>
+            <td><strong>Rp 250,000</strong></td>
+            <td><span class="status-badge status-selesai">Selesai</span></td>
+            <td>Kartu Kredit</td>
+            <td>
+              <div class="action-buttons">
+                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#transactionDetailModal" title="Lihat Detail">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" title="Print Invoice">
+                  <i class="fas fa-print"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="#" class="transaction-link" data-bs-toggle="modal" data-bs-target="#transactionDetailModal" data-transaction-id="TRX-001235">
+                TRX-001235
+              </a>
+            </td>
+            <td>Dewi Lestari</td>
+            <td>10 Mei 2025</td>
+            <td><strong>Rp 280,000</strong></td>
+            <td><span class="status-badge status-dibatalkan">Dibatalkan</span></td>
+            <td>Transfer Bank</td>
+            <td>
+              <div class="action-buttons">
+                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#transactionDetailModal" title="Lihat Detail">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" title="Print Invoice">
+                  <i class="fas fa-print"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="#" class="transaction-link" data-bs-toggle="modal" data-bs-target="#transactionDetailModal" data-transaction-id="TRX-001234">
+                TRX-001234
+              </a>
+            </td>
+            <td>Ahmad Dahlan</td>
+            <td>09 Mei 2025</td>
+            <td><strong>Rp 750,000</strong></td>
+            <td><span class="status-badge status-selesai">Selesai</span></td>
+            <td>E-Wallet</td>
+            <td>
+              <div class="action-buttons">
+                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#transactionDetailModal" title="Lihat Detail">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" title="Print Invoice">
+                  <i class="fas fa-print"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="#" class="transaction-link" data-bs-toggle="modal" data-bs-target="#transactionDetailModal" data-transaction-id="TRX-001233">
+                TRX-001233
+              </a>
+            </td>
+            <td>Rina Marlina</td>
+            <td>08 Mei 2025</td>
+            <td><strong>Rp 800,000</strong></td>
+            <td><span class="status-badge status-selesai">Selesai</span></td>
+            <td>Transfer Bank</td>
+            <td>
+              <div class="action-buttons">
+                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#transactionDetailModal" title="Lihat Detail">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" title="Print Invoice">
+                  <i class="fas fa-print"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="#" class="transaction-link" data-bs-toggle="modal" data-bs-target="#transactionDetailModal" data-transaction-id="TRX-001232">
+                TRX-001232
+              </a>
+            </td>
+            <td>Hadi Sutrisno</td>
+            <td>07 Mei 2025</td>
+            <td><strong>Rp 500,000</strong></td>
+            <td><span class="status-badge status-dikembalikan">Dikembalikan</span></td>
+            <td>Kartu Kredit</td>
+            <td>
+              <div class="action-buttons">
+                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#transactionDetailModal" title="Lihat Detail">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" title="Print Invoice">
+                  <i class="fas fa-print"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <!-- Pagination -->
+      <div class="d-flex justify-content-between align-items-center p-3">
+        <div>
+          <span class="text-muted">Menampilkan 1 sampai 7 dari 150 data</span>
+        </div>
+        <nav aria-label="Transaction history pagination">
+          <ul class="pagination">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">5</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </main>
 
   <!-- Transaction Detail Modal -->
   <div class="modal fade" id="transactionDetailModal" tabindex="-1" aria-labelledby="transactionDetailModalLabel" aria-hidden="true">
@@ -525,20 +1034,21 @@
         <div class="modal-body">
           <div class="row mb-4">
             <div class="col-md-6">
-              <h6>Informasi Pelanggan</h6>
-              <p class="mb-1"><strong>Nama:</strong> Budi Santoso</p>
-              <p class="mb-1"><strong>No. Telepon:</strong> 081234567890</p>
-              <p class="mb-1"><strong>Alamat:</strong> Jl. Merdeka No. 123, Jakarta Selatan</p>
+              <h6 class="mb-3">Informasi Pelanggan</h6>
+              <p class="mb-2"><strong>Nama:</strong> Budi Santoso</p>
+              <p class="mb-2"><strong>No. Telepon:</strong> 081234567890</p>
+              <p class="mb-2"><strong>Alamat:</strong> Jl. Merdeka No. 123, Jakarta Selatan</p>
             </div>
             <div class="col-md-6">
-              <h6>Informasi Transaksi</h6>
-              <p class="mb-1"><strong>Tanggal:</strong> 12 Mei 2025</p>
-              <p class="mb-1"><strong>Status:</strong> <span class="badge bg-success">Selesai</span></p>
-              <p class="mb-1"><strong>Metode Pembayaran:</strong> Transfer Bank</p>
-              <p class="mb-1"><strong>Metode Pengiriman:</strong> Kurir Regular</p>
+              <h6 class="mb-3">Informasi Transaksi</h6>
+              <p class="mb-2"><strong>Tanggal:</strong> 12 Mei 2025</p>
+              <p class="mb-2"><strong>Status:</strong> <span class="status-badge status-selesai">Selesai</span></p>
+              <p class="mb-2"><strong>Metode Pembayaran:</strong> Transfer Bank</p>
+              <p class="mb-2"><strong>Metode Pengiriman:</strong> Kurir Regular</p>
             </div>
           </div>
-          <h6>Daftar Produk</h6>
+
+          <h6 class="mb-3">Daftar Produk</h6>
           <div class="table-responsive">
             <table class="table table-bordered">
               <thead>
@@ -551,225 +1061,228 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>Syur Pakcoy Segar</td>
+                  <td>Sayur Pakcoy Segar</td>
                   <td>Rp 20,000</td>
                   <td>2</td>
-                  <td>Rp 40,000</td>
+                  <td><strong>Rp 40,000</strong></td>
                 </tr>
                 <tr>
                   <td>Brokoli</td>
                   <td>Rp 20,000</td>
                   <td>1</td>
-                  <td>Rp 20,000</td>
+                  <td><strong>Rp 20,000</strong></td>
                 </tr>
                 <tr>
                   <td>Mangga Kuning</td>
                   <td>Rp 18,000</td>
                   <td>2</td>
-                  <td>Rp 36,000</td>
+                  <td><strong>Rp 36,000</strong></td>
                 </tr>
               </tbody>
-              <tfoot>
-                <tr>
-                  <td colspan="3" class="text-end">Subtotal:</td>
-                  <td>Rp 96,000</td>
-                </tr>
-                <tr>
-                  <td colspan="3" class="text-end">Biaya Pengiriman:</td>
-                  <td>Rp 10,000</td>
-                </tr>
-                <tr>
-                  <td colspan="3" class="text-end">Total:</td>
-                  <td class="fw-bold">Rp 106,000</td>
-                </tr>
-              </tfoot>
             </table>
           </div>
-          <div class="row mt-3">
-            <div class="col-md-12">
-              <h6>Riwayat Status</h6>
-              <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <div>
-                    <span class="badge bg-info me-2">Menunggu Pembayaran</span>
-                    Transaksi dibuat
-                  </div>
-                  <small>12 Mei 2025, 09:15</small>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <div>
-                    <span class="badge bg-success me-2">Pembayaran Diterima</span>
-                    Pembayaran telah dikonfirmasi
-                  </div>
-                  <small>12 Mei 2025, 10:30</small>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <div>
-                    <span class="badge bg-warning me-2">Diproses</span>
-                    Pesanan sedang diproses
-                  </div>
-                  <small>12 Mei 2025, 11:45</small>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <div>
-                    <span class="badge bg-primary me-2">Dikirim</span>
-                    Pesanan sedang dikirim
-                  </div>
-                  <small>12 Mei 2025, 14:20</small>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <div>
-                    <span class="badge bg-success me-2">Selesai</span>
-                    Pesanan telah diterima pelanggan
-                  </div>
-                  <small>12 Mei 2025, 17:35</small>
-                </li>
-              </ul>
+
+          <div class="transaction-summary">
+            <div class="summary-row">
+              <span>Subtotal:</span>
+              <span>Rp 96,000</span>
+            </div>
+            <div class="summary-row">
+              <span>Biaya Pengiriman:</span>
+              <span>Rp 10,000</span>
+            </div>
+            <div class="summary-row">
+              <span>Total:</span>
+              <span>Rp 106,000</span>
+            </div>
+          </div>
+
+          <h6 class="mt-4 mb-3">Riwayat Status</h6>
+          <div class="status-history">
+            <div class="status-history-item">
+              <div>
+                <span class="status-badge status-selesai me-2">Menunggu Pembayaran</span>
+                <span>Transaksi dibuat</span>
+              </div>
+              <small class="text-muted">12 Mei 2025, 09:15</small>
+            </div>
+            <div class="status-history-item">
+              <div>
+                <span class="status-badge status-selesai me-2">Pembayaran Diterima</span>
+                <span>Pembayaran telah dikonfirmasi</span>
+              </div>
+              <small class="text-muted">12 Mei 2025, 10:30</small>
+            </div>
+            <div class="status-history-item">
+              <div>
+                <span class="status-badge status-dikembalikan me-2">Diproses</span>
+                <span>Pesanan sedang diproses</span>
+              </div>
+              <small class="text-muted">12 Mei 2025, 11:45</small>
+            </div>
+            <div class="status-history-item">
+              <div>
+                <span class="status-badge status-selesai me-2">Dikirim</span>
+                <span>Pesanan sedang dikirim</span>
+              </div>
+              <small class="text-muted">12 Mei 2025, 14:20</small>
+            </div>
+            <div class="status-history-item">
+              <div>
+                <span class="status-badge status-selesai me-2">Selesai</span>
+                <span>Pesanan telah diterima pelanggan</span>
+              </div>
+              <small class="text-muted">12 Mei 2025, 17:35</small>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-          <button type="button" class="btn btn-primary">Cetak Invoice</button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="button" class="btn btn-primary">
+            <i class="fas fa-print"></i> Cetak Invoice
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <footer class="pc-footer">
-    <div class="footer-wrapper container-fluid">
-      <div class="row">
-        <div class="col-sm my-1">
-          <p class="m-0">MiniMarket Admin Dashboard &copy; 2025</p>
-        </div>
-      </div>
-    </div>
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 MiniMarket Professional Dashboard. All rights reserved.</p>
   </footer>
 
-  <!-- Required Js -->
-  <script src="../assets/js/plugins/popper.min.js"></script>
-  <script src="../assets/js/plugins/simplebar.min.js"></script>
-  <script src="../assets/js/plugins/bootstrap.min.js"></script>
-  <script src="../assets/js/fonts/custom-font.js"></script>
-  <script src="../assets/js/pcoded.js"></script>
-  <script src="../assets/js/plugins/feather.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script>layout_change('light');</script>
-  <script>change_box_container('false');</script>
-  <script>layout_rtl_change('false');</script>
-  <script>preset_change("preset-1");</script>
-  <script>font_change("Public-Sans");</script>
+  <script>
+    // Sample transaction data
+    const transactionHistory = [
+      {
+        id: 'TRX-001238',
+        customer: 'Budi Santoso',
+        date: '12 Mei 2025',
+        total: 106000,
+        status: 'Selesai',
+        paymentMethod: 'Transfer Bank'
+      },
+      {
+        id: 'TRX-001237',
+        customer: 'Siti Aminah',
+        date: '11 Mei 2025',
+        total: 75000,
+        status: 'Selesai',
+        paymentMethod: 'E-Wallet'
+      },
+      // Add more sample data as needed
+    ];
 
-  <!-- Add this script at the end of the body, just before the closing </body> tag -->
-  <!-- <script>
-    // Function to handle logout
-    function handleLogout() {
-      // Show confirmation dialog
-      if (confirm('Are you sure you want to logout?')) {
-        // Clear user session from localStorage
-        localStorage.removeItem('minimarket_current_user');
-        
-        // Show logout message
-        showLogoutMessage();
-        
-        // Redirect to login page after a short delay
-        setTimeout(() => {
-          window.location.href = '../pages/login.html';
-        }, 1000);
-      }
+    // Utility Functions
+    function formatRupiah(number) {
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0
+      }).format(number);
     }
-    
-    // Function to show logout message
-    function showLogoutMessage() {
-      // Create toast element if it doesn't exist
-      let toast = document.getElementById('logoutToast');
+
+    // Filter and Search Functions
+    function applyFilters() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const statusFilter = document.getElementById('statusFilter').value;
+      const startDate = document.getElementById('startDate').value;
+      const endDate = document.getElementById('endDate').value;
+
+      // Filter logic would go here
+      console.log('Applying filters:', { searchTerm, statusFilter, startDate, endDate });
       
-      if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'logoutToast';
-        toast.style.position = 'fixed';
-        toast.style.top = '20px';
-        toast.style.right = '20px';
-        toast.style.backgroundColor = '#d1e7dd';
-        toast.style.color = '#0f5132';
-        toast.style.padding = '15px 25px';
-        toast.style.borderRadius = '5px';
-        toast.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
-        toast.style.zIndex = '9999';
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(-20px)';
-        toast.style.transition = 'opacity 0.3s, transform 0.3s';
-        toast.textContent = 'Logging out...';
-        document.body.appendChild(toast);
+      // For demo purposes, just show a toast
+      showToast('Filter diterapkan!', 'success');
+    }
+
+    // Toast Notification
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.style.position = 'fixed';
+      toast.style.top = '20px';
+      toast.style.right = '20px';
+      toast.style.padding = '15px 25px';
+      toast.style.borderRadius = '0.5rem';
+      toast.style.color = 'white';
+      toast.style.fontWeight = '500';
+      toast.style.zIndex = '9999';
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(-20px)';
+      toast.style.transition = 'all 0.3s ease';
+      
+      if (type === 'success') {
+        toast.style.background = 'var(--success-color)';
+      } else if (type === 'error') {
+        toast.style.background = 'var(--danger-color)';
       }
       
-      // Show toast
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
       setTimeout(() => {
         toast.style.opacity = '1';
         toast.style.transform = 'translateY(0)';
       }, 100);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+          document.body.removeChild(toast);
+        }, 300);
+      }, 3000);
     }
-    
-    // Function to check if user is logged in
-    function checkUserAuthentication() {
-      const currentUser = JSON.parse(localStorage.getItem('minimarket_current_user'));
-      
-      // If no user is logged in, redirect to login page
-      if (!currentUser) {
-        window.location.href = '../pages/login.html';
-      } else {
-        // Update UI with user information
-        updateUserInfo(currentUser);
-      }
+
+    // Export Functions
+    function exportToExcel() {
+      showToast('Export Excel sedang diproses...', 'success');
+      // Export logic would go here
     }
-    
-    // Function to update UI with user information
-    function updateUserInfo(user) {
-      // Update user name in the header
-      const userNameElements = document.querySelectorAll('.header-user-profile span');
-      const userNameInDropdown = document.querySelector('.dropdown-user-profile h6');
-      
-      if (userNameElements.length > 0) {
-        userNameElements.forEach(element => {
-          element.textContent = user.name || 'User';
-        });
-      }
-      
-      if (userNameInDropdown) {
-        userNameInDropdown.textContent = user.name || 'User';
-      }
-      
-      // Update user role in the dropdown
-      const userRoleElement = document.querySelector('.dropdown-user-profile span');
-      if (userRoleElement) {
-        userRoleElement.textContent = user.role || 'User';
+
+    function printReport() {
+      window.print();
+    }
+
+    // Logout functionality
+    function handleLogout() {
+      if (confirm('Apakah Anda yakin ingin logout?')) {
+        showToast('Logout berhasil!', 'success');
+        setTimeout(() => {
+          alert('Redirect to login page');
+        }, 1000);
       }
     }
-    
-    // Add event listeners to logout buttons when the DOM is fully loaded
+
+    // Initialize
     document.addEventListener('DOMContentLoaded', function() {
-      // Check if user is authenticated
-      checkUserAuthentication();
+      // Event listeners
+      document.getElementById('searchButton').addEventListener('click', applyFilters);
+      document.getElementById('statusFilter').addEventListener('change', applyFilters);
+      document.getElementById('startDate').addEventListener('change', applyFilters);
+      document.getElementById('endDate').addEventListener('change', applyFilters);
       
-      // Add event listener to the logout icon in the user dropdown
-      const logoutIcon = document.querySelector('#logout-icon');
-      if (logoutIcon) {
-        logoutIcon.addEventListener('click', function(e) {
+      document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
           e.preventDefault();
-          handleLogout();
-        });
-      }
-      
-      // Add event listener to the logout option in the profile tab
-      const logoutOption = document.querySelector('#logout-option');
-      if (logoutOption) {
-        logoutOption.addEventListener('click', function(e) {
-          e.preventDefault();
-          handleLogout();
-        });
-      }
+          applyFilters();
+        }
+      });
+
+      // Export button listeners
+      document.querySelector('.btn:has(.fa-file-excel)').addEventListener('click', exportToExcel);
+      document.querySelector('.btn:has(.fa-print)').addEventListener('click', printReport);
+
+      // Print invoice buttons
+      document.querySelectorAll('.btn:has(.fa-print)').forEach(btn => {
+        if (btn.closest('.modal-footer')) {
+          btn.addEventListener('click', printReport);
+        }
+      });
     });
-  </script> -->
+  </script>
 </body>
-<!-- [Body] end -->
 </html>

@@ -1,843 +1,1248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>MiniMarket - Kelola Produk</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="MiniMarket Admin Dashboard">
-    <meta name="keywords" content="admin, dashboard, minimarket, inventory, sales">
-    <meta name="author" content="CodedThemes">
+  <title>MiniMarket - Kelola Produk</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="MiniMarket Professional Product Management">
+  <meta name="keywords" content="admin, dashboard, minimarket, inventory, products">
+  <meta name="author" content="MiniMarket">
 
-    <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" id="main-font-link">
-    <link rel="stylesheet" href="../assets/fonts/tabler-icons.min.css">
-    <link rel="stylesheet" href="../assets/fonts/feather.css">
-    <link rel="stylesheet" href="../assets/fonts/fontawesome.css">
-    <link rel="stylesheet" href="../assets/fonts/material.css">
-    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link">
-    <link rel="stylesheet" href="../assets/css/style-preset.css">
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏪</text></svg>" type="image/svg+xml">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-light: #dbeafe;
+      --secondary-color: #64748b;
+      --success-color: #059669;
+      --success-light: #d1fae5;
+      --warning-color: #d97706;
+      --warning-light: #fef3c7;
+      --danger-color: #dc2626;
+      --danger-light: #fee2e2;
+      --dark-color: #1e293b;
+      --light-color: #f8fafc;
+      --border-color: #e2e8f0;
+      --text-muted: #64748b;
+      --sidebar-width: 280px;
+      --header-height: 70px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .sidebar-brand i {
+      margin-right: 0.75rem;
+      font-size: 2rem;
+    }
+
+    .sidebar-nav {
+      padding: 1rem 0;
+    }
+
+    .nav-section {
+      margin-bottom: 2rem;
+    }
+
+    .nav-section-title {
+      padding: 0 1.5rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .nav-item {
+      margin: 0.25rem 1rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .nav-link i {
+      margin-right: 0.75rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Header Styles */
+    .header {
+      position: fixed;
+      top: 0;
+      left: var(--sidebar-width);
+      right: 0;
+      height: var(--header-height);
+      background: white;
+      border-bottom: 1px solid var(--border-color);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--dark-color);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 1rem;
+      background: var(--light-color);
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .user-profile:hover {
+      background: var(--primary-light);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      margin-top: var(--header-height);
+      padding: 2rem;
+      min-height: calc(100vh - var(--header-height));
+    }
+
+    /* Breadcrumb */
+    .breadcrumb-container {
+      margin-bottom: 2rem;
+    }
+
+    .breadcrumb {
+      background: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .breadcrumb-item {
+      color: var(--text-muted);
+    }
+
+    .breadcrumb-item.active {
+      color: var(--dark-color);
+      font-weight: 500;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+      content: ">";
+      color: var(--text-muted);
+    }
+
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--light-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--dark-color);
+      margin: 0;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+      border-radius: 0.5rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-outline-primary {
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      background: transparent;
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .btn-outline-danger {
+      border: 1px solid var(--danger-color);
+      color: var(--danger-color);
+      background: transparent;
+    }
+
+    .btn-outline-danger:hover {
+      background: var(--danger-color);
+      color: white;
+    }
+
+    .btn-outline-secondary {
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      background: transparent;
+    }
+
+    .btn-outline-secondary:hover {
+      background: var(--secondary-color);
+      color: white;
+      border-color: var(--secondary-color);
+    }
+
+    /* Form Controls */
+    .form-control,
+    .form-select {
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: var(--dark-color);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Filter Controls */
+    .filter-controls {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Table */
+    .table-container {
+      background: white;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border-color);
+    }
+
+    .table {
+      margin: 0;
+      border-collapse: collapse;
+    }
+
+    .table th {
+      background: var(--light-color);
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--dark-color);
+      border-bottom: 2px solid var(--border-color);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--dark-color);
+      vertical-align: middle;
+    }
+
+    .table tbody tr:hover {
+      background: var(--light-color);
+    }
+
+    .table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Product Image */
+    .product-image {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      border: 1px solid var(--border-color);
+    }
+
+    /* Status Badges */
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-tersedia {
+      background: var(--success-light);
+      color: var(--success-color);
+    }
+
+    .status-menipis {
+      background: var(--warning-light);
+      color: var(--warning-color);
+    }
+
+    .status-habis {
+      background: var(--danger-light);
+      color: var(--danger-color);
+    }
+
+    /* Modal */
+    .modal-content {
+      border-radius: 1rem;
+      border: none;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-header {
+      border-bottom: 1px solid var(--border-color);
+      padding: 1.5rem;
+    }
+
+    .modal-title {
+      font-weight: 600;
+      color: var(--dark-color);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-footer {
+      border-top: 1px solid var(--border-color);
+      padding: 1.5rem;
+    }
+
+    /* Image Preview */
+    .image-preview {
+      max-width: 100px;
+      max-height: 100px;
+      border-radius: 0.5rem;
+      border: 1px solid var(--border-color);
+      margin-top: 0.5rem;
+    }
+
+    /* Pagination */
+    .pagination {
+      margin: 0;
+    }
+
+    .page-link {
+      border: 1px solid var(--border-color);
+      color: var(--dark-color);
+      padding: 0.5rem 0.75rem;
+      margin: 0 0.125rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .page-link:hover {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      color: white;
+    }
+
+    .page-item.active .page-link {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      color: white;
+    }
+
+    .page-item.disabled .page-link {
+      color: var(--text-muted);
+      background: var(--light-color);
+      border-color: var(--border-color);
+    }
+
+    /* Footer */
+    .footer {
+      margin-left: var(--sidebar-width);
+      padding: 1.5rem 2rem;
+      background: white;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .header {
+        left: 0;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .footer {
+        margin-left: 0;
+      }
+
+      .filter-controls .row > div {
+        margin-bottom: 1rem;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+  </style>
 </head>
-<body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
-    <div class="loader-bg">
-        <div class="loader-track">
-            <div class="loader-fill"></div>
-        </div>
+
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <a href="../../../uas_workshopui/index.html" class="sidebar-brand">
+        <i class="fas fa-store"></i>
+        MiniMarket
+      </a>
     </div>
-    <nav class="pc-sidebar">
-        <div class="navbar-wrapper">
-            <div class="m-header">
-                <a href="dashboard.html" class="b-brand text-primary">
-                    <img src="../assets/images/logo-dark.svg" class="img-fluid logo-lg" alt="logo">
-                </a>
-            </div>
-            <div class="navbar-content">
-                <ul class="pc-navbar">
-                    <li class="pc-item pc-caption">
-                        <label>Navigation</label>
-                        <i class="ti ti-dashboard"></i>
-                    </li>
-                    <li class="pc-item">
-                        <a href="dashboard.html" class="pc-link">
-                            <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-                            <span class="pc-mtext">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="pc-item active">
-                        <a href="kelola-produk.html" class="pc-link">
-                            <span class="pc-micon"><i class="ti ti-box"></i></span>
-                            <span class="pc-mtext">Kelola Produk</span>
-                        </a>
-                    </li>
-                    <li class="pc-item">
-                        <a href="kelola-transaksi.html" class="pc-link">
-                            <span class="pc-micon"><i class="ti ti-receipt"></i></span>
-                            <span class="pc-mtext">Kelola Transaksi</span>
-                        </a>
-                    </li>
-                    <li class="pc-item">
-                        <a href="history-transaksi.html" class="pc-link">
-                            <span class="pc-micon"><i class="ti ti-history"></i></span>
-                            <span class="pc-mtext">History Transaksi</span>
-                        </a>
-                    </li>
-                    <li class="pc-item">
-                        <a href="kelola-pengguna.html" class="pc-link">
-                            <span class="pc-micon"><i class="ti ti-users"></i></span>
-                            <span class="pc-mtext">Kelola Pengguna</span>
-                        </a>
-                    </li>
-                    <li class="pc-item">
-                        <a href="kelola-artikel.html" class="pc-link">
-                            <span class="pc-micon"><i class="ti ti-file-text"></i></span>
-                            <span class="pc-mtext">Kelola Artikel</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+    
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Main Navigation</div>
+        <div class="nav-item">
+          <a href="dashboard.html" class="nav-link">
+            <i class="fas fa-chart-line"></i>
+            Dashboard
+          </a>
         </div>
+        <div class="nav-item">
+          <a href="kelola-produk.html" class="nav-link active">
+            <i class="fas fa-box"></i>
+            Kelola Produk
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-transaksi.html" class="nav-link">
+            <i class="fas fa-receipt"></i>
+            Kelola Transaksi
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="history-transaksi.html" class="nav-link">
+            <i class="fas fa-history"></i>
+            History Transaksi
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-pengguna.html" class="nav-link">
+            <i class="fas fa-users"></i>
+            Kelola Pengguna
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-artikel.html" class="nav-link">
+            <i class="fas fa-file-alt"></i>
+            Kelola Artikel
+          </a>
+        </div>
+      </div>
     </nav>
-    <header class="pc-header">
-        <div class="header-wrapper">
-            <div class="me-auto pc-mob-drp">
-                <ul class="list-unstyled">
-                    <li class="pc-h-item pc-sidebar-collapse">
-                        <a href="#" class="pc-head-link ms-0" id="sidebar-hide">
-                            <i class="ti ti-menu-2"></i>
-                        </a>
-                    </li>
-                    <li class="pc-h-item pc-sidebar-popup">
-                        <a href="#" class="pc-head-link ms-0" id="mobile-collapse">
-                            <i class="ti ti-menu-2"></i>
-                        </a>
-                    </li>
-                    <li class="dropdown pc-h-item d-inline-flex d-md-none">
-                        <a class="pc-head-link dropdown-toggle arrow-none m-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <i class="ti ti-search"></i>
-                        </a>
-                        <div class="dropdown-menu pc-h-dropdown drp-search">
-                            <form class="px-3">
-                                <div class="form-group mb-0 d-flex align-items-center">
-                                    <i data-feather="search"></i>
-                                    <input type="search" class="form-control border-0 shadow-none" placeholder="Search here. . .">
-                                </div>
-                            </form>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="ms-auto">
-                <ul class="list-unstyled">
-                    <li class="dropdown pc-h-item header-user-profile">
-                        <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" data-bs-auto-close="outside" aria-expanded="false">
-                            <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar">
-                            <span>Admin</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
-                            <div class="dropdown-header">
-                                <div class="d-flex mb-1">
-                                    <div class="flex-shrink-0">
-                                        <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar wid-35">
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <h6 class="mb-1">Admin</h6>
-                                        <span>Administrator</span>
-                                    </div>
-                                    <a href="#!" class="pc-head-link bg-transparent" id="logout-icon">
-                                        <i class="ti ti-power text-danger"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <a href="#!" class="dropdown-item" id="logout-option">
-                                <i class="ti ti-power"></i>
-                                <span>Logout</span>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </header>
-    <div class="pc-container">
-        <div class="pc-content">
-            <div class="page-header">
-                <div class="page-block">
-                    <div class="row align-items-center">
-                        <div class="col-md-12">
-                            <div class="page-header-title">
-                                <h5 class="m-b-10">Kelola Produk</h5>
-                            </div>
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
-                                <li class="breadcrumb-item" aria-current="page">Kelola Produk</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Daftar Produk</h5>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" id="add-product-btn">
-                                <i class="ti ti-plus"></i> Tambah Produk
-                            </button>
-                        </div>
-                        <div class="card-body">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Cari produk..." id="searchProduct">
-                                        <button class="btn btn-outline-secondary" type="button" id="searchButton">
-                                            <i class="ti ti-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <select class="form-select" id="filterCategory">
-                                        <option value="Semua Kategori" selected>Semua Kategori</option>
-                                        <option value="Sayuran">Sayuran</option>
-                                        <option value="Buahan">Buahan</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <select class="form-select" id="sortProducts">
-                                        <option value="Urutkan" selected>Urutkan</option>
-                                        <option value="Nama (A-Z)">Nama (A-Z)</option>
-                                        <option value="Nama (Z-A)">Nama (Z-A)</option>
-                                        <option value="Harga (Rendah-Tinggi)">Harga (Rendah-Tinggi)</option>
-                                        <option value="Harga (Tinggi-Rendah)">Harga (Tinggi-Rendah)</option>
-                                        <option value="Stok (Rendah-Tinggi)">Stok (Rendah-Tinggi)</option>
-                                        <option value="Stok (Tinggi-Rendah)">Stok (Tinggi-Rendah)</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Gambar</th>
-                                            <th>Nama Produk</th>
-                                            <th>Kategori</th>
-                                            <th>Harga</th>
-                                            <th>Stok</th>
-                                            <th>Status</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="productTableBody">
-                                        </tbody>
-                                </table>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info" id="paginationInfo">Menampilkan 0 sampai 0 dari 0 data</div>
-                                </div>
-                                <div class="col-sm-12 col-md-7">
-                                    <div class="dataTables_paginate">
-                                        <ul class="pagination justify-content-end" id="paginationControls">
-                                            </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <h1 class="header-title">Kelola Produk</h1>
     </div>
-    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="productModalLabel">Tambah Produk</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="productForm">
-                        <input type="hidden" id="editProductId">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="productId" class="form-label">ID Produk</label>
-                                <input type="text" class="form-control" id="productId" placeholder="Otomatis" disabled>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="productName" class="form-label">Nama Produk</label>
-                                <input type="text" class="form-control" id="productName" required>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="productCategory" class="form-label">Kategori</label>
-                                <select class="form-select" id="productCategory" required>
-                                    <option value="">Pilih Kategori</option>
-                                    <option>Makanan</option>
-                                    <option>Minuman</option>
-                                    <option>Kebutuhan Pokok</option>
-                                    <option>Peralatan Rumah Tangga</option>
-                                    <option>Sayuran</option>
-                                    <option>Buahan</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="productPrice" class="form-label">Harga (Rp)</label>
-                                <input type="number" class="form-control" id="productPrice" required>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="productStock" class="form-label">Stok</label>
-                                <input type="number" class="form-control" id="productStock" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="productStatus" class="form-label">Status</label>
-                                <select class="form-select" id="productStatus" required>
-                                    <option value="Tersedia">Tersedia</option>
-                                    <option value="Stok Menipis">Stok Menipis</option>
-                                    <option value="Habis">Habis</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="productDescription" class="form-label">Deskripsi</label>
-                            <textarea class="form-control" id="productDescription" rows="3"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="productImage" class="form-label">Gambar Produk</label>
-                            <input class="form-control" type="file" id="productImage">
-                            <div class="form-text">Format: JPG, PNG. Maks: 2MB</div>
-                            <img id="productImagePreview" src="" alt="Image Preview" class="img-fluid mt-2" style="max-width: 100px; display: none;">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary" id="saveProductBtn" form="productForm">Simpan</button>
-                </div>
-            </div>
-        </div>
+    <div class="header-right">
+      <div class="user-profile" onclick="handleLogout()">
+      <div class="user-avatar">A</div>
+      <div>
+        <div style="font-weight: 600; font-size: 0.875rem;">Admin</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">Administrator</div>
+      </div>
+      <i class="fas fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Kelola Produk</li>
+        </ol>
+      </nav>
     </div>
 
-    <footer class="pc-footer">
-        <div class="footer-wrapper container-fluid">
-            <div class="row">
-                <div class="col-sm my-1">
-                    <p class="m-0">MiniMarket Admin Dashboard &copy; 2025</p>
-                </div>
-            </div>
+    <!-- Filter Controls -->
+    <div class="filter-controls">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Cari produk..." id="searchProduct">
+            <button class="btn btn-outline-secondary" type="button" id="searchButton">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
         </div>
-    </footer>
+        <div class="col-md-3">
+          <select class="form-select" id="filterCategory">
+            <option value="Semua Kategori" selected>Semua Kategori</option>
+            <option value="Sayuran">Sayuran</option>
+            <option value="Buahan">Buahan</option>
+            <option value="Makanan">Makanan</option>
+            <option value="Minuman">Minuman</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" id="sortProducts">
+            <option value="Urutkan" selected>Urutkan</option>
+            <option value="Nama (A-Z)">Nama (A-Z)</option>
+            <option value="Nama (Z-A)">Nama (Z-A)</option>
+            <option value="Harga (Rendah-Tinggi)">Harga (Rendah-Tinggi)</option>
+            <option value="Harga (Tinggi-Rendah)">Harga (Tinggi-Rendah)</option>
+            <option value="Stok (Rendah-Tinggi)">Stok (Rendah-Tinggi)</option>
+            <option value="Stok (Tinggi-Rendah)">Stok (Tinggi-Rendah)</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#productModal" id="add-product-btn">
+            <i class="fas fa-plus"></i> Tambah
+          </button>
+        </div>
+      </div>
+    </div>
 
-    <script src="../assets/js/plugins/popper.min.js"></script>
-    <script src="../assets/js/plugins/simplebar.min.js"></script>
-    <script src="../assets/js/plugins/bootstrap.min.js"></script>
-    <script src="../assets/js/fonts/custom-font.js"></script>
-    <script src="../assets/js/pcoded.js"></script>
-    <script src="../assets/js/plugins/feather.min.js"></script>
+    <!-- Products Table -->
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Gambar</th>
+            <th>Nama Produk</th>
+            <th>Kategori</th>
+            <th>Harga</th>
+            <th>Stok</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="productTableBody">
+          <!-- Products will be rendered here -->
+        </tbody>
+      </table>
+      
+      <!-- Pagination -->
+      <div class="d-flex justify-content-between align-items-center p-3">
+        <div>
+          <span id="paginationInfo" class="text-muted">Menampilkan 0 sampai 0 dari 0 data</span>
+        </div>
+        <nav aria-label="Product pagination">
+          <ul class="pagination" id="paginationControls">
+            <!-- Pagination controls will be rendered here -->
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </main>
 
-    <script>
-        layout_change('light');
-    </script>
-    <script>
-        change_box_container('false');
-    </script>
-    <script>
-        layout_rtl_change('false');
-    </script>
-    <script>
-        preset_change("preset-1");
-    </script>
-    <script>
-        font_change("Public-Sans");
-    </script>
+  <!-- Product Modal -->
+  <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="productModalLabel">Tambah Produk</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="productForm">
+            <input type="hidden" id="editProductId">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="productId" class="form-label">ID Produk</label>
+                <input type="text" class="form-control" id="productId" placeholder="Otomatis" disabled>
+              </div>
+              <div class="col-md-6">
+                <label for="productName" class="form-label">Nama Produk <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="productName" required>
+              </div>
+              <div class="col-md-6">
+                <label for="productCategory" class="form-label">Kategori <span class="text-danger">*</span></label>
+                <select class="form-select" id="productCategory" required>
+                  <option value="">Pilih Kategori</option>
+                  <option>Makanan</option>
+                  <option>Minuman</option>
+                  <option>Kebutuhan Pokok</option>
+                  <option>Peralatan Rumah Tangga</option>
+                  <option>Sayuran</option>
+                  <option>Buahan</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="productPrice" class="form-label">Harga (Rp) <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" id="productPrice" required min="0">
+              </div>
+              <div class="col-md-6">
+                <label for="productStock" class="form-label">Stok <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" id="productStock" required min="0">
+              </div>
+              <div class="col-md-6">
+                <label for="productStatus" class="form-label">Status <span class="text-danger">*</span></label>
+                <select class="form-select" id="productStatus" required>
+                  <option value="Tersedia">Tersedia</option>
+                  <option value="Stok Menipis">Stok Menipis</option>
+                  <option value="Habis">Habis</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label for="productDescription" class="form-label">Deskripsi</label>
+                <textarea class="form-control" id="productDescription" rows="3" placeholder="Deskripsi produk (opsional)"></textarea>
+              </div>
+              <div class="col-12">
+                <label for="productImage" class="form-label">Gambar Produk</label>
+                <input class="form-control" type="file" id="productImage" accept="image/*">
+                <div class="form-text">Format: JPG, PNG. Maksimal: 2MB</div>
+                <img id="productImagePreview" src="/placeholder.svg" alt="Preview" class="image-preview" style="display: none;">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary" id="saveProductBtn" form="productForm">
+            <i class="fas fa-save"></i> Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <script>
-        // Initial product data (you would typically fetch this from a backend)
-        let products = [{
-            id: 'PRD001',
-            image: '../../../uas_workshopui/img/featured/parkcoy.png',
-            name: 'Sayur Pakcoy Segar',
-            category: 'Sayuran',
-            price: 20000,
-            stock: 120,
-            status: 'Tersedia',
-            description: 'Sayur pakcoy segar dari petani lokal.'
-        }, {
-            id: 'PRD002',
-            image: '../../../uas_workshopui/img/featured/bayam.png',
-            name: 'Bayam Segar',
-            category: 'Sayuran',
-            price: 12000,
-            stock: 85,
-            status: 'Tersedia',
-            description: 'Bayam segar kaya akan zat besi.'
-        }, {
-            id: 'PRD003',
-            image: '../../../uas_workshopui/img/featured/wortel.png',
-            name: 'Wortel Segar',
-            category: 'Sayuran',
-            price: 18000,
-            stock: 150,
-            status: 'Tersedia',
-            description: 'Wortel segar pilihan untuk kesehatan mata.'
-        }, {
-            id: 'PRD004',
-            image: '../../../uas_workshopui/img/featured/sawi.png',
-            name: 'Sawi Putih Segar',
-            category: 'Sayuran',
-            price: 17500,
-            stock: 100,
-            status: 'Tersedia',
-            description: 'Sawi putih segar, cocok untuk berbagai masakan.'
-        }, {
-            id: 'PRD005',
-            image: '../../../uas_workshopui/img/featured/buncis.png',
-            name: 'Buncis Segar',
-            category: 'Sayuran',
-            price: 18000,
-            stock: 75,
-            status: 'Tersedia',
-            description: 'Buncis segar pilihan, renyah dan bergizi.'
-        }, {
-            id: 'PRD006',
-            image: '../../../uas_workshopui/img/featured/mangga.jpg',
-            name: 'Mangga Kuning Manis',
-            category: 'Buahan',
-            price: 18000,
-            stock: 60,
-            status: 'Tersedia',
-            description: 'Mangga kuning manis, siap disantap.'
-        }, {
-            id: 'PRD007',
-            image: '../../../uas_workshopui/img/featured/brokoli.png',
-            name: 'Brokoli Hijau',
-            category: 'Sayuran',
-            price: 20000,
-            stock: 90,
-            status: 'Tersedia',
-            description: 'Brokoli hijau segar, sumber vitamin dan serat.'
-        }, {
-            id: 'PRD008',
-            image: '../../../uas_workshopui/img/featured/anggur.png',
-            name: 'Anggur Ungu',
-            category: 'Buahan',
-            price: 38000,
-            stock: 5,
-            status: 'Stok Menipis',
-            description: 'Anggur ungu pilihan, manis dan menyegarkan.'
-        }, {
-            id: 'PRD009',
-            image: '../../../uas_workshopui/img/featured/semangka.png',
-            name: 'Semangka Merah',
-            category: 'Buahan',
-            price: 20000,
-            stock: 0,
-            status: 'Habis',
-            description: 'Semangka merah, cocok untuk cuaca panas.'
-        }, {
-            id: 'PRD010',
-            image: '../../../uas_workshopui/img/featured/terong.png',
-            name: 'Terong Ungu',
-            category: 'Sayuran',
-            price: 15000,
-            stock: 200,
-            status: 'Tersedia',
-            description: 'Terong ungu segar, baik untuk kesehatan.'
-        }, ];
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 MiniMarket Professional Dashboard. All rights reserved.</p>
+  </footer>
 
-        let currentEditProductId = null; // To store the ID of the product being edited
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-        const productTableBody = document.getElementById('productTableBody');
-        const productForm = document.getElementById('productForm');
-        const saveProductBtn = document.getElementById('saveProductBtn');
-        const productModalLabel = document.getElementById('productModalLabel');
-        const addProductBtn = document.getElementById('add-product-btn');
+  <script>
+    // Sample product data
+    let products = [
+      {
+        id: 'PRD001',
+        image: '../../../uas_workshopui/img/featured/pakcoy.png',
+        name: 'Sayur Pakcoy Segar',
+        category: 'Sayuran',
+        price: 20000,
+        stock: 120,
+        status: 'Tersedia',
+        description: 'Sayur pakcoy segar dari petani lokal.'
+      },
+      {
+        id: 'PRD002',
+        image: '../../../uas_workshopui/img/featured/bayam.png',
+        name: 'Bayam Segar',
+        category: 'Sayuran',
+        price: 12000,
+        stock: 85,
+        status: 'Tersedia',
+        description: 'Bayam segar kaya akan zat besi.'
+      },
+      {
+        id: 'PRD003',
+        image: '../../../uas_workshopui/img/featured/wortel.png',
+        name: 'Wortel Segar',
+        category: 'Sayuran',
+        price: 18000,
+        stock: 150,
+        status: 'Tersedia',
+        description: 'Wortel segar pilihan untuk kesehatan mata.'
+      },
+      {
+        id: 'PRD004',
+        image: '../../../uas_workshopui/img/featured/sawi.png',
+        name: 'Sawi Putih Segar',
+        category: 'Sayuran',
+        price: 17500,
+        stock: 100,
+        status: 'Tersedia',
+        description: 'Sawi putih segar, cocok untuk berbagai masakan.'
+      },
+      {
+        id: 'PRD005',
+        image: '../../../uas_workshopui/img/featured/buncis.png',
+        name: 'Buncis Segar',
+        category: 'Sayuran',
+        price: 18000,
+        stock: 75,
+        status: 'Tersedia',
+        description: 'Buncis segar pilihan, renyah dan bergizi.'
+      },
+      {
+        id: 'PRD006',
+        image: '../../../uas_workshopui/img/featured/mangga.png',
+        name: 'Mangga Kuning Manis',
+        category: 'Buahan',
+        price: 18000,
+        stock: 60,
+        status: 'Tersedia',
+        description: 'Mangga kuning manis, siap disantap.'
+      },
+      {
+        id: 'PRD007',
+        image: '../../../uas_workshopui/img/featured/brokoli.png',
+        name: 'Brokoli Hijau',
+        category: 'Sayuran',
+        price: 20000,
+        stock: 90,
+        status: 'Tersedia',
+        description: 'Brokoli hijau segar, sumber vitamin dan serat.'
+      },
+      {
+        id: 'PRD008',
+        image: '../../../uas_workshopui/img/featured/anggur.png',
+        name: 'Anggur Ungu',
+        category: 'Buahan',
+        price: 38000,
+        stock: 5,
+        status: 'Stok Menipis',
+        description: 'Anggur ungu pilihan, manis dan menyegarkan.'
+      },
+      {
+        id: 'PRD009',
+        image: '../../../uas_workshopui/img/featured/semangka.png',
+        name: 'Semangka Merah',
+        category: 'Buahan',
+        price: 20000,
+        stock: 0,
+        status: 'Habis',
+        description: 'Semangka merah, cocok untuk cuaca panas.'
+      },
+      {
+        id: 'PRD010',
+        image: '../../../uas_workshopui/img/featured/terong.png',
+        name: 'Terong Ungu',
+        category: 'Sayuran',
+        price: 15000,
+        stock: 200,
+        status: 'Tersedia',
+        description: 'Terong ungu segar, baik untuk kesehatan.'
+      }
+    ];
 
-        const productIdInput = document.getElementById('productId');
-        const productNameInput = document.getElementById('productName');
-        const productCategorySelect = document.getElementById('productCategory');
-        const productPriceInput = document.getElementById('productPrice');
-        const productStockInput = document.getElementById('productStock');
-        const productStatusSelect = document.getElementById('productStatus');
-        const productDescriptionTextarea = document.getElementById('productDescription');
-        const productImageInput = document.getElementById('productImage');
-        const productImagePreview = document.getElementById('productImagePreview');
+    let currentEditProductId = null;
+    let currentPage = 1;
+    const rowsPerPage = 10;
 
-        const searchProductInput = document.getElementById('searchProduct');
-        const searchButton = document.getElementById('searchButton');
-        const filterCategorySelect = document.getElementById('filterCategory');
-        const sortProductsSelect = document.getElementById('sortProducts');
+    // DOM Elements
+    const productTableBody = document.getElementById('productTableBody');
+    const productForm = document.getElementById('productForm');
+    const saveProductBtn = document.getElementById('saveProductBtn');
+    const productModalLabel = document.getElementById('productModalLabel');
+    const addProductBtn = document.getElementById('add-product-btn');
 
-        let currentPage = 1;
-        const rowsPerPage = 10;
+    const productIdInput = document.getElementById('productId');
+    const productNameInput = document.getElementById('productName');
+    const productCategorySelect = document.getElementById('productCategory');
+    const productPriceInput = document.getElementById('productPrice');
+    const productStockInput = document.getElementById('productStock');
+    const productStatusSelect = document.getElementById('productStatus');
+    const productDescriptionTextarea = document.getElementById('productDescription');
+    const productImageInput = document.getElementById('productImage');
+    const productImagePreview = document.getElementById('productImagePreview');
 
-        // Function to render products in the table
-        function renderProducts(dataToRender = products) {
-            productTableBody.innerHTML = ''; // Clear existing rows
-            const startIndex = (currentPage - 1) * rowsPerPage;
-            const endIndex = startIndex + rowsPerPage;
-            const paginatedProducts = dataToRender.slice(startIndex, endIndex);
+    const searchProductInput = document.getElementById('searchProduct');
+    const searchButton = document.getElementById('searchButton');
+    const filterCategorySelect = document.getElementById('filterCategory');
+    const sortProductsSelect = document.getElementById('sortProducts');
 
-            if (paginatedProducts.length === 0 && dataToRender.length > 0) {
-                // If no products on current page but there are products overall, go to previous page
-                currentPage = Math.max(1, currentPage - 1);
-                renderProducts(dataToRender);
-                return;
-            }
+    // Render products in table
+    function renderProducts(dataToRender = products) {
+      productTableBody.innerHTML = '';
+      const startIndex = (currentPage - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
+      const paginatedProducts = dataToRender.slice(startIndex, endIndex);
 
-            paginatedProducts.forEach(product => {
-                const row = productTableBody.insertRow();
-                row.dataset.productId = product.id; // Store product ID on the row
+      if (paginatedProducts.length === 0 && dataToRender.length > 0) {
+        currentPage = Math.max(1, currentPage - 1);
+        renderProducts(dataToRender);
+        return;
+      }
 
-                let statusBadgeClass = '';
-                if (product.status === 'Tersedia') {
-                    statusBadgeClass = 'bg-success';
-                } else if (product.status === 'Stok Menipis') {
-                    statusBadgeClass = 'bg-warning';
-                } else if (product.status === 'Habis') {
-                    statusBadgeClass = 'bg-danger';
-                }
+      paginatedProducts.forEach(product => {
+        const row = productTableBody.insertRow();
+        row.dataset.productId = product.id;
 
-                row.innerHTML = `
-                    <td>${product.id}</td>
-                    <td><img src="${product.image}" alt="product" class="img-fluid" width="50"></td>
-                    <td>${product.name}</td>
-                    <td>${product.category}</td>
-                    <td>Rp ${product.price.toLocaleString('id-ID')}</td>
-                    <td>${product.stock}</td>
-                    <td><span class="badge ${statusBadgeClass}">${product.status}</span></td>
-                    <td>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-outline-primary edit-btn" data-bs-toggle="modal" data-bs-target="#productModal">
-                                <i class="ti ti-edit"></i>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-outline-danger delete-btn">
-                                <i class="ti ti-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                `;
-            });
-            updatePaginationControls(dataToRender.length);
-            updatePaginationInfo(dataToRender.length);
+        let statusClass = '';
+        if (product.status === 'Tersedia') {
+          statusClass = 'status-tersedia';
+        } else if (product.status === 'Stok Menipis') {
+          statusClass = 'status-menipis';
+        } else if (product.status === 'Habis') {
+          statusClass = 'status-habis';
         }
 
-        // Function to generate a unique product ID
-        function generateProductId() {
-            const prefix = 'PRD';
-            const existingIds = products.map(p => parseInt(p.id.replace(prefix, '')));
-            const maxIdNum = existingIds.length > 0 ? Math.max(...existingIds) : 0;
-            const newIdNum = maxIdNum + 1;
-            return prefix + String(newIdNum).padStart(3, '0');
+        row.innerHTML = `
+          <td><strong>${product.id}</strong></td>
+          <td><img src="${product.image}" alt="product" class="product-image"></td>
+          <td>${product.name}</td>
+          <td>${product.category}</td>
+          <td><strong>Rp ${product.price.toLocaleString('id-ID')}</strong></td>
+          <td>${product.stock}</td>
+          <td><span class="status-badge ${statusClass}">${product.status}</span></td>
+          <td>
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-outline-primary edit-btn" data-bs-toggle="modal" data-bs-target="#productModal" title="Edit">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-danger delete-btn" title="Hapus">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        `;
+      });
+
+      updatePaginationControls(dataToRender.length);
+      updatePaginationInfo(dataToRender.length);
+    }
+
+    // Generate unique product ID
+    function generateProductId() {
+      const prefix = 'PRD';
+      const existingIds = products.map(p => parseInt(p.id.replace(prefix, '')));
+      const maxIdNum = existingIds.length > 0 ? Math.max(...existingIds) : 0;
+      const newIdNum = maxIdNum + 1;
+      return prefix + String(newIdNum).padStart(3, '0');
+    }
+
+    // Handle form submission
+    productForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const productName = productNameInput.value;
+      const productCategory = productCategorySelect.value;
+      const productPrice = parseFloat(productPriceInput.value);
+      const productStock = parseInt(productStockInput.value);
+      const productStatus = productStatusSelect.value;
+      const productDescription = productDescriptionTextarea.value;
+      let productImage = productImagePreview.src || '';
+
+      const file = productImageInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          productImage = e.target.result;
+          processProductSave(productName, productCategory, productPrice, productStock, productStatus, productDescription, productImage);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        processProductSave(productName, productCategory, productPrice, productStock, productStatus, productDescription, productImage);
+      }
+    });
+
+    function processProductSave(productName, productCategory, productPrice, productStock, productStatus, productDescription, productImage) {
+      if (currentEditProductId) {
+        const productIndex = products.findIndex(p => p.id === currentEditProductId);
+        if (productIndex !== -1) {
+          products[productIndex] = {
+            ...products[productIndex],
+            name: productName,
+            category: productCategory,
+            price: productPrice,
+            stock: productStock,
+            status: productStatus,
+            description: productDescription,
+            image: productImage
+          };
+          showToast('Produk berhasil diperbarui!', 'success');
         }
+      } else {
+        const newProductId = generateProductId();
+        const newProduct = {
+          id: newProductId,
+          image: productImage || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23e2e8f0"/><text x="50" y="55" text-anchor="middle" fill="%2364748b" font-size="30">📦</text></svg>',
+          name: productName,
+          category: productCategory,
+          price: productPrice,
+          stock: productStock,
+          status: productStatus,
+          description: productDescription
+        };
+        products.push(newProduct);
+        showToast('Produk berhasil ditambahkan!', 'success');
+      }
 
-        // Function to handle form submission (Add/Edit product)
-        productForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
+      bootstrap.Modal.getInstance(document.getElementById('productModal')).hide();
+      resetProductForm();
+      applyFiltersAndSorting();
+    }
 
-            const productName = productNameInput.value;
-            const productCategory = productCategorySelect.value;
-            const productPrice = parseFloat(productPriceInput.value);
-            const productStock = parseInt(productStockInput.value);
-            const productStatus = productStatusSelect.value;
-            const productDescription = productDescriptionTextarea.value;
-            let productImage = productImagePreview.src || ''; // Use current preview if no new image is selected
+    // Handle image preview
+    productImageInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          productImagePreview.src = e.target.result;
+          productImagePreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        productImagePreview.src = '';
+        productImagePreview.style.display = 'none';
+      }
+    });
 
-            // Handle image upload if a new file is selected
-            const file = productImageInput.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    productImage = e.target.result;
-                    processProductSave(productName, productCategory, productPrice, productStock, productStatus, productDescription, productImage);
-                };
-                reader.readAsDataURL(file);
-            } else {
-                processProductSave(productName, productCategory, productPrice, productStock, productStatus, productDescription, productImage);
-            }
-        });
+    // Reset form
+    function resetProductForm() {
+      productForm.reset();
+      productIdInput.value = 'Otomatis';
+      productModalLabel.textContent = 'Tambah Produk';
+      saveProductBtn.innerHTML = '<i class="fas fa-save"></i> Simpan';
+      currentEditProductId = null;
+      productImagePreview.src = '';
+      productImagePreview.style.display = 'none';
+    }
 
-        function processProductSave(productName, productCategory, productPrice, productStock, productStatus, productDescription, productImage) {
-            if (currentEditProductId) {
-                // Editing an existing product
-                const productIndex = products.findIndex(p => p.id === currentEditProductId);
-                if (productIndex !== -1) {
-                    products[productIndex] = {
-                        ...products[productIndex], // Keep existing properties if not updated
-                        name: productName,
-                        category: productCategory,
-                        price: productPrice,
-                        stock: productStock,
-                        status: productStatus,
-                        description: productDescription,
-                        image: productImage
-                    };
-                    alert('Produk berhasil diperbarui!');
-                }
-            } else {
-                // Adding a new product
-                const newProductId = generateProductId();
-                const newProduct = {
-                    id: newProductId,
-                    image: productImage || '../assets/images/placeholder.png', // Default placeholder if no image
-                    name: productName,
-                    category: productCategory,
-                    price: productPrice,
-                    stock: productStock,
-                    status: productStatus,
-                    description: productDescription
-                };
-                products.push(newProduct);
-                alert('Produk berhasil ditambahkan!');
-            }
+    // Add product button
+    addProductBtn.addEventListener('click', function() {
+      resetProductForm();
+    });
 
-            $('#productModal').modal('hide'); // Close the modal
-            resetProductForm(); // Reset form fields
-            applyFiltersAndSorting(); // Re-render products after add/edit
-        }
+    // Handle edit and delete buttons
+    productTableBody.addEventListener('click', function(event) {
+      const editBtn = event.target.closest('.edit-btn');
+      const deleteBtn = event.target.closest('.delete-btn');
 
+      if (editBtn) {
+        const row = editBtn.closest('tr');
+        const productId = row.dataset.productId;
+        const product = products.find(p => p.id === productId);
 
-        // Function to handle image preview
-        productImageInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    productImagePreview.src = e.target.result;
-                    productImagePreview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            } else {
-                productImagePreview.src = '';
-                productImagePreview.style.display = 'none';
-            }
-        });
+        if (product) {
+          productModalLabel.textContent = 'Edit Produk';
+          saveProductBtn.innerHTML = '<i class="fas fa-save"></i> Perbarui';
+          currentEditProductId = product.id;
 
-        // Function to reset the product form
-        function resetProductForm() {
-            productForm.reset();
-            productIdInput.value = 'Otomatis';
-            productModalLabel.textContent = 'Tambah Produk';
-            saveProductBtn.textContent = 'Simpan';
-            currentEditProductId = null;
+          productIdInput.value = product.id;
+          productNameInput.value = product.name;
+          productCategorySelect.value = product.category;
+          productPriceInput.value = product.price;
+          productStockInput.value = product.stock;
+          productStatusSelect.value = product.status;
+          productDescriptionTextarea.value = product.description || '';
+          
+          if (product.image) {
+            productImagePreview.src = product.image;
+            productImagePreview.style.display = 'block';
+          } else {
             productImagePreview.src = '';
             productImagePreview.style.display = 'none';
+          }
         }
-
-        // Event listener for "Tambah Produk" button
-        addProductBtn.addEventListener('click', function() {
-            resetProductForm();
-        });
-
-        // Event listener for "Edit" buttons (delegated to parent table)
-        productTableBody.addEventListener('click', function(event) {
-            const editBtn = event.target.closest('.edit-btn');
-            const deleteBtn = event.target.closest('.delete-btn');
-
-            if (editBtn) {
-                const row = editBtn.closest('tr');
-                const productId = row.dataset.productId;
-                const product = products.find(p => p.id === productId);
-
-                if (product) {
-                    productModalLabel.textContent = 'Edit Produk';
-                    saveProductBtn.textContent = 'Perbarui';
-                    currentEditProductId = product.id;
-
-                    productIdInput.value = product.id;
-                    productNameInput.value = product.name;
-                    productCategorySelect.value = product.category;
-                    productPriceInput.value = product.price;
-                    productStockInput.value = product.stock;
-                    productStatusSelect.value = product.status;
-                    productDescriptionTextarea.value = product.description || ''; // Handle undefined description
-                    if (product.image) {
-                        productImagePreview.src = product.image;
-                        productImagePreview.style.display = 'block';
-                    } else {
-                        productImagePreview.src = '';
-                        productImagePreview.style.display = 'none';
-                    }
-                }
-            } else if (deleteBtn) {
-                const row = deleteBtn.closest('tr');
-                const productId = row.dataset.productId;
-                if (confirm(`Apakah Anda yakin ingin menghapus produk dengan ID ${productId}?`)) {
-                    products = products.filter(p => p.id !== productId);
-                    alert('Produk berhasil dihapus!');
-                    applyFiltersAndSorting(); // Re-render products after deletion
-                }
-            }
-        });
-
-        // Search, Filter, and Sort functionality
-        function applyFiltersAndSorting() {
-            let filteredProducts = [...products];
-
-            // Search
-            const searchTerm = searchProductInput.value.toLowerCase().trim();
-            if (searchTerm) {
-                filteredProducts = filteredProducts.filter(product =>
-                    product.name.toLowerCase().includes(searchTerm) ||
-                    product.id.toLowerCase().includes(searchTerm) ||
-                    product.category.toLowerCase().includes(searchTerm)
-                );
-            }
-
-            // Filter by Category
-            const selectedCategory = filterCategorySelect.value;
-            if (selectedCategory !== 'Semua Kategori') {
-                filteredProducts = filteredProducts.filter(product =>
-                    product.category === selectedCategory
-                );
-            }
-
-            // Sort
-            const sortOption = sortProductsSelect.value;
-            filteredProducts.sort((a, b) => {
-                switch (sortOption) {
-                    case 'Nama (A-Z)':
-                        return a.name.localeCompare(b.name);
-                    case 'Nama (Z-A)':
-                        return b.name.localeCompare(a.name);
-                    case 'Harga (Rendah-Tinggi)':
-                        return a.price - b.price;
-                    case 'Harga (Tinggi-Rendah)':
-                        return b.price - a.price;
-                    case 'Stok (Rendah-Tinggi)':
-                        return a.stock - b.stock;
-                    case 'Stok (Tinggi-Rendah)':
-                        return b.stock - a.stock;
-                    default:
-                        return 0; // No sorting
-                }
-            });
-            renderProducts(filteredProducts);
+      } else if (deleteBtn) {
+        const row = deleteBtn.closest('tr');
+        const productId = row.dataset.productId;
+        const product = products.find(p => p.id === productId);
+        
+        if (confirm(`Apakah Anda yakin ingin menghapus produk "${product.name}"?`)) {
+          products = products.filter(p => p.id !== productId);
+          showToast('Produk berhasil dihapus!', 'success');
+          applyFiltersAndSorting();
         }
+      }
+    });
 
-        searchButton.addEventListener('click', applyFiltersAndSorting);
-        searchProductInput.addEventListener('keyup', applyFiltersAndSorting);
-        filterCategorySelect.addEventListener('change', applyFiltersAndSorting);
-        sortProductsSelect.addEventListener('change', applyFiltersAndSorting);
+    // Search, filter, and sort
+    function applyFiltersAndSorting() {
+      let filteredProducts = [...products];
 
+      const searchTerm = searchProductInput.value.toLowerCase().trim();
+      if (searchTerm) {
+        filteredProducts = filteredProducts.filter(product =>
+          product.name.toLowerCase().includes(searchTerm) ||
+          product.id.toLowerCase().includes(searchTerm) ||
+          product.category.toLowerCase().includes(searchTerm)
+        );
+      }
 
-        // Pagination functionality
-        function updatePaginationControls(totalItems) {
-            const totalPages = Math.ceil(totalItems / rowsPerPage);
-            const paginationControls = document.getElementById('paginationControls');
-            paginationControls.innerHTML = '';
+      const selectedCategory = filterCategorySelect.value;
+      if (selectedCategory !== 'Semua Kategori') {
+        filteredProducts = filteredProducts.filter(product =>
+          product.category === selectedCategory
+        );
+      }
 
-            const createPageItem = (pageNumber, text, isDisabled, isActive) => {
-                const li = document.createElement('li');
-                li.classList.add('page-item');
-                if (isDisabled) li.classList.add('disabled');
-                if (isActive) li.classList.add('active');
-
-                const a = document.createElement('a');
-                a.classList.add('page-link');
-                a.href = '#';
-                a.textContent = text;
-                a.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (!isDisabled && !isActive) {
-                        currentPage = pageNumber;
-                        applyFiltersAndSorting();
-                    }
-                });
-                li.appendChild(a);
-                return li;
-            };
-
-            // Previous button
-            paginationControls.appendChild(createPageItem(currentPage - 1, 'Previous', currentPage === 1, false));
-
-            // Page numbers
-            for (let i = 1; i <= totalPages; i++) {
-                paginationControls.appendChild(createPageItem(i, i, false, i === currentPage));
-            }
-
-            // Next button
-            paginationControls.appendChild(createPageItem(currentPage + 1, 'Next', currentPage === totalPages || totalPages === 0, false));
+      const sortOption = sortProductsSelect.value;
+      filteredProducts.sort((a, b) => {
+        switch (sortOption) {
+          case 'Nama (A-Z)':
+            return a.name.localeCompare(b.name);
+          case 'Nama (Z-A)':
+            return b.name.localeCompare(a.name);
+          case 'Harga (Rendah-Tinggi)':
+            return a.price - b.price;
+          case 'Harga (Tinggi-Rendah)':
+            return b.price - a.price;
+          case 'Stok (Rendah-Tinggi)':
+            return a.stock - b.stock;
+          case 'Stok (Tinggi-Rendah)':
+            return b.stock - a.stock;
+          default:
+            return 0;
         }
+      });
 
-        function updatePaginationInfo(totalItems) {
-            const paginationInfo = document.getElementById('paginationInfo');
-            const startIndex = (currentPage - 1) * rowsPerPage + 1;
-            const endIndex = Math.min(startIndex + rowsPerPage - 1, totalItems);
-            paginationInfo.textContent = `Menampilkan ${totalItems === 0 ? 0 : startIndex} sampai ${endIndex} dari ${totalItems} data`;
-        }
+      renderProducts(filteredProducts);
+    }
 
+    // Pagination
+    function updatePaginationControls(totalItems) {
+      const totalPages = Math.ceil(totalItems / rowsPerPage);
+      const paginationControls = document.getElementById('paginationControls');
+      paginationControls.innerHTML = '';
 
-        // Initial load of products
-        document.addEventListener('DOMContentLoaded', () => {
+      const createPageItem = (pageNumber, text, isDisabled, isActive) => {
+        const li = document.createElement('li');
+        li.classList.add('page-item');
+        if (isDisabled) li.classList.add('disabled');
+        if (isActive) li.classList.add('active');
+
+        const a = document.createElement('a');
+        a.classList.add('page-link');
+        a.href = '#';
+        a.textContent = text;
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (!isDisabled && !isActive) {
+            currentPage = pageNumber;
             applyFiltersAndSorting();
-            // User authentication (re-added from your commented out code)
-            checkUserAuthentication();
-
-            const logoutIcon = document.querySelector('#logout-icon');
-            if (logoutIcon) {
-                logoutIcon.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    handleLogout();
-                });
-            }
-
-            const logoutOption = document.querySelector('#logout-option');
-            if (logoutOption) {
-                logoutOption.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    handleLogout();
-                });
-            }
+          }
         });
+        li.appendChild(a);
+        return li;
+      };
 
+      paginationControls.appendChild(createPageItem(currentPage - 1, 'Previous', currentPage === 1, false));
 
-        // Functions for logout and user authentication (from your original commented out code)
-        function handleLogout() {
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('minimarket_current_user');
-                showLogoutMessage();
-                setTimeout(() => {
-                    window.location.href = '../pages/login.html';
-                }, 1000);
-            }
-        }
+      for (let i = 1; i <= totalPages; i++) {
+        paginationControls.appendChild(createPageItem(i, i, false, i === currentPage));
+      }
 
-        function showLogoutMessage() {
-            let toast = document.getElementById('logoutToast');
-            if (!toast) {
-                toast = document.createElement('div');
-                toast.id = 'logoutToast';
-                toast.style.position = 'fixed';
-                toast.style.top = '20px';
-                toast.style.right = '20px';
-                toast.style.backgroundColor = '#d1e7dd';
-                toast.style.color = '#0f5132';
-                toast.style.padding = '15px 25px';
-                toast.style.borderRadius = '5px';
-                toast.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
-                toast.style.zIndex = '9999';
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateY(-20px)';
-                toast.style.transition = 'opacity 0.3s, transform 0.3s';
-                toast.textContent = 'Logging out...';
-                document.body.appendChild(toast);
-            }
-            setTimeout(() => {
-                toast.style.opacity = '1';
-                toast.style.transform = 'translateY(0)';
-            }, 100);
-        }
+      paginationControls.appendChild(createPageItem(currentPage + 1, 'Next', currentPage === totalPages || totalPages === 0, false));
+    }
 
-        function checkUserAuthentication() {
-            const currentUser = JSON.parse(localStorage.getItem('minimarket_current_user'));
-            if (!currentUser) {
-                window.location.href = '../pages/login.html';
-            } else {
-                updateUserInfo(currentUser);
-            }
-        }
+    function updatePaginationInfo(totalItems) {
+      const paginationInfo = document.getElementById('paginationInfo');
+      const startIndex = (currentPage - 1) * rowsPerPage + 1;
+      const endIndex = Math.min(startIndex + rowsPerPage - 1, totalItems);
+      paginationInfo.textContent = `Menampilkan ${totalItems === 0 ? 0 : startIndex} sampai ${endIndex} dari ${totalItems} data`;
+    }
 
-        function updateUserInfo(user) {
-            const userNameElements = document.querySelectorAll('.header-user-profile span');
-            const userNameInDropdown = document.querySelector('.dropdown-user-profile h6');
-            if (userNameElements.length > 0) {
-                userNameElements.forEach(element => {
-                    element.textContent = user.name || 'User';
-                });
-            }
-            if (userNameInDropdown) {
-                userNameInDropdown.textContent = user.name || 'User';
-            }
-            const userRoleElement = document.querySelector('.dropdown-user-profile span');
-            if (userRoleElement) {
-                userRoleElement.textContent = user.role || 'User';
-            }
-        }
-    </script>
+    // Toast notification
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.style.position = 'fixed';
+      toast.style.top = '20px';
+      toast.style.right = '20px';
+      toast.style.padding = '15px 25px';
+      toast.style.borderRadius = '0.5rem';
+      toast.style.color = 'white';
+      toast.style.fontWeight = '500';
+      toast.style.zIndex = '9999';
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(-20px)';
+      toast.style.transition = 'all 0.3s ease';
+      
+      if (type === 'success') {
+        toast.style.background = 'var(--success-color)';
+      } else if (type === 'error') {
+        toast.style.background = 'var(--danger-color)';
+      }
+      
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateY(0)';
+      }, 100);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+          document.body.removeChild(toast);
+        }, 300);
+      }, 3000);
+    }
+
+    // Event listeners
+    searchButton.addEventListener('click', applyFiltersAndSorting);
+    searchProductInput.addEventListener('keyup', applyFiltersAndSorting);
+    filterCategorySelect.addEventListener('change', applyFiltersAndSorting);
+    sortProductsSelect.addEventListener('change', applyFiltersAndSorting);
+
+    // Logout functionality
+    function handleLogout() {
+      if (confirm('Apakah Anda yakin ingin logout?')) {
+        showToast('Logout berhasil!', 'success');
+        setTimeout(() => {
+          window.location.href = 'login.html';
+          alert('Redirect to login page');
+        }, 1000);
+      }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      applyFiltersAndSorting();
+    });
+  </script>
 </body>
 </html>

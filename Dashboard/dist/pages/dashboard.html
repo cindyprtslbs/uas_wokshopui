@@ -1,521 +1,875 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- [Head] start -->
-
 <head>
-  <title>MiniMarket - Dashboard</title>
-  <!-- [Meta] -->
+  <title>MiniMarket - Professional Dashboard</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="MiniMarket Admin Dashboard">
+  <meta name="description" content="MiniMarket Professional Admin Dashboard">
   <meta name="keywords" content="admin, dashboard, minimarket, inventory, sales">
-  <meta name="author" content="CodedThemes">
+  <meta name="author" content="MiniMarket">
 
-  <!-- [Favicon] icon -->
-  <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon">
-  <!-- [Google Font] Family -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" id="main-font-link">
-  <!-- [Tabler Icons] https://tablericons.com -->
-  <link rel="stylesheet" href="../assets/fonts/tabler-icons.min.css">
-  <!-- [Feather Icons] https://feathericons.com -->
-  <link rel="stylesheet" href="../assets/fonts/feather.css">
-  <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
-  <link rel="stylesheet" href="../assets/fonts/fontawesome.css">
-  <!-- [Material Icons] https://fonts.google.com/icons -->
-  <link rel="stylesheet" href="../assets/fonts/material.css">
-  <!-- [Template CSS Files] -->
-  <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link">
-  <link rel="stylesheet" href="../assets/css/style-preset.css">
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏪</text></svg>" type="image/svg+xml">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabler-icons@latest/tabler-sprite.svg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-light: #dbeafe;
+      --secondary-color: #64748b;
+      --success-color: #059669;
+      --success-light: #d1fae5;
+      --warning-color: #d97706;
+      --warning-light: #fef3c7;
+      --danger-color: #dc2626;
+      --danger-light: #fee2e2;
+      --dark-color: #1e293b;
+      --light-color: #f8fafc;
+      --border-color: #e2e8f0;
+      --text-muted: #64748b;
+      --sidebar-width: 280px;
+      --header-height: 70px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .sidebar-brand i {
+      margin-right: 0.75rem;
+      font-size: 2rem;
+    }
+
+    .sidebar-nav {
+      padding: 1rem 0;
+    }
+
+    .nav-section {
+      margin-bottom: 2rem;
+    }
+
+    .nav-section-title {
+      padding: 0 1.5rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .nav-item {
+      margin: 0.25rem 1rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .nav-link i {
+      margin-right: 0.75rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Header Styles */
+    .header {
+      position: fixed;
+      top: 0;
+      left: var(--sidebar-width);
+      right: 0;
+      height: var(--header-height);
+      background: white;
+      border-bottom: 1px solid var(--border-color);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--dark-color);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 1rem;
+      background: var(--light-color);
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .user-profile:hover {
+      background: var(--primary-light);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      margin-top: var(--header-height);
+      padding: 2rem;
+      min-height: calc(100vh - var(--header-height));
+    }
+
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary-color);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .stat-card.success::before { background: var(--success-color); }
+    .stat-card.warning::before { background: var(--warning-color); }
+    .stat-card.danger::before { background: var(--danger-color); }
+
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .stat-icon.primary { background: var(--primary-light); color: var(--primary-color); }
+    .stat-icon.success { background: var(--success-light); color: var(--success-color); }
+    .stat-icon.warning { background: var(--warning-light); color: var(--warning-color); }
+    .stat-icon.danger { background: var(--danger-light); color: var(--danger-color); }
+
+    .stat-title {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--dark-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-change {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    .change-positive { color: var(--success-color); }
+    .change-negative { color: var(--danger-color); }
+
+    /* Cards */
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--light-color);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--dark-color);
+      margin: 0;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    /* Table */
+    .table-container {
+      overflow-x: auto;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table th {
+      background: var(--light-color);
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--dark-color);
+      border-bottom: 2px solid var(--border-color);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--dark-color);
+    }
+
+    .table tbody tr:hover {
+      background: var(--light-color);
+    }
+
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-success {
+      background: var(--success-light);
+      color: var(--success-color);
+    }
+
+    .status-warning {
+      background: var(--warning-light);
+      color: var(--warning-color);
+    }
+
+    .status-danger {
+      background: var(--danger-light);
+      color: var(--danger-color);
+    }
+
+    /* Product List */
+    .product-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .product-item:hover {
+      background: var(--light-color);
+    }
+
+    .product-item:last-child {
+      border-bottom: none;
+    }
+
+    .product-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      font-size: 1.25rem;
+    }
+
+    .product-info {
+      flex: 1;
+    }
+
+    .product-name {
+      font-weight: 600;
+      color: var(--dark-color);
+      margin-bottom: 0.25rem;
+    }
+
+    .product-sales {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .product-stats {
+      text-align: right;
+    }
+
+    .product-price {
+      font-weight: 600;
+      color: var(--dark-color);
+      margin-bottom: 0.25rem;
+    }
+
+    .product-percentage {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* Chart Container */
+    .chart-container {
+      position: relative;
+      height: 300px;
+      margin: 1rem 0;
+    }
+
+    /* Footer */
+    .footer {
+      margin-left: var(--sidebar-width);
+      padding: 1.5rem 2rem;
+      background: white;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .header {
+        left: 0;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .footer {
+        margin-left: 0;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .stat-card {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .stat-card:nth-child(1) { animation-delay: 0.1s; }
+    .stat-card:nth-child(2) { animation-delay: 0.2s; }
+    .stat-card:nth-child(3) { animation-delay: 0.3s; }
+    .stat-card:nth-child(4) { animation-delay: 0.4s; }
+  </style>
 </head>
-<!-- [Head] end -->
-<!-- [Body] Start -->
 
-<body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
-  <!-- [ Pre-loader ] start -->
-  <div class="loader-bg">
-    <div class="loader-track">
-      <div class="loader-fill"></div>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <a href="../../../uas_workshopui/index.html" class="sidebar-brand">
+        <i class="fas fa-store"></i>
+        MiniMarket
+      </a>
     </div>
+    
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Main Navigation</div>
+        <div class="nav-item">
+          <a href="#" class="nav-link active">
+            <i class="fas fa-chart-line"></i>
+            Dashboard
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-produk.html" class="nav-link">
+            <i class="fas fa-box"></i>
+            Kelola Produk
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-transaksi.html" class="nav-link">
+            <i class="fas fa-receipt"></i>
+            Kelola Transaksi
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="history-transaksi.html" class="nav-link">
+            <i class="fas fa-history"></i>
+            History Transaksi
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-pengguna.html" class="nav-link">
+            <i class="fas fa-users"></i>
+            Kelola Pengguna
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="kelola-artikel.html" class="nav-link">
+            <i class="fas fa-file-alt"></i>
+            Kelola Artikel
+          </a>
+        </div>
+      </div>
+    </nav>
   </div>
-  <!-- [ Pre-loader ] End -->
-  <!-- [ Sidebar Menu ] start -->
-  <nav class="pc-sidebar">
-    <div class="navbar-wrapper">
-      <div class="m-header">
-        <a href="../../../uas_workshopui/index.html" class="b-brand text-primary">
-          <img src="../assets/images/logo-dark.svg" class="img-fluid logo-lg" alt="logo">
-        </a>
-      </div>
-      <div class="navbar-content">
-        <ul class="pc-navbar">
-          <li class="pc-item pc-caption">
-            <label>Navigation</label>
-            <i class="ti ti-dashboard"></i>
-          </li>
-          <li class="pc-item active">
-            <a href="dashboard.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-              <span class="pc-mtext">Dashboard</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="kelola-produk.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-box"></i></span>
-              <span class="pc-mtext">Kelola Produk</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="kelola-transaksi.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-receipt"></i></span>
-              <span class="pc-mtext">Kelola Transaksi</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="history-transaksi.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-history"></i></span>
-              <span class="pc-mtext">History Transaksi</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="kelola-pengguna.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-users"></i></span>
-              <span class="pc-mtext">Kelola Pengguna</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="kelola-artikel.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-file-text"></i></span>
-              <span class="pc-mtext">Kelola Artikel</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <h1 class="header-title">Dashboard</h1>
     </div>
-  </nav>
-  <!-- [ Sidebar Menu ] end -->
-  <!-- [ Header Topbar ] start -->
-  <header class="pc-header">
-    <div class="header-wrapper">
-      <!-- [Mobile Media Block] start -->
-      <div class="me-auto pc-mob-drp">
-        <ul class="list-unstyled">
-          <!-- ======= Menu collapse Icon ===== -->
-          <li class="pc-h-item pc-sidebar-collapse">
-            <a href="#" class="pc-head-link ms-0" id="sidebar-hide">
-              <i class="ti ti-menu-2"></i>
-            </a>
-          </li>
-          <li class="pc-h-item pc-sidebar-popup">
-            <a href="#" class="pc-head-link ms-0" id="mobile-collapse">
-              <i class="ti ti-menu-2"></i>
-            </a>
-          </li>
-          <li class="dropdown pc-h-item d-inline-flex d-md-none">
-            <a class="pc-head-link dropdown-toggle arrow-none m-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-              <i class="ti ti-search"></i>
-            </a>
-            <div class="dropdown-menu pc-h-dropdown drp-search">
-              <form class="px-3">
-                <div class="form-group mb-0 d-flex align-items-center">
-                  <i data-feather="search"></i>
-                  <input type="search" class="form-control border-0 shadow-none" placeholder="Search here. . .">
-                </div>
-              </form>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <!-- [Mobile Media Block end] -->
-      <div class="ms-auto">
-        <ul class="list-unstyled">
-          <li class="dropdown pc-h-item header-user-profile">
-            <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" data-bs-auto-close="outside" aria-expanded="false">
-              <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar">
-              <span>Admin</span>
-            </a>
-            <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
-              <div class="dropdown-header">
-                <div class="d-flex mb-1">
-                  <div class="flex-shrink-0">
-                    <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar wid-35">
-                  </div>
-                  <div class="flex-grow-1 ms-3">
-                    <h6 class="mb-1">Admin</h6>
-                    <span>Administrator</span>
-                  </div>
-                  <a href="login.html" class="pc-head-link bg-transparent" id="logout-icon">
-                    <i class="ti ti-power text-danger"></i>
-                  </a>
-                </div>
-              </div>
-              <div class="dropdown-divider"></div>
-              <a href="login.html" class="dropdown-item" id="logout-option">
-                <i class="ti ti-power"></i>
-                <span>Logout</span>
-              </a>
-            </div>
-          </li>
-        </ul>
+    <div class="header-right">
+      <div class="user-profile" onclick="handleLogout()">
+        <div class="user-avatar">A</div>
+        <div>
+          <div style="font-weight: 600; font-size: 0.875rem;">Admin</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Administrator</div>
+        </div>
+        <i class="fas fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
       </div>
     </div>
   </header>
-  <!-- [ Header ] end -->
 
-  <!-- [ Main Content ] start -->
-  <div class="pc-container">
-    <div class="pc-content">
-      <!-- [ breadcrumb ] start -->
-      <div class="page-header">
-        <div class="page-block">
-          <div class="row align-items-center">
-            <div class="col-md-12">
-              <div class="page-header-title">
-                <h5 class="m-b-10">Dashboard</h5>
-              </div>
-              <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
-                <li class="breadcrumb-item" aria-current="page">Dashboard</li>
-              </ul>
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card primary">
+        <div class="stat-header">
+          <div class="stat-icon primary">
+            <i class="fas fa-box"></i>
+          </div>
+        </div>
+        <div class="stat-title">Total Produk</div>
+        <div class="stat-value">1,250</div>
+        <div class="stat-change">
+          <span class="change-positive">
+            <i class="fas fa-arrow-up"></i>
+            15.5%
+          </span>
+          <span style="color: var(--text-muted);">dari bulan lalu</span>
+        </div>
+      </div>
+
+      <div class="stat-card success">
+        <div class="stat-header">
+          <div class="stat-icon success">
+            <i class="fas fa-users"></i>
+          </div>
+        </div>
+        <div class="stat-title">Total Pengguna</div>
+        <div class="stat-value">850</div>
+        <div class="stat-change">
+          <span class="change-positive">
+            <i class="fas fa-arrow-up"></i>
+            8.5%
+          </span>
+          <span style="color: var(--text-muted);">dari bulan lalu</span>
+        </div>
+      </div>
+
+      <div class="stat-card warning">
+        <div class="stat-header">
+          <div class="stat-icon warning">
+            <i class="fas fa-receipt"></i>
+          </div>
+        </div>
+        <div class="stat-title">Total Transaksi</div>
+        <div class="stat-value">3,550</div>
+        <div class="stat-change">
+          <span class="change-positive">
+            <i class="fas fa-arrow-up"></i>
+            12.4%
+          </span>
+          <span style="color: var(--text-muted);">dari bulan lalu</span>
+        </div>
+      </div>
+
+      <div class="stat-card success">
+        <div class="stat-header">
+          <div class="stat-icon success">
+            <i class="fas fa-dollar-sign"></i>
+          </div>
+        </div>
+        <div class="stat-title">Total Pendapatan</div>
+        <div class="stat-value">Rp 125.7M</div>
+        <div class="stat-change">
+          <span class="change-positive">
+            <i class="fas fa-arrow-up"></i>
+            18.7%
+          </span>
+          <span style="color: var(--text-muted);">dari bulan lalu</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts and Tables Row -->
+    <div class="row g-4 mb-4">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Grafik Penjualan</h3>
+          </div>
+          <div class="card-body">
+            <div class="chart-container">
+              <canvas id="salesChart"></canvas>
             </div>
           </div>
         </div>
       </div>
-      <!-- [ breadcrumb ] end -->
-      <!-- [ Main Content ] start -->
-      <div class="row">
-        <!-- [ sample-page ] start -->
-        <div class="col-md-6 col-xl-3">
-          <div class="card">
-            <div class="card-body">
-              <h6 class="mb-2 f-w-400 text-muted">Total Produk</h6>
-              <h4 class="mb-3">1,250 <span class="badge bg-light-primary border border-primary"><i class="ti ti-trending-up"></i> 15.5%</span></h4>
-              <p class="mb-0 text-muted text-sm">Bertambah <span class="text-primary">50</span> dari bulan lalu</p>
+      
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Ringkasan Pendapatan</h3>
+          </div>
+          <div class="card-body">
+            <div style="text-align: center; margin-bottom: 1rem;">
+              <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem;">Minggu Ini</div>
+              <div style="font-size: 2rem; font-weight: 700; color: var(--dark-color);">Rp 35.7M</div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-xl-3">
-          <div class="card">
-            <div class="card-body">
-              <h6 class="mb-2 f-w-400 text-muted">Total Pengguna</h6>
-              <h4 class="mb-3">850 <span class="badge bg-light-success border border-success"><i class="ti ti-trending-up"></i> 8.5%</span></h4>
-              <p class="mb-0 text-muted text-sm">Bertambah <span class="text-success">25</span> dari bulan lalu</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-xl-3">
-          <div class="card">
-            <div class="card-body">
-              <h6 class="mb-2 f-w-400 text-muted">Total Transaksi</h6>
-              <h4 class="mb-3">3,550 <span class="badge bg-light-warning border border-warning"><i class="ti ti-trending-up"></i> 12.4%</span></h4>
-              <p class="mb-0 text-muted text-sm">Bertambah <span class="text-warning">120</span> dari bulan lalu</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-xl-3">
-          <div class="card">
-            <div class="card-body">
-              <h6 class="mb-2 f-w-400 text-muted">Total Pendapatan</h6>
-              <h4 class="mb-3">Rp 125,750,000 <span class="badge bg-light-success border border-success"><i class="ti ti-trending-up"></i> 18.7%</span></h4>
-              <p class="mb-0 text-muted text-sm">Bertambah <span class="text-success">Rp 15,500,000</span> dari bulan lalu</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-12 col-xl-8">
-          <div class="d-flex align-items-center justify-content-between mb-3">
-            <h5 class="mb-0">Grafik Penjualan</h5>
-            <ul class="nav nav-pills justify-content-end mb-0" id="chart-tab-tab" role="tablist">
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" id="chart-tab-home-tab" data-bs-toggle="pill" data-bs-target="#chart-tab-home" type="button" role="tab" aria-controls="chart-tab-home" aria-selected="true">Bulan</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="chart-tab-profile-tab" data-bs-toggle="pill" data-bs-target="#chart-tab-profile" type="button" role="tab" aria-controls="chart-tab-profile" aria-selected="false">Minggu</button>
-              </li>
-            </ul>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <div class="tab-content" id="chart-tab-tabContent">
-                <div class="tab-pane" id="chart-tab-home" role="tabpanel" aria-labelledby="chart-tab-home-tab" tabindex="0">
-                  <div id="visitor-chart-1"></div>
-                </div>
-                <div class="tab-pane show active" id="chart-tab-profile" role="tabpanel" aria-labelledby="chart-tab-profile-tab" tabindex="0">
-                  <div id="visitor-chart"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12 col-xl-4">
-          <h5 class="mb-3">Ringkasan Pendapatan</h5>
-          <div class="card">
-            <div class="card-body">
-              <h6 class="mb-2 f-w-400 text-muted">Statistik Minggu Ini</h6>
-              <h3 class="mb-3">Rp 35,750,000</h3>
-              <div id="income-overview-chart"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-12 col-xl-8">
-          <h5 class="mb-3">Transaksi Terbaru</h5>
-          <div class="card tbl-card">
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-hover table-borderless mb-0">
-                  <thead>
-                    <tr>
-                      <th>ID TRANSAKSI</th>
-                      <th>PELANGGAN</th>
-                      <th>TANGGAL</th>
-                      <th>STATUS</th>
-                      <th class="text-end">TOTAL</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><a href="#" class="text-muted">TRX-001245</a></td>
-                      <td>Budi Santoso</td>
-                      <td>15 Mei 2025</td>
-                      <td><span class="d-flex align-items-center gap-2"><i class="fas fa-circle text-success f-10 m-r-5"></i>Selesai</span></td>
-                      <td class="text-end">Rp 1,250,000</td>
-                    </tr>
-                    <tr>
-                      <td><a href="#" class="text-muted">TRX-001244</a></td>
-                      <td>Siti Aminah</td>
-                      <td>15 Mei 2025</td>
-                      <td><span class="d-flex align-items-center gap-2"><i class="fas fa-circle text-warning f-10 m-r-5"></i>Diproses</span></td>
-                      <td class="text-end">Rp 750,000</td>
-                    </tr>
-                    <tr>
-                      <td><a href="#" class="text-muted">TRX-001243</a></td>
-                      <td>Joko Widodo</td>
-                      <td>14 Mei 2025</td>
-                      <td><span class="d-flex align-items-center gap-2"><i class="fas fa-circle text-success f-10 m-r-5"></i>Selesai</span></td>
-                      <td class="text-end">Rp 2,500,000</td>
-                    </tr>
-                    <tr>
-                      <td><a href="#" class="text-muted">TRX-001242</a></td>
-                      <td>Dewi Lestari</td>
-                      <td>14 Mei 2025</td>
-                      <td><span class="d-flex align-items-center gap-2"><i class="fas fa-circle text-danger f-10 m-r-5"></i>Dibatalkan</span></td>
-                      <td class="text-end">Rp 1,800,000</td>
-                    </tr>
-                    <tr>
-                      <td><a href="#" class="text-muted">TRX-001241</a></td>
-                      <td>Ahmad Dahlan</td>
-                      <td>13 Mei 2025</td>
-                      <td><span class="d-flex align-items-center gap-2"><i class="fas fa-circle text-success f-10 m-r-5"></i>Selesai</span></td>
-                      <td class="text-end">Rp 950,000</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12 col-xl-4">
-          <h5 class="mb-3">Produk Terlaris</h5>
-          <div class="card">
-            <div class="list-group list-group-flush">
-              <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex">
-                  <div class="flex-shrink-0">
-                    <div class="avtar avtar-s rounded-circle text-success bg-light-success">
-                      <i class="ti ti-box f-18"></i>
-                    </div>
-                  </div>
-                  <div class="flex-grow-1 ms-3">
-                    <h6 class="mb-1">Sayur Pakcoy Segar</h6>
-                    <p class="mb-0 text-muted">Terjual: 50 Kg</p>
-                  </div>
-                  <div class="flex-shrink-0 text-end">
-                    <h6 class="mb-1">Rp 20,000</h6>
-                    <p class="mb-0 text-muted">15%</p>
-                  </div>
-                </div>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex">
-                  <div class="flex-shrink-0">
-                    <div class="avtar avtar-s rounded-circle text-primary bg-light-primary">
-                      <i class="ti ti-box f-18"></i>
-                    </div>
-                  </div>
-                  <div class="flex-grow-1 ms-3">
-                    <h6 class="mb-1">Buncis Segar</h6>
-                    <p class="mb-0 text-muted">Terjual: 20 Kg</p>
-                  </div>
-                  <div class="flex-shrink-0 text-end">
-                    <h6 class="mb-1">Rp 18,000</h6>
-                    <p class="mb-0 text-muted">12%</p>
-                  </div>
-                </div>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex">
-                  <div class="flex-shrink-0">
-                    <div class="avtar avtar-s rounded-circle text-danger bg-light-danger">
-                      <i class="ti ti-box f-18"></i>
-                    </div>
-                  </div>
-                  <div class="flex-grow-1 ms-3">
-                    <h6 class="mb-1">Wortel Segar</h6>
-                    <p class="mb-0 text-muted">Terjual: 18 Kg</p>
-                  </div>
-                  <div class="flex-shrink-0 text-end">
-                    <h6 class="mb-1">Rp 15,000</h6>
-                    <p class="mb-0 text-muted">10%</p>
-                  </div>
-                </div>
-              </a>
+            <div class="chart-container" style="height: 200px;">
+              <canvas id="revenueChart"></canvas>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- [ Main Content ] end -->
-  <footer class="pc-footer">
-    <div class="footer-wrapper container-fluid">
-      <div class="row">
-        <div class="col-sm my-1">
-          <p class="m-0">MiniMarket Admin Dashboard &copy; 2025</p>
+
+    <!-- Recent Transactions and Best Products -->
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Transaksi Terbaru</h3>
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID Transaksi</th>
+                    <th>Pelanggan</th>
+                    <th>Tanggal</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>TRX-001245</strong></td>
+                    <td>Budi Santoso</td>
+                    <td>15 Mei 2025</td>
+                    <td><span class="status-badge status-success">Selesai</span></td>
+                    <td style="text-align: right; font-weight: 600;">Rp 1,250,000</td>
+                  </tr>
+                  <tr>
+                    <td><strong>TRX-001244</strong></td>
+                    <td>Siti Aminah</td>
+                    <td>15 Mei 2025</td>
+                    <td><span class="status-badge status-warning">Diproses</span></td>
+                    <td style="text-align: right; font-weight: 600;">Rp 750,000</td>
+                  </tr>
+                  <tr>
+                    <td><strong>TRX-001243</strong></td>
+                    <td>Joko Widodo</td>
+                    <td>14 Mei 2025</td>
+                    <td><span class="status-badge status-success">Selesai</span></td>
+                    <td style="text-align: right; font-weight: 600;">Rp 2,500,000</td>
+                  </tr>
+                  <tr>
+                    <td><strong>TRX-001242</strong></td>
+                    <td>Dewi Lestari</td>
+                    <td>14 Mei 2025</td>
+                    <td><span class="status-badge status-danger">Dibatalkan</span></td>
+                    <td style="text-align: right; font-weight: 600;">Rp 1,800,000</td>
+                  </tr>
+                  <tr>
+                    <td><strong>TRX-001241</strong></td>
+                    <td>Ahmad Dahlan</td>
+                    <td>13 Mei 2025</td>
+                    <td><span class="status-badge status-success">Selesai</span></td>
+                    <td style="text-align: right; font-weight: 600;">Rp 950,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Produk Terlaris</h3>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="product-item">
+              <div class="product-icon success">
+              <img src="../../../uas_workshopui/img/featured/pakcoy.png" alt="Wortel Segar" style="width: 24px; height: 24px;">
+              </div>
+              <div class="product-info">
+                <div class="product-name">Sayur Pakcoy Segar</div>
+                <div class="product-sales">Terjual: 50 Kg</div>
+              </div>
+              <div class="product-stats">
+                <div class="product-price">Rp 20,000</div>
+                <div class="product-percentage">15%</div>
+              </div>
+            </div>
+            
+            <div class="product-item">
+              <div class="product-icon primary">
+              <img src="../../../uas_workshopui/img/featured/buncis.png" alt="Wortel Segar" style="width: 24px; height: 24px;">
+              </div>
+              <div class="product-info">
+                <div class="product-name">Buncis Segar</div>
+                <div class="product-sales">Terjual: 20 Kg</div>
+              </div>
+              <div class="product-stats">
+                <div class="product-price">Rp 18,000</div>
+                <div class="product-percentage">12%</div>
+              </div>
+            </div>
+            
+            <div class="product-item">
+              <div class="product-icon warning">
+              <img src="../../../uas_workshopui/img/featured/wortel.png" alt="Wortel Segar" style="width: 24px; height: 24px;">
+              </div>
+              <div class="product-info">
+              <div class="product-name">Wortel Segar</div>
+              <div class="product-sales">Terjual: 18 Kg</div>
+              </div>
+              <div class="product-stats">
+              <div class="product-price">Rp 15,000</div>
+              <div class="product-percentage">10%</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 MiniMarket Professional Dashboard. All rights reserved.</p>
   </footer>
 
-  <!-- [Page Specific JS] start -->
-  <script src="../assets/js/plugins/apexcharts.min.js"></script>
-  <script src="../assets/js/pages/dashboard-default.js"></script>
-  <!-- [Page Specific JS] end -->
-  <!-- Required Js -->
-  <script src="../assets/js/plugins/popper.min.js"></script>
-  <script src="../assets/js/plugins/simplebar.min.js"></script>
-  <script src="../assets/js/plugins/bootstrap.min.js"></script>
-  <script src="../assets/js/fonts/custom-font.js"></script>
-  <script src="../assets/js/pcoded.js"></script>
-  <script src="../assets/js/plugins/feather.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script>layout_change('light');</script>
-  <script>change_box_container('false');</script>
-  <script>layout_rtl_change('false');</script>
-  <script>preset_change("preset-1");</script>
-  <script>font_change("Public-Sans");</script>
-
-  <!-- Add this script at the end of the body, just before the closing </body> tag -->
-  <!-- <script>
-    // Function to handle logout
-    function handleLogout() {
-      // Show confirmation dialog
-      if (confirm('Are you sure you want to logout?')) {
-        // Clear user session from localStorage
-        localStorage.removeItem('minimarket_current_user');
-        
-        // Show logout message
-        showLogoutMessage();
-        
-        // Redirect to login page after a short delay
-        setTimeout(() => {
-          window.location.href = '../pages/login.html';
-        }, 1000);
-      }
-    }
-    
-    // Function to show logout message
-    function showLogoutMessage() {
-      // Create toast element if it doesn't exist
-      let toast = document.getElementById('logoutToast');
-      
-      if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'logoutToast';
-        toast.style.position = 'fixed';
-        toast.style.top = '20px';
-        toast.style.right = '20px';
-        toast.style.backgroundColor = '#d1e7dd';
-        toast.style.color = '#0f5132';
-        toast.style.padding = '15px 25px';
-        toast.style.borderRadius = '5px';
-        toast.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
-        toast.style.zIndex = '9999';
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(-20px)';
-        toast.style.transition = 'opacity 0.3s, transform 0.3s';
-        toast.textContent = 'Logging out...';
-        document.body.appendChild(toast);
-      }
-      
-      // Show toast
-      setTimeout(() => {
-        toast.style.opacity = '1';
-        toast.style.transform = 'translateY(0)';
-      }, 100);
-    }
-    
-    // Function to check if user is logged in
-    function checkUserAuthentication() {
-      const currentUser = JSON.parse(localStorage.getItem('minimarket_current_user'));
-      
-      // If no user is logged in, redirect to login page
-      if (!currentUser) {
-        window.location.href = '../pages/login.html';
-      } else {
-        // Update UI with user information
-        updateUserInfo(currentUser);
-      }
-    }
-    
-    // Function to update UI with user information
-    function updateUserInfo(user) {
-      // Update user name in the header
-      const userNameElements = document.querySelectorAll('.header-user-profile span');
-      const userNameInDropdown = document.querySelector('.dropdown-user-profile h6');
-      
-      if (userNameElements.length > 0) {
-        userNameElements.forEach(element => {
-          element.textContent = user.name || 'User';
-        });
-      }
-      
-      if (userNameInDropdown) {
-        userNameInDropdown.textContent = user.name || 'User';
-      }
-      
-      // Update user role in the dropdown
-      const userRoleElement = document.querySelector('.dropdown-user-profile span');
-      if (userRoleElement) {
-        userRoleElement.textContent = user.role || 'User';
-      }
-    }
-    
-    // Add event listeners to logout buttons when the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      // Check if user is authenticated
-      checkUserAuthentication();
-      
-      // Add event listener to the logout icon in the user dropdown
-      const logoutIcon = document.querySelector('#logout-icon');
-      if (logoutIcon) {
-        logoutIcon.addEventListener('click', function(e) {
-          e.preventDefault();
-          handleLogout();
-        });
-      }
-      
-      // Add event listener to the logout option in the profile tab
-      const logoutOption = document.querySelector('#logout-option');
-      if (logoutOption) {
-        logoutOption.addEventListener('click', function(e) {
-          e.preventDefault();
-          handleLogout();
-        });
+  <!-- Chart.js Configuration -->
+  <script>
+    // Sales Chart
+    const salesCtx = document.getElementById('salesChart').getContext('2d');
+    new Chart(salesCtx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+          label: 'Penjualan',
+          data: [12, 19, 3, 5, 2, 3],
+          borderColor: '#2563eb',
+          backgroundColor: 'rgba(37, 99, 235, 0.1)',
+          borderWidth: 3,
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: {
+              color: '#e2e8f0'
+            }
+          },
+          x: {
+            grid: {
+              color: '#e2e8f0'
+            }
+          }
+        }
       }
     });
-  </script> -->
+
+    // Revenue Chart
+    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+    new Chart(revenueCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Produk A', 'Produk B', 'Produk C'],
+        datasets: [{
+          data: [300, 50, 100],
+          backgroundColor: ['#2563eb', '#059669', '#d97706'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              padding: 20,
+              usePointStyle: true
+            }
+          }
+        }
+      }
+    });
+
+    // Logout function
+    function handleLogout() {
+      if (confirm('Apakah Anda yakin ingin logout?')) {
+        // Add logout logic here
+        alert('Logout berhasil!');
+        // window.location.href = 'login.html';
+      }
+    }
+  </script>
 </body>
-<!-- [Body] end -->
 </html>
